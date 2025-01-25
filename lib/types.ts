@@ -1,3 +1,3 @@
-export interface ReactQRCodeGeneratorOptions {
+export interface ReactQRCodeOptions {
   data: string;
 }
