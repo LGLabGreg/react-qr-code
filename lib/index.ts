@@ -1,2 +1,2 @@
-export * from './types';
-export { ReactQRCodeGenerator } from './react-qr-code-generator';
+export type { ReactQRCodeOptions } from './types';
+export { ReactQRCode } from './react-qr-code';

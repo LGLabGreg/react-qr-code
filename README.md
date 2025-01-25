@@ -1,3 +1,3 @@
-# React QR Code Generator
+# React QR Code
 
 Coming soon...

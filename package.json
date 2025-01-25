@@ -1,26 +1,36 @@
 {
-  "name": "react-qr-code-generator",
+  "name": "@lglab/react-qr-code",
   "version": "1.0.0",
+  "description": "Component to generate QR codes",
+  "author": "LGLab",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LGLabGreg/react-qr-code.git",
+    "directory": "lib"
+  },
   "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:lib": "tsc -b && vite build",
+    "build:types": "tsc --declaration --emitDeclarationOnly --outDir ./dist",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "prepare": "husky"
+  },
   "types": "./dist/index.d.ts",
-  "main": "./dist/index.umd.js",
+  "main": "./dist/index.es.js",
   "module": "./dist/index.es.js",
   "exports": {
     ".": {
       "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js"
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [
     "dist"
   ],
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "prepare": "husky"
-  },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
       "eslint --max-warnings=0",
@@ -28,8 +38,7 @@
     ]
   },
   "peerDependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^19.0.0"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.0.0",
@@ -55,6 +64,7 @@
     "lint-staged": "^15.4.2",
     "typescript": "~5.7.3",
     "typescript-eslint": "^8.18.2",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+    "vite-plugin-dts": "^4.5.0"
   }
 }
