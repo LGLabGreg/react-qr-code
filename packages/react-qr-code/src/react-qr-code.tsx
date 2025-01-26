@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { FinderPatternsOuter } from './components/finder-patterns-outer';
 import {
   DEFAULT_BGCOLOR,
   DEFAULT_LEVEL,
@@ -7,18 +8,15 @@ import {
   DEFAULT_SIZE,
 } from './constants';
 import { useQRCode } from './hooks/use-qr-code';
-import { ReactQRCodeProps } from './types';
+import { ReactQRCodeProps } from './types/lib';
+import { generateDataModulesPath } from './utils/data-modules';
+import { generateFinderPatternInnerPath } from './utils/finder-patterns-inner';
 import { excavateModules } from './utils/qr-code';
 import {
   sanitizeDataModulesSettings,
   sanitizeFinderPatternInnerSettings,
   sanitizeFinderPatternOuterSettings,
 } from './utils/settings';
-import {
-  generateDataModulesPath,
-  generateFinderPatternInnerPath,
-  generateFinderPatternOuterPath,
-} from './utils/svg';
 
 const ReactQRCode = (props: ReactQRCodeProps) => {
   const {
@@ -60,11 +58,11 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     size,
   });
 
-  let cellsToDraw = cells;
+  let modules = cells;
   let image = null;
   if (imageSettings != null && calculatedImageSettings != null) {
     if (calculatedImageSettings.excavation != null) {
-      cellsToDraw = excavateModules(cells, calculatedImageSettings.excavation);
+      modules = excavateModules(cells, calculatedImageSettings.excavation);
     }
 
     image = (
@@ -82,9 +80,17 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     );
   }
 
-  const dataModulesPath = generateDataModulesPath(cellsToDraw, margin);
-  const finderPatternOuterPath = generateFinderPatternOuterPath(cellsToDraw, margin);
-  const finderPatternInnerPath = generateFinderPatternInnerPath(cellsToDraw, margin);
+  const dataModulesPath = generateDataModulesPath({
+    modules,
+    margin,
+    settings: dataModulesSettings,
+  });
+
+  const finderPatternInnerPath = generateFinderPatternInnerPath({
+    modules,
+    margin,
+    settings: finderPatternInnerSettings,
+  });
 
   return (
     <svg
@@ -96,21 +102,13 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
       {...svgProps}
     >
       {!!title && <title>{title}</title>}
-      <path
-        fill={bgColor}
-        d={`M0,0 h${numCells}v${numCells}H0z`}
-        shapeRendering='crispEdges'
+      <path fill={bgColor} d={`M0,0 h${numCells}v${numCells}H0z`} />
+      <FinderPatternsOuter
+        modules={modules}
+        margin={margin}
+        settings={finderPatternOuterSettings}
       />
-      <path
-        fill={finderPatternOuterSettings.color}
-        d={finderPatternOuterPath}
-        shapeRendering='crispEdges'
-      />
-      <path
-        fill={finderPatternInnerSettings.color}
-        d={finderPatternInnerPath}
-        shapeRendering='crispEdges'
-      />
+      <path fill={finderPatternInnerSettings.color} d={finderPatternInnerPath} />
       <path
         fill={dataModulesSettings.color}
         d={dataModulesPath}

@@ -1,2 +1,2 @@
-export type { ReactQRCodeProps } from './types';
+export * from './types/lib';
 export { ReactQRCode } from './react-qr-code';

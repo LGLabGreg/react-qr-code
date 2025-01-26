@@ -4,12 +4,14 @@ function App() {
   const qrCodeOptions: ReactQRCodeProps = {
     value: 'https://github.com/LGLabGreg/react-qr-code.git',
     size: 400,
+    marginSize: 3,
     bgColor: '#f1f1f1',
     dataModulesSettings: {
       color: '#16697a',
     },
     finderPatternOuterSettings: {
-      color: '#f4d35e',
+      color: '#16697a',
+      style: 'classy',
     },
     finderPatternInnerSettings: {
       color: '#ee964b',
