@@ -1,7 +1,7 @@
 import { DEFAULT_IMG_SCALE, DEFAULT_MARGIN_SIZE } from '../constants';
 import { CrossOrigin, Excavation, ImageSettings, Modules } from '../types';
 
-// We could just do this in generatePath, except that we want to support
+// We could just do this in generateDataModulesPath, except that we want to support
 // non-Path2D canvas, so we need to keep it an explicit step.
 export const excavateModules = (modules: Modules, excavation: Excavation): Modules => {
   return modules.slice().map((row, y) => {
