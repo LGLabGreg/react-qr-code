@@ -2,10 +2,6 @@ import { Ref } from 'react';
 
 import qrcodegen from './lib/qrcodegen';
 
-export interface ReactQRCodeOptions {
-  data: string;
-}
-
 export type Modules = ReturnType<qrcodegen.QrCode['getModules']>;
 export type Excavation = { x: number; y: number; w: number; h: number };
 export type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H';
@@ -33,7 +29,7 @@ export interface ImageSettings {
    * means that any modules the embedded image overlaps will use the background
    * color.
    */
-  excavate: boolean;
+  excavate?: boolean;
   /**
    * The horiztonal offset of the embedded image, starting from the top left corner.
    * Will center if not specified.
@@ -60,7 +56,19 @@ export interface ImageSettings {
   crossOrigin?: CrossOrigin;
 }
 
-export interface QRProps {
+export interface DataModulesSettings {
+  color?: string;
+}
+
+export interface FinderPatternOuterSettings {
+  color?: string;
+}
+
+export interface FinderPatternInnerSettings {
+  color?: string;
+}
+
+export interface ReactQRCodeProps {
   ref?: Ref<SVGSVGElement>;
   /**
    * The value to encode into the QR Code. An array of strings can be passed in
@@ -78,18 +86,7 @@ export interface QRProps {
    * @defaultValue L
    */
   level?: ErrorCorrectionLevel;
-  /**
-   * The background color used to render the QR Code.
-   * @see https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
-   * @defaultValue #FFFFFF
-   */
-  bgColor?: string;
-  /**
-   * The foregtound color used to render the QR Code.
-   * @see https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
-   * @defaultValue #000000
-   */
-  fgColor?: string;
+
   /**
    * The number of _modules_ to use for margin. The QR Code specification
    * requires `4`, however you can specify any number. Values will be turned to
@@ -117,9 +114,29 @@ export interface QRProps {
    */
   boostLevel?: boolean;
   /**
+   * The background color used to render the QR Code.
+   * @see https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+   * @defaultValue #FFFFFF
+   */
+  bgColor?: string;
+  /**
+   * The settings for the data modules.
+   */
+  dataModulesSettings?: DataModulesSettings;
+  /**
+   * The settings for the finder pattern outer modules.
+   */
+  finderPatternOuterSettings?: FinderPatternOuterSettings;
+  /**
+   * The settings for the finder pattern outer modules.
+   */
+  finderPatternInnerSettings?: FinderPatternInnerSettings;
+  /**
    * The settings for the embedded image.
    */
   imageSettings?: ImageSettings;
+  /**
+   * Optional props to pass to the SVG element.
+   */
+  svgProps?: React.SVGProps<SVGSVGElement>;
 }
-
-export type QRPropsSVG = QRProps & React.SVGAttributes<SVGSVGElement>;

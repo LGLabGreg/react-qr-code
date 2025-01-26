@@ -1,30 +1,54 @@
+import { useMemo } from 'react';
+
 import {
   DEFAULT_BGCOLOR,
-  DEFAULT_FGCOLOR,
   DEFAULT_LEVEL,
   DEFAULT_MINVERSION,
   DEFAULT_SIZE,
 } from './constants';
 import { useQRCode } from './hooks/use-qr-code';
-import { QRPropsSVG, ReactQRCodeOptions } from './types';
+import { ReactQRCodeProps } from './types';
 import { excavateModules } from './utils/qr-code';
-import { generatePath } from './utils/svg';
+import {
+  sanitizeDataModulesSettings,
+  sanitizeFinderPatternInnerSettings,
+  sanitizeFinderPatternOuterSettings,
+} from './utils/settings';
+import {
+  generateDataModulesPath,
+  generateFinderPatternInnerPath,
+  generateFinderPatternOuterPath,
+} from './utils/svg';
 
-const ReactQRCode = (props: QRPropsSVG) => {
+const ReactQRCode = (props: ReactQRCodeProps) => {
   const {
     ref,
     value,
     size = DEFAULT_SIZE,
     level = DEFAULT_LEVEL,
     bgColor = DEFAULT_BGCOLOR,
-    fgColor = DEFAULT_FGCOLOR,
     minVersion = DEFAULT_MINVERSION,
     boostLevel,
     title,
     marginSize,
     imageSettings,
-    ...otherProps
+    svgProps,
   } = props;
+
+  const dataModulesSettings = useMemo(
+    () => sanitizeDataModulesSettings(props.dataModulesSettings),
+    [props.dataModulesSettings],
+  );
+
+  const finderPatternOuterSettings = useMemo(
+    () => sanitizeFinderPatternOuterSettings(props.finderPatternOuterSettings),
+    [props.finderPatternOuterSettings],
+  );
+
+  const finderPatternInnerSettings = useMemo(
+    () => sanitizeFinderPatternInnerSettings(props.finderPatternInnerSettings),
+    [props.finderPatternInnerSettings],
+  );
 
   const { margin, cells, numCells, calculatedImageSettings } = useQRCode({
     value,
@@ -58,13 +82,9 @@ const ReactQRCode = (props: QRPropsSVG) => {
     );
   }
 
-  // Drawing strategy: instead of a rect per module, we're going to create a
-  // single path for the dark modules and layer that on top of a light rect,
-  // for a total of 2 DOM nodes. We pay a bit more in string concat but that's
-  // way faster than DOM ops.
-  // For level 1, 441 nodes -> 2
-  // For level 40, 31329 -> 2
-  const fgPath = generatePath(cellsToDraw, margin);
+  const dataModulesPath = generateDataModulesPath(cellsToDraw, margin);
+  const finderPatternOuterPath = generateFinderPatternOuterPath(cellsToDraw, margin);
+  const finderPatternInnerPath = generateFinderPatternInnerPath(cellsToDraw, margin);
 
   return (
     <svg
@@ -73,7 +93,7 @@ const ReactQRCode = (props: QRPropsSVG) => {
       viewBox={`0 0 ${numCells} ${numCells}`}
       ref={ref}
       role='img'
-      {...otherProps}
+      {...svgProps}
     >
       {!!title && <title>{title}</title>}
       <path
@@ -81,7 +101,21 @@ const ReactQRCode = (props: QRPropsSVG) => {
         d={`M0,0 h${numCells}v${numCells}H0z`}
         shapeRendering='crispEdges'
       />
-      <path fill={fgColor} d={fgPath} shapeRendering='crispEdges' />
+      <path
+        fill={finderPatternOuterSettings.color}
+        d={finderPatternOuterPath}
+        shapeRendering='crispEdges'
+      />
+      <path
+        fill={finderPatternInnerSettings.color}
+        d={finderPatternInnerPath}
+        shapeRendering='crispEdges'
+      />
+      <path
+        fill={dataModulesSettings.color}
+        d={dataModulesPath}
+        shapeRendering='crispEdges'
+      />
       {image}
     </svg>
   );
