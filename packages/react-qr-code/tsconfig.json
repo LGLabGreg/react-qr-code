@@ -17,6 +17,6 @@
     "noEmit": true,
     "outDir": "./dist"
   },
-  "include": ["lib/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }
