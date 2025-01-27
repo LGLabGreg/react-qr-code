@@ -25,12 +25,14 @@ export interface DataModulesSettings {
 
 export type FinderPatternOuterStyle =
   | 'square'
+  | 'rounded-sm'
   | 'rounded'
-  | 'extra-rounded'
+  | 'rounded-lg'
   | 'circle'
   | 'inpoint'
   | 'outpoint'
-  | 'classy';
+  | 'classy'
+  | 'classy-rounded';
 export interface FinderPatternOuterSettings {
   color?: string;
   style?: FinderPatternOuterStyle;

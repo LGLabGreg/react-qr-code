@@ -9,13 +9,15 @@ export const generateDataModulesPath = ({
 }: GeneratePathFnProps): string => {
   console.log('generateDataModulesPath', settings);
   const ops: Array<string> = [];
+  const numCells = modules.length;
+
   modules.forEach(function (row, y) {
     let start: number | null = null;
     row.forEach(function (cell, x) {
-      // Skip the timing patterns
+      // Skip the finder patterns
       if (
-        isFinderPatternOuterModule({ x, y, numCells: modules.length }) ||
-        isFinderPatternInnerModule({ x, y, numCells: modules.length })
+        isFinderPatternOuterModule({ x, y, numCells }) ||
+        isFinderPatternInnerModule({ x, y, numCells })
       ) {
         return;
       }
