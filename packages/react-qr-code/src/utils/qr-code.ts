@@ -1,5 +1,5 @@
 import { DEFAULT_IMG_SCALE, DEFAULT_MARGIN_SIZE } from '../constants';
-import { CrossOrigin, Excavation, ImageSettings, Modules } from '../types';
+import { CrossOrigin, Excavation, ImageSettings, Modules } from '../types/lib';
 
 // We could just do this in generateDataModulesPath, except that we want to support
 // non-Path2D canvas, so we need to keep it an explicit step.
@@ -45,10 +45,10 @@ export const getImageSettings = (
 
   let excavation = null;
   if (imageSettings.excavate) {
-    let floorX = Math.floor(x);
-    let floorY = Math.floor(y);
-    let ceilW = Math.ceil(w + x - floorX);
-    let ceilH = Math.ceil(h + y - floorY);
+    const floorX = Math.floor(x);
+    const floorY = Math.floor(y);
+    const ceilW = Math.ceil(w + x - floorX);
+    const ceilH = Math.ceil(h + y - floorY);
     excavation = { x: floorX, y: floorY, w: ceilW, h: ceilH };
   }
 

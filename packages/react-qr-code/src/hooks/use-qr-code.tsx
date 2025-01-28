@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import { ERROR_LEVEL_MAP } from '../constants';
 import qrcodegen from '../lib/qrcodegen';
-import { ErrorCorrectionLevel, ImageSettings } from '../types';
+import { ErrorCorrectionLevel, ImageSettings } from '../types/lib';
 import { getImageSettings, getMarginSize } from '../utils/qr-code';
 
 export const useQRCode = ({
@@ -22,7 +22,7 @@ export const useQRCode = ({
   size: number;
   boostLevel?: boolean;
 }) => {
-  let qrcode = useMemo(() => {
+  const qrcode = useMemo(() => {
     const values = Array.isArray(value) ? value : [value];
     const segments = values.reduce<qrcodegen.QrSegment[]>((accum, v) => {
       accum.push(...qrcodegen.QrSegment.makeSegments(v));
@@ -39,7 +39,7 @@ export const useQRCode = ({
   }, [value, level, minVersion, boostLevel]);
 
   const { cells, margin, numCells, calculatedImageSettings } = useMemo(() => {
-    let cells = qrcode.getModules();
+    const cells = qrcode.getModules();
 
     const margin = getMarginSize(marginSize);
     const numCells = cells.length + margin * 2;

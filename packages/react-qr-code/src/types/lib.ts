@@ -1,7 +1,10 @@
 import { Ref } from 'react';
 
-import qrcodegen from './lib/qrcodegen';
+import qrcodegen from '../lib/qrcodegen';
 
+/**
+ * qrcodegen
+ */
 export type Modules = ReturnType<qrcodegen.QrCode['getModules']>;
 export type Excavation = { x: number; y: number; w: number; h: number };
 export type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H';
@@ -11,61 +14,40 @@ export type ERROR_LEVEL_MAPPED_TYPE = {
   [index in ErrorCorrectionLevel]: qrcodegen.QrCode.Ecc;
 };
 
-export interface ImageSettings {
-  /**
-   * The URI of the embedded image.
-   */
-  src: string;
-  /**
-   * The height, in pixels, of the image.
-   */
-  height: number;
-  /**
-   * The width, in pixels, of the image.
-   */
-  width: number;
-  /**
-   * Whether or not to "excavate" the modules around the embedded image. This
-   * means that any modules the embedded image overlaps will use the background
-   * color.
-   */
-  excavate?: boolean;
-  /**
-   * The horiztonal offset of the embedded image, starting from the top left corner.
-   * Will center if not specified.
-   */
-  x?: number;
-  /**
-   * The vertical offset of the embedded image, starting from the top left corner.
-   * Will center if not specified.
-   */
-  y?: number;
-  /**
-   * The opacity of the embedded image in the range of 0-1.
-   * @defaultValue 1
-   */
-  opacity?: number;
-  /**
-   * The cross-origin value to use when loading the image. This is used to
-   * ensure compatibility with CORS, particularly when extracting image data
-   * from QRCodeCanvas.
-   * Note: `undefined` is treated differently than the seemingly equivalent
-   * empty string. This is intended to align with HTML behavior where omitting
-   * the attribute behaves differently than the empty string.
-   */
-  crossOrigin?: CrossOrigin;
-}
-
+/**
+ * ReactQRCode props.
+ */
+export type DataModulesStyle = 'square' | 'rounded';
 export interface DataModulesSettings {
   color?: string;
+  style?: DataModulesStyle;
 }
+
+export type FinderPatternOuterStyle =
+  | 'square'
+  | 'rounded-sm'
+  | 'rounded'
+  | 'rounded-lg'
+  | 'circle'
+  | 'inpoint-sm'
+  | 'inpoint'
+  | 'inpoint-lg'
+  | 'outpoint-sm'
+  | 'outpoint'
+  | 'outpoint-lg'
+  | 'leaf-sm'
+  | 'leaf'
+  | 'leaf-lg';
 
 export interface FinderPatternOuterSettings {
   color?: string;
+  style?: FinderPatternOuterStyle;
 }
 
+export type FinderPatternInnerStyle = 'square' | 'rounded';
 export interface FinderPatternInnerSettings {
   color?: string;
+  style?: FinderPatternInnerStyle;
 }
 
 export interface ReactQRCodeProps {
@@ -139,4 +121,52 @@ export interface ReactQRCodeProps {
    * Optional props to pass to the SVG element.
    */
   svgProps?: React.SVGProps<SVGSVGElement>;
+}
+
+/**
+ * Image settings for the QR Code.
+ */
+export interface ImageSettings {
+  /**
+   * The URI of the embedded image.
+   */
+  src: string;
+  /**
+   * The height, in pixels, of the image.
+   */
+  height: number;
+  /**
+   * The width, in pixels, of the image.
+   */
+  width: number;
+  /**
+   * Whether or not to "excavate" the modules around the embedded image. This
+   * means that any modules the embedded image overlaps will use the background
+   * color.
+   */
+  excavate?: boolean;
+  /**
+   * The horiztonal offset of the embedded image, starting from the top left corner.
+   * Will center if not specified.
+   */
+  x?: number;
+  /**
+   * The vertical offset of the embedded image, starting from the top left corner.
+   * Will center if not specified.
+   */
+  y?: number;
+  /**
+   * The opacity of the embedded image in the range of 0-1.
+   * @defaultValue 1
+   */
+  opacity?: number;
+  /**
+   * The cross-origin value to use when loading the image. This is used to
+   * ensure compatibility with CORS, particularly when extracting image data
+   * from QRCodeCanvas.
+   * Note: `undefined` is treated differently than the seemingly equivalent
+   * empty string. This is intended to align with HTML behavior where omitting
+   * the attribute behaves differently than the empty string.
+   */
+  crossOrigin?: CrossOrigin;
 }
