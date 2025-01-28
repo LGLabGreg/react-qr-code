@@ -5,6 +5,9 @@ import {
   FinderPatternOuterStyle,
 } from './types/lib';
 
+/**
+ * Error correction level map.
+ */
 export const ERROR_LEVEL_MAP: ERROR_LEVEL_MAPPED_TYPE = {
   L: qrcodegen.QrCode.Ecc.LOW,
   M: qrcodegen.QrCode.Ecc.MEDIUM,
@@ -12,6 +15,9 @@ export const ERROR_LEVEL_MAP: ERROR_LEVEL_MAPPED_TYPE = {
   H: qrcodegen.QrCode.Ecc.HIGH,
 } as const;
 
+/**
+ * Default values.
+ */
 export const DEFAULT_SIZE = 128;
 export const DEFAULT_LEVEL: ErrorCorrectionLevel = 'M';
 export const DEFAULT_BGCOLOR = '#FFFFFF';
@@ -28,6 +34,10 @@ export const DEFAULT_FINDER_PATTERN_OUTER_STYLE: FinderPatternOuterStyle = 'squa
 // get an explicit height or width, I'd rather default to something than throw.
 export const DEFAULT_IMG_SCALE = 0.1;
 
+/**
+ * Finder pattern.
+ */
+
 export const FINDER_PATTERN_SIZE = 7;
 
 export const FINDER_PATTERN_OUTER_MASK = [
@@ -39,6 +49,33 @@ export const FINDER_PATTERN_OUTER_MASK = [
   [1, 0, 0, 0, 0, 0, 1],
   [1, 1, 1, 1, 1, 1, 1],
 ];
+
+export const FINDER_PATTERN_OUTER_ROTATIONS = {
+  'inpoint-sm': [0, 90, -90],
+  inpoint: [0, 90, -90],
+  'inpoint-lg': [0, 90, -90],
+  'outpoint-sm': [180, -90, 90],
+  outpoint: [180, -90, 90],
+  'outpoint-lg': [180, -90, 90],
+  'leaf-sm': [0, 90, -90],
+  leaf: [0, 90, -90],
+  'leaf-lg': [0, 90, -90],
+};
+
+export const FINDER_PATTERN_OUTER_RADIUSES = {
+  'rounded-sm': 3,
+  rounded: 4,
+  'rounded-lg': 5,
+  'leaf-sm': 3,
+  leaf: 4,
+  'leaf-lg': 5,
+  'inpoint-sm': 3,
+  inpoint: 4,
+  'inpoint-lg': 5,
+  'outpoint-sm': 3,
+  outpoint: 4,
+  'outpoint-lg': 5,
+};
 
 export const FINDER_PATTERN_INNER_MASK = [
   [0, 0, 0, 0, 0, 0, 0],

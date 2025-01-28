@@ -29,10 +29,16 @@ export type FinderPatternOuterStyle =
   | 'rounded'
   | 'rounded-lg'
   | 'circle'
+  | 'inpoint-sm'
   | 'inpoint'
+  | 'inpoint-lg'
+  | 'outpoint-sm'
   | 'outpoint'
-  | 'classy'
-  | 'classy-rounded';
+  | 'outpoint-lg'
+  | 'leaf-sm'
+  | 'leaf'
+  | 'leaf-lg';
+
 export interface FinderPatternOuterSettings {
   color?: string;
   style?: FinderPatternOuterStyle;

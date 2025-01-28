@@ -1,10 +1,16 @@
 import { ReactNode, useMemo } from 'react';
 
-import { DEFAULT_FINDER_PATTERN_OUTER_STYLE, FINDER_PATTERN_SIZE } from '../constants';
+import {
+  DEFAULT_FINDER_PATTERN_OUTER_STYLE,
+  FINDER_PATTERN_OUTER_RADIUSES,
+  FINDER_PATTERN_OUTER_ROTATIONS,
+  FINDER_PATTERN_SIZE,
+} from '../constants';
 import { FinderPatternOuterStyle } from '../types/lib';
 import { GeneratePathFnProps } from '../types/utils';
 import {
-  finderPatternsOuterClassy,
+  finderPatternsInOutPoint,
+  finderPatternsOuterLeaf,
   finderPatternsOuterRoundedSquare,
 } from '../utils/finder-patterns-outer';
 
@@ -26,26 +32,16 @@ export const FinderPatternsOuter = ({
     [margin, modules.length],
   );
 
-  const rotations = {
-    inpoint: [0, 90, -90],
-    outpoint: [180, -90, 90],
-    classy: [0, 90, -90],
-    'classy-rounded': [0, 90, -90],
-  };
-
-  const radiuses = {
-    classy: 3,
-    'classy-rounded': 5,
-  };
-
   if (['rounded-sm', 'rounded', 'rounded-lg', 'circle', 'square'].includes(style)) {
     coordinates.forEach(({ x, y }) => {
-      if (style === 'rounded-sm') {
-        ops.push(finderPatternsOuterRoundedSquare({ x, y, radius: 3 }));
-      } else if (style === 'rounded') {
-        ops.push(finderPatternsOuterRoundedSquare({ x, y, radius: 4 }));
-      } else if (style === 'rounded-lg') {
-        ops.push(finderPatternsOuterRoundedSquare({ x, y, radius: 5 }));
+      if (style === 'rounded-sm' || style === 'rounded' || style === 'rounded-lg') {
+        ops.push(
+          finderPatternsOuterRoundedSquare({
+            x,
+            y,
+            radius: FINDER_PATTERN_OUTER_RADIUSES[style],
+          }),
+        );
       } else if (style === 'circle') {
         ops.push(
           `M ${x + FINDER_PATTERN_SIZE / 2} ${y}` +
@@ -71,50 +67,32 @@ export const FinderPatternsOuter = ({
       }
     });
     return <path fill={settings.color} d={ops.join('')} />;
-  } else if (style === 'inpoint' || style === 'outpoint') {
+  } else if (
+    style === 'inpoint-sm' ||
+    style === 'inpoint' ||
+    style === 'inpoint-lg' ||
+    style === 'outpoint-sm' ||
+    style === 'outpoint' ||
+    style === 'outpoint-lg' ||
+    style === 'leaf-sm' ||
+    style === 'leaf' ||
+    style === 'leaf-lg'
+  ) {
+    const pathFn =
+      style === 'leaf-sm' || style === 'leaf' || style === 'leaf-lg'
+        ? finderPatternsOuterLeaf
+        : finderPatternsInOutPoint;
     return coordinates
       .map((coordinate, index) => ({
         ...coordinate,
-        rotation: rotations[style][index],
+        rotation: FINDER_PATTERN_OUTER_ROTATIONS[style][index],
       }))
       .map(({ x, y, rotation }) => {
-        const path =
-          `M ${x} ${y + 2.5}` +
-          `v ${2}` +
-          `a ${2.5} ${2.5}, 0, 0, 0, ${2.5} ${2.5}` +
-          `h ${4.5}` +
-          `v ${-4.5}` +
-          `a ${2.5} ${2.5}, 0, 0, 0, ${-2.5} ${-2.5}` +
-          `h ${-2}` +
-          `a ${2.5} ${2.5}, 0, 0, 0, ${-2.5} ${2.5}` +
-          `M ${x + 2.5} ${y + 1}` +
-          `h ${2}` +
-          `a ${1.5} ${1.5}, 0, 0, 1, ${1.5} ${1.5}` +
-          `v ${3.5}` +
-          `h ${-3.5}` +
-          `a ${1.5} ${1.5}, 0, 0, 1, ${-1.5} ${-1.5}` +
-          `v ${-2}` +
-          `a ${1.5} ${1.5}, 0, 0, 1, ${1.5} ${-1.5}`;
-        return (
-          <path
-            fill={settings.color}
-            d={path}
-            style={{
-              transform: `rotate(${rotation}deg)`,
-              transformOrigin: 'center',
-              transformBox: 'fill-box',
-            }}
-          />
-        );
-      });
-  } else if (style === 'classy' || style === 'classy-rounded') {
-    return coordinates
-      .map((coordinate, index) => ({
-        ...coordinate,
-        rotation: rotations[style][index],
-      }))
-      .map(({ x, y, rotation }) => {
-        const path = finderPatternsOuterClassy({ x, y, radius: radiuses[style] });
+        const path = pathFn({
+          x,
+          y,
+          radius: FINDER_PATTERN_OUTER_RADIUSES[style],
+        });
         return (
           <path
             fill={settings.color}
