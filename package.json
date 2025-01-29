@@ -21,7 +21,7 @@
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
-      "biome check"
+      "biome check --staged"
     ]
   },
   "devDependencies": {
