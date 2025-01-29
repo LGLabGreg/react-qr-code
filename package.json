@@ -13,20 +13,23 @@
     "watch:apps": "pnpm --filter \"./apps/**\" run dev",
     "build:lib": "pnpm --filter \"./packages/**\" run build",
     "build:app": "pnpm --filter \"./apps/**\" run build",
-    "lint": "biome lint .",
-    "lint:fix": "biome lint --write .",
-    "check": "biome check .",
-    "check:fix": "biome check --write .",
+    "lint": "eslint .",
     "prepare": "husky"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "biome check"
+    "**/*.{ts,tsx}": [
+      "eslint --max-warnings=0",
+      "prettier --write --config .prettierrc"
     ]
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@eslint/js": "^9.19.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "concurrently": "^9.1.2",
+    "eslint": "^9.19.0",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.18",
     "globals": "^15.14.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
