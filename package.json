@@ -1,39 +1,37 @@
 {
-  "name": "root",
-  "private": true,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/LGLabGreg/react-qr-code.git"
-  },
-  "packageManager": "pnpm@9.15.4",
-  "type": "module",
-  "scripts": {
-    "dev": "pnpm concurrently --names packages,apps \"pnpm watch:packages\" \"pnpm watch:apps\"",
-    "watch:packages": "pnpm --filter \"./packages/**\" run build --watch",
-    "watch:apps": "pnpm --filter \"./apps/**\" run dev",
-    "build:lib": "pnpm --filter \"./packages/**\" run build",
-    "build:app": "pnpm --filter \"./apps/**\" run build",
-    "lint": "biome lint .",
-    "lint:fix": "biome lint --write .",
-    "check": "biome check .",
-    "check:fix": "biome check --write .",
-    "prepare": "husky"
-  },
-  "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "biome check --staged"
-    ]
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
-    "concurrently": "^9.1.2",
-    "globals": "^15.14.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^15.4.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "typescript": "~5.7.3",
-    "typescript-eslint": "^8.22.0",
-    "vite": "^6.0.5"
-  }
+	"name": "root",
+	"private": true,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/LGLabGreg/react-qr-code.git"
+	},
+	"packageManager": "pnpm@9.15.4",
+	"type": "module",
+	"scripts": {
+		"dev": "pnpm concurrently --names packages,apps \"pnpm watch:packages\" \"pnpm watch:apps\"",
+		"watch:packages": "pnpm --filter \"./packages/**\" run build --watch",
+		"watch:apps": "pnpm --filter \"./apps/**\" run dev",
+		"build:lib": "pnpm --filter \"./packages/**\" run build",
+		"build:app": "pnpm --filter \"./apps/**\" run build",
+		"lint": "biome lint .",
+		"lint:fix": "biome lint --write .",
+		"check": "biome check .",
+		"check:fix": "biome check --write .",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"src/**/*.{ts,tsx}": ["biome check --staged"]
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"concurrently": "^9.1.2",
+		"globals": "^15.14.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.4.3",
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"typescript": "~5.7.3",
+		"typescript-eslint": "^8.22.0",
+		"vite": "^6.0.5"
+	}
 }
