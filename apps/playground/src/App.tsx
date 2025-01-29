@@ -12,8 +12,6 @@ function App() {
   const [finderPatternOuterStyle, setFinderPatternOuterStyle] =
     useState<FinderPatternOuterStyle>('square');
 
-  const unused = 'unused';
-
   const qrCodeOptions: ReactQRCodeProps = {
     value: 'https://github.com/LGLabGreg/react-qr-code.git',
     size: 400,
