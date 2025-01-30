@@ -1,60 +1,58 @@
-import type { GeneratePathFnProps } from '../types/utils';
-import { isFinderPatternInnerModule } from './finder-patterns-inner';
-import { isFinderPatternOuterModule } from './finder-patterns-outer';
+import type { GeneratePathFnProps } from '../types/utils'
+import { isFinderPatternInnerModule } from './finder-patterns-inner'
+import { isFinderPatternOuterModule } from './finder-patterns-outer'
 
 export const generateDataModulesPath = ({
-	modules,
-	margin,
-	settings,
+  modules,
+  margin,
+  settings,
 }: GeneratePathFnProps): string => {
-	console.log('generateDataModulesPath', settings);
-	const ops: Array<string> = [];
-	const numCells = modules.length;
+  console.log('generateDataModulesPath', settings)
+  const ops: Array<string> = []
+  const numCells = modules.length
 
-	modules.forEach((row, y) => {
-		let start: number | null = null;
-		row.forEach((cell, x) => {
-			// Skip the finder patterns
-			if (
-				isFinderPatternOuterModule({ x, y, numCells }) ||
-				isFinderPatternInnerModule({ x, y, numCells })
-			) {
-				return;
-			}
+  modules.forEach((row, y) => {
+    let start: number | null = null
+    row.forEach((cell, x) => {
+      // Skip the finder patterns
+      if (
+        isFinderPatternOuterModule({ x, y, numCells }) ||
+        isFinderPatternInnerModule({ x, y, numCells })
+      ) {
+        return
+      }
 
-			if (!cell && start !== null) {
-				// M0 0h7v1H0z injects the space with the move and drops the comma,
-				// saving a char per operation
-				ops.push(
-					`M${start + margin} ${y + margin}h${x - start}v1H${start + margin}z`,
-				);
-				start = null;
-				return;
-			}
+      if (!cell && start !== null) {
+        // M0 0h7v1H0z injects the space with the move and drops the comma,
+        // saving a char per operation
+        ops.push(`M${start + margin} ${y + margin}h${x - start}v1H${start + margin}z`)
+        start = null
+        return
+      }
 
-			// end of row, clean up or skip
-			if (x === row.length - 1) {
-				if (!cell) {
-					// We would have closed the op above already so this can only mean
-					// 2+ light modules in a row.
-					return;
-				}
-				if (start === null) {
-					// Just a single dark module.
-					ops.push(`M${x + margin},${y + margin} h1v1H${x + margin}z`);
-				} else {
-					// Otherwise finish the current line.
-					ops.push(
-						`M${start + margin},${y + margin} h${x + 1 - start}v1H${start + margin}z`,
-					);
-				}
-				return;
-			}
+      // end of row, clean up or skip
+      if (x === row.length - 1) {
+        if (!cell) {
+          // We would have closed the op above already so this can only mean
+          // 2+ light modules in a row.
+          return
+        }
+        if (start === null) {
+          // Just a single dark module.
+          ops.push(`M${x + margin},${y + margin} h1v1H${x + margin}z`)
+        } else {
+          // Otherwise finish the current line.
+          ops.push(
+            `M${start + margin},${y + margin} h${x + 1 - start}v1H${start + margin}z`,
+          )
+        }
+        return
+      }
 
-			if (cell && start === null) {
-				start = x;
-			}
-		});
-	});
-	return ops.join('');
-};
+      if (cell && start === null) {
+        start = x
+      }
+    })
+  })
+  return ops.join('')
+}
