@@ -1,5 +1,5 @@
-import { FINDER_PATTERN_OUTER_MASK, FINDER_PATTERN_SIZE } from '../constants';
-import type { FilterFnProps } from '../types/utils';
+import { FINDER_PATTERN_OUTER_MASK, FINDER_PATTERN_SIZE } from '../constants'
+import type { FilterFnProps } from '../types/utils'
 
 export const isFinderPatternOuterModule = ({
   x,
@@ -11,22 +11,22 @@ export const isFinderPatternOuterModule = ({
     FINDER_PATTERN_OUTER_MASK[x - numCells + 7]?.[y] ||
     FINDER_PATTERN_OUTER_MASK[x]?.[y - numCells + 7]
   ) {
-    return true;
+    return true
   }
-  return false;
-};
+  return false
+}
 
 export const finderPatternsOuterRoundedSquare = ({
   x,
   y,
   radius,
 }: {
-  x: number;
-  y: number;
-  radius: number;
+  x: number
+  y: number
+  radius: number
 }) => {
-  const size = FINDER_PATTERN_SIZE - radius;
-  const arc = radius / 2;
+  const size = FINDER_PATTERN_SIZE - radius
+  const arc = radius / 2
   return (
     `M ${x} ${y + arc}` +
     `v ${size}` +
@@ -46,21 +46,21 @@ export const finderPatternsOuterRoundedSquare = ({
     `a ${arc - 1} ${arc - 1}, 0, 0, 1, ${-(arc - 1)} ${-(arc - 1)}` +
     `v ${-size}` +
     `a ${arc - 1} ${arc - 1}, 0, 0, 1, ${arc - 1} ${-(arc - 1)}`
-  );
-};
+  )
+}
 
 export const finderPatternsOuterLeaf = ({
   x,
   y,
   radius,
 }: {
-  x: number;
-  y: number;
-  radius: number;
+  x: number
+  y: number
+  radius: number
 }) => {
-  const size = FINDER_PATTERN_SIZE - radius;
-  const arc = radius / 2;
-  const arcSize = FINDER_PATTERN_SIZE - arc;
+  const size = FINDER_PATTERN_SIZE - radius
+  const arc = radius / 2
+  const arcSize = FINDER_PATTERN_SIZE - arc
   return (
     // biome-ignore lint/style/useTemplate: readability
     `M ${x} ${y + arc}` +
@@ -80,21 +80,21 @@ export const finderPatternsOuterLeaf = ({
     `a ${arc - 1} ${arc - 1}, 0, 0, 1, ${-(arc - 1)} ${-(arc - 1)}` +
     `v ${-(arcSize - 1)}` +
     'z'
-  );
-};
+  )
+}
 
 export const finderPatternsOuterInOutPoint = ({
   x,
   y,
   radius,
 }: {
-  x: number;
-  y: number;
-  radius: number;
+  x: number
+  y: number
+  radius: number
 }) => {
-  const size = FINDER_PATTERN_SIZE - radius;
-  const arc = radius / 2;
-  const arcSize = FINDER_PATTERN_SIZE - arc;
+  const size = FINDER_PATTERN_SIZE - radius
+  const arc = radius / 2
+  const arcSize = FINDER_PATTERN_SIZE - arc
   return (
     `M ${x} ${y + arc}` +
     `v ${size}` +
@@ -112,5 +112,5 @@ export const finderPatternsOuterInOutPoint = ({
     `a ${arc - 1} ${arc - 1}, 0, 0, 1, ${-(arc - 1)} ${-(arc - 1)}` +
     `v ${-size}` +
     `a ${arc - 1} ${arc - 1}, 0, 0, 1, ${arc - 1} ${-(arc - 1)}`
-  );
-};
+  )
+}

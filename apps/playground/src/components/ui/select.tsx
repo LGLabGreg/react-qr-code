@@ -1,8 +1,8 @@
 interface SelectProps {
-  label: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: string[];
-  value: string;
+  label: string
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
+  options: string[]
+  value: string
 }
 
 export const Select = ({ label, onChange, options, value }: SelectProps) => {
@@ -24,5 +24,5 @@ export const Select = ({ label, onChange, options, value }: SelectProps) => {
         ))}
       </select>
     </>
-  );
-};
+  )
+}

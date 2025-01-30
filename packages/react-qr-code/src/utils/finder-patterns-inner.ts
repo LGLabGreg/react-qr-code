@@ -1,5 +1,5 @@
-import { FINDER_PATTERN_INNER_MASK, FINDER_PATTERN_INNER_SIZE } from '../constants';
-import type { FilterFnProps } from '../types/utils';
+import { FINDER_PATTERN_INNER_MASK, FINDER_PATTERN_INNER_SIZE } from '../constants'
+import type { FilterFnProps } from '../types/utils'
 
 export const isFinderPatternInnerModule = ({
   x,
@@ -11,23 +11,23 @@ export const isFinderPatternInnerModule = ({
     FINDER_PATTERN_INNER_MASK[x - numCells + 7]?.[y] ||
     FINDER_PATTERN_INNER_MASK[x]?.[y - numCells + 7]
   ) {
-    return true;
+    return true
   }
-  return false;
-};
+  return false
+}
 
 export const finderPatternsInnerLeaf = ({
   x,
   y,
   radius,
 }: {
-  x: number;
-  y: number;
-  radius: number;
+  x: number
+  y: number
+  radius: number
 }) => {
-  const size = FINDER_PATTERN_INNER_SIZE - radius;
-  const arc = radius / 2;
-  const arcSize = FINDER_PATTERN_INNER_SIZE - arc;
+  const size = FINDER_PATTERN_INNER_SIZE - radius
+  const arc = radius / 2
+  const arcSize = FINDER_PATTERN_INNER_SIZE - arc
   return (
     // biome-ignore lint/style/useTemplate: readability
     `M ${x} ${y + arc}` +
@@ -39,21 +39,21 @@ export const finderPatternsInnerLeaf = ({
     `h ${-size}` +
     `H ${x}` +
     'z'
-  );
-};
+  )
+}
 
 export const finderPatternsInnerInOutPoint = ({
   x,
   y,
   radius,
 }: {
-  x: number;
-  y: number;
-  radius: number;
+  x: number
+  y: number
+  radius: number
 }) => {
-  const size = FINDER_PATTERN_INNER_SIZE - radius;
-  const arc = radius / 2;
-  const arcSize = FINDER_PATTERN_INNER_SIZE - arc;
+  const size = FINDER_PATTERN_INNER_SIZE - radius
+  const arc = radius / 2
+  const arcSize = FINDER_PATTERN_INNER_SIZE - arc
   return (
     `M ${x} ${y + arc}` +
     `v ${size}` +
@@ -63,5 +63,5 @@ export const finderPatternsInnerInOutPoint = ({
     `a ${arc} ${arc}, 0, 0, 0, ${-arc} ${-arc}` +
     `h ${-size}` +
     `a ${arc} ${arc}, 0, 0, 0, ${-arc} ${arc}`
-  );
-};
+  )
+}

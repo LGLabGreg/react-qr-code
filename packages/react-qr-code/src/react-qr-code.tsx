@@ -1,22 +1,22 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
-import { FinderPatternsInner } from './components/finder-patterns-inner';
-import { FinderPatternsOuter } from './components/finder-patterns-outer';
+import { FinderPatternsInner } from './components/finder-patterns-inner'
+import { FinderPatternsOuter } from './components/finder-patterns-outer'
 import {
   DEFAULT_BGCOLOR,
   DEFAULT_LEVEL,
   DEFAULT_MINVERSION,
   DEFAULT_SIZE,
-} from './constants';
-import { useQRCode } from './hooks/use-qr-code';
-import type { ReactQRCodeProps } from './types/lib';
-import { generateDataModulesPath } from './utils/data-modules';
-import { excavateModules } from './utils/qr-code';
+} from './constants'
+import { useQRCode } from './hooks/use-qr-code'
+import type { ReactQRCodeProps } from './types/lib'
+import { generateDataModulesPath } from './utils/data-modules'
+import { excavateModules } from './utils/qr-code'
 import {
   sanitizeDataModulesSettings,
   sanitizeFinderPatternInnerSettings,
   sanitizeFinderPatternOuterSettings,
-} from './utils/settings';
+} from './utils/settings'
 
 const ReactQRCode = (props: ReactQRCodeProps) => {
   const {
@@ -30,22 +30,22 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     marginSize,
     imageSettings,
     svgProps,
-  } = props;
+  } = props
 
   const dataModulesSettings = useMemo(
     () => sanitizeDataModulesSettings(props.dataModulesSettings),
     [props.dataModulesSettings],
-  );
+  )
 
   const finderPatternOuterSettings = useMemo(
     () => sanitizeFinderPatternOuterSettings(props.finderPatternOuterSettings),
     [props.finderPatternOuterSettings],
-  );
+  )
 
   const finderPatternInnerSettings = useMemo(
     () => sanitizeFinderPatternInnerSettings(props.finderPatternInnerSettings),
     [props.finderPatternInnerSettings],
-  );
+  )
 
   const { margin, cells, numCells, calculatedImageSettings } = useQRCode({
     value,
@@ -55,13 +55,13 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     marginSize,
     imageSettings,
     size,
-  });
+  })
 
-  let modules = cells;
-  let image = null;
+  let modules = cells
+  let image = null
   if (imageSettings != null && calculatedImageSettings != null) {
     if (calculatedImageSettings.excavation != null) {
-      modules = excavateModules(cells, calculatedImageSettings.excavation);
+      modules = excavateModules(cells, calculatedImageSettings.excavation)
     }
 
     image = (
@@ -76,14 +76,14 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
         // Note: specified here always, but undefined will result in no attribute.
         crossOrigin={calculatedImageSettings.crossOrigin}
       />
-    );
+    )
   }
 
   const dataModulesPath = generateDataModulesPath({
     modules,
     margin,
     settings: dataModulesSettings,
-  });
+  })
 
   return (
     <svg
@@ -113,9 +113,9 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
       />
       {image}
     </svg>
-  );
-};
+  )
+}
 
-ReactQRCode.displayName = 'ReactQRCode';
+ReactQRCode.displayName = 'ReactQRCode'
 
-export { ReactQRCode };
+export { ReactQRCode }

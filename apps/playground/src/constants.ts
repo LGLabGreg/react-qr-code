@@ -1,7 +1,7 @@
 import type {
   FinderPatternInnerStyle,
   FinderPatternOuterStyle,
-} from '@lglab/react-qr-code';
+} from '@lglab/react-qr-code'
 
 export const FINDER_PATTERN_OUTER_STYLES: FinderPatternOuterStyle[] = [
   'square',
@@ -18,7 +18,7 @@ export const FINDER_PATTERN_OUTER_STYLES: FinderPatternOuterStyle[] = [
   'leaf-sm',
   'leaf',
   'leaf-lg',
-];
+]
 
 export const FINDER_PATTERN_INNER_STYLES: FinderPatternInnerStyle[] = [
   'square',
@@ -38,4 +38,4 @@ export const FINDER_PATTERN_INNER_STYLES: FinderPatternInnerStyle[] = [
   'diamond',
   'heart',
   'star',
-];
+]

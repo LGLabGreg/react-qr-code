@@ -1,9 +1,9 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
-import { ERROR_LEVEL_MAP } from '../constants';
-import qrcodegen from '../lib/qrcodegen';
-import type { ErrorCorrectionLevel, ImageSettings } from '../types/lib';
-import { getImageSettings, getMarginSize } from '../utils/qr-code';
+import { ERROR_LEVEL_MAP } from '../constants'
+import qrcodegen from '../lib/qrcodegen'
+import type { ErrorCorrectionLevel, ImageSettings } from '../types/lib'
+import { getImageSettings, getMarginSize } from '../utils/qr-code'
 
 export const useQRCode = ({
   value,
@@ -14,20 +14,20 @@ export const useQRCode = ({
   size,
   boostLevel,
 }: {
-  value: string | string[];
-  level: ErrorCorrectionLevel;
-  minVersion: number;
-  marginSize?: number;
-  imageSettings?: ImageSettings;
-  size: number;
-  boostLevel?: boolean;
+  value: string | string[]
+  level: ErrorCorrectionLevel
+  minVersion: number
+  marginSize?: number
+  imageSettings?: ImageSettings
+  size: number
+  boostLevel?: boolean
 }) => {
   const qrcode = useMemo(() => {
-    const values = Array.isArray(value) ? value : [value];
+    const values = Array.isArray(value) ? value : [value]
     const segments = values.reduce<qrcodegen.QrSegment[]>((accum, v) => {
-      accum.push(...qrcodegen.QrSegment.makeSegments(v));
-      return accum;
-    }, []);
+      accum.push(...qrcodegen.QrSegment.makeSegments(v))
+      return accum
+    }, [])
     return qrcodegen.QrCode.encodeSegments(
       segments,
       ERROR_LEVEL_MAP[level],
@@ -35,22 +35,22 @@ export const useQRCode = ({
       undefined,
       undefined,
       boostLevel,
-    );
-  }, [value, level, minVersion, boostLevel]);
+    )
+  }, [value, level, minVersion, boostLevel])
 
   const { cells, margin, numCells, calculatedImageSettings } = useMemo(() => {
-    const cells = qrcode.getModules();
+    const cells = qrcode.getModules()
 
-    const margin = getMarginSize(marginSize);
-    const numCells = cells.length + margin * 2;
-    const calculatedImageSettings = getImageSettings(cells, size, margin, imageSettings);
+    const margin = getMarginSize(marginSize)
+    const numCells = cells.length + margin * 2
+    const calculatedImageSettings = getImageSettings(cells, size, margin, imageSettings)
     return {
       cells,
       margin,
       numCells,
       calculatedImageSettings,
-    };
-  }, [qrcode, size, imageSettings, marginSize]);
+    }
+  }, [qrcode, size, imageSettings, marginSize])
 
   return {
     qrcode,
@@ -58,5 +58,5 @@ export const useQRCode = ({
     cells,
     numCells,
     calculatedImageSettings,
-  };
-};
+  }
+}

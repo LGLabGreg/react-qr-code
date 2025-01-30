@@ -1,18 +1,18 @@
-import { type ReactNode, useMemo } from 'react';
+import { type ReactNode, useMemo } from 'react'
 
 import {
   DEFAULT_FINDER_PATTERN_OUTER_STYLE,
   FINDER_PATTERN_OUTER_RADIUSES,
   FINDER_PATTERN_OUTER_ROTATIONS,
   FINDER_PATTERN_SIZE,
-} from '../constants';
-import type { FinderPatternOuterStyle } from '../types/lib';
-import type { FinderPatternsOuterProps } from '../types/utils';
+} from '../constants'
+import type { FinderPatternOuterStyle } from '../types/lib'
+import type { FinderPatternsOuterProps } from '../types/utils'
 import {
   finderPatternsOuterInOutPoint,
   finderPatternsOuterLeaf,
   finderPatternsOuterRoundedSquare,
-} from '../utils/finder-patterns-outer';
+} from '../utils/finder-patterns-outer'
 
 export const FinderPatternsOuter = ({
   modules,
@@ -20,8 +20,8 @@ export const FinderPatternsOuter = ({
   settings,
 }: FinderPatternsOuterProps): ReactNode => {
   const style: FinderPatternOuterStyle =
-    settings.style || DEFAULT_FINDER_PATTERN_OUTER_STYLE;
-  const ops: Array<string> = [];
+    settings.style || DEFAULT_FINDER_PATTERN_OUTER_STYLE
+  const ops: Array<string> = []
 
   const coordinates = useMemo(
     () => [
@@ -30,11 +30,11 @@ export const FinderPatternsOuter = ({
       { x: margin, y: modules.length - margin - 1 },
     ],
     [margin, modules.length],
-  );
+  )
 
   if (['rounded-sm', 'rounded', 'rounded-lg', 'circle', 'square'].includes(style)) {
     for (const coordinate of coordinates) {
-      const { x, y } = coordinate;
+      const { x, y } = coordinate
       if (style === 'rounded-sm' || style === 'rounded' || style === 'rounded-lg') {
         ops.push(
           finderPatternsOuterRoundedSquare({
@@ -42,7 +42,7 @@ export const FinderPatternsOuter = ({
             y,
             radius: FINDER_PATTERN_OUTER_RADIUSES[style],
           }),
-        );
+        )
       } else if (style === 'circle') {
         ops.push(
           // biome-ignore lint/style/useTemplate: readability
@@ -54,7 +54,7 @@ export const FinderPatternsOuter = ({
               FINDER_PATTERN_SIZE / 2 - 1
             } 0 1 1 -0.01 0` +
             'Z',
-        );
+        )
       } else {
         ops.push(
           // biome-ignore lint/style/useTemplate: readability
@@ -68,10 +68,10 @@ export const FinderPatternsOuter = ({
             `v ${FINDER_PATTERN_SIZE - 2 * 1}` +
             `h ${-FINDER_PATTERN_SIZE + 2 * 1}` +
             'z',
-        );
+        )
       }
     }
-    return <path fill={settings.color} d={ops.join('')} />;
+    return <path fill={settings.color} d={ops.join('')} />
   }
 
   if (
@@ -88,7 +88,7 @@ export const FinderPatternsOuter = ({
     const pathFn =
       style === 'leaf-sm' || style === 'leaf' || style === 'leaf-lg'
         ? finderPatternsOuterLeaf
-        : finderPatternsOuterInOutPoint;
+        : finderPatternsOuterInOutPoint
     return coordinates
       .map((coordinate, index) => ({
         ...coordinate,
@@ -99,7 +99,7 @@ export const FinderPatternsOuter = ({
           x,
           y,
           radius: FINDER_PATTERN_OUTER_RADIUSES[style],
-        });
+        })
         return (
           <path
             key={`finder-patterns-outer-${style}-${x}-${y}`}
@@ -111,9 +111,9 @@ export const FinderPatternsOuter = ({
               transformBox: 'fill-box',
             }}
           />
-        );
-      });
+        )
+      })
   }
 
-  return null;
-};
+  return null
+}
