@@ -1,5 +1,6 @@
 import {
   DEFAULT_DATA_MODULES_COLOR,
+  DEFAULT_DATA_MODULES_STYLE,
   DEFAULT_FINDER_PATTERN_INNER_STYLE,
   DEFAULT_FINDER_PATTERN_OUTER_STYLE,
 } from '../constants'
@@ -12,6 +13,8 @@ import type {
 export const sanitizeDataModulesSettings = (settings?: DataModulesSettings) => {
   return {
     color: settings?.color || DEFAULT_DATA_MODULES_COLOR,
+    style: settings?.style || DEFAULT_DATA_MODULES_STYLE,
+    randomSize: settings?.randomSize || false,
   }
 }
 

@@ -1,8 +1,6 @@
 import { DEFAULT_IMG_SCALE, DEFAULT_MARGIN_SIZE } from '../constants'
 import type { CrossOrigin, Excavation, ImageSettings, Modules } from '../types/lib'
 
-// We could just do this in generateDataModulesPath, except that we want to support
-// non-Path2D canvas, so we need to keep it an explicit step.
 export const excavateModules = (modules: Modules, excavation: Excavation): Modules => {
   return modules.slice().map((row, y) => {
     if (y < excavation.y || y >= excavation.y + excavation.h) {

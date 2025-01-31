@@ -14,13 +14,16 @@ export interface FilterFnProps {
 export interface GeneratePathFnProps {
   modules: Modules
   margin: number
-  settings: DataModulesSettings | FinderPatternInnerSettings | FinderPatternOuterSettings
 }
 
 export interface FinderPatternsOuterProps extends GeneratePathFnProps {
-  settings: FinderPatternOuterSettings
+  settings?: FinderPatternOuterSettings
 }
 
 export interface FinderPatternsInnerProps extends GeneratePathFnProps {
-  settings: FinderPatternInnerSettings
+  settings?: FinderPatternInnerSettings
+}
+
+export interface DataModulesProps extends GeneratePathFnProps {
+  settings?: DataModulesSettings
 }
