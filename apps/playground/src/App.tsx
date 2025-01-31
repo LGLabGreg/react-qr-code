@@ -24,7 +24,7 @@ function App() {
 
   const qrCodeOptions: ReactQRCodeProps = {
     value: 'https://github.com/LGLabGreg/react-qr-code.git',
-    size: 400,
+    size: 700,
     marginSize: 3,
     bgColor: '#f1f1f1',
     dataModulesSettings: {

@@ -12,7 +12,7 @@ import {
   finderPatternsInnerLeaf,
 } from '../utils/finder-patterns-inner'
 import { sanitizeFinderPatternInnerSettings } from '../utils/settings'
-import { calculateStarPoints, heartPaths, numToAttr } from '../utils/svg'
+import { heart, star } from '../utils/svg'
 
 export const FinderPatternsInner = ({
   modules,
@@ -125,24 +125,9 @@ export const FinderPatternsInner = ({
 
   if (style === 'heart') {
     return coordinates.map(({ x, y }) => {
-      let move = false
-      let i = 0
-      const path = heartPaths
-        .map((v) => {
-          if (typeof v == 'string') {
-            i = 0
-            move = v.toUpperCase() == v
-            return v
-          }
-          i++
-          v = v * FINDER_PATTERN_INNER_SIZE
-          if (move) {
-            v += i % 2 == 1 ? x : y
-          }
-          return numToAttr(v)
-        })
-        .join(' ')
-      return <path key={key(x, y)} fill={color} d={path} />
+      return (
+        <path key={key(x, y)} fill={color} d={heart(x, y, FINDER_PATTERN_INNER_SIZE)} />
+      )
     })
   }
 
@@ -150,12 +135,7 @@ export const FinderPatternsInner = ({
     return coordinates.map(({ x, y }) => {
       const cx = x + FINDER_PATTERN_INNER_SIZE / 2
       const cy = y + FINDER_PATTERN_INNER_SIZE / 2
-      const path = calculateStarPoints(
-        cx,
-        cy,
-        FINDER_PATTERN_INNER_SIZE,
-        DEFAULT_NUM_STAR_POINTS,
-      )
+      const path = star(cx, cy, FINDER_PATTERN_INNER_SIZE * 1.2, DEFAULT_NUM_STAR_POINTS)
       return <path key={key(x, y)} fill={color} d={path} />
     })
   }

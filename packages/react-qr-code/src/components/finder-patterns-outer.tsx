@@ -47,7 +47,6 @@ export const FinderPatternsOuter = ({
         )
       } else if (style === 'circle') {
         ops.push(
-          // biome-ignore lint/style/useTemplate: readability
           `M ${x + FINDER_PATTERN_SIZE / 2} ${y}` +
             `a ${FINDER_PATTERN_SIZE / 2} ${FINDER_PATTERN_SIZE / 2} 0 1 0 0.01 0z` +
             'z' +
@@ -59,7 +58,6 @@ export const FinderPatternsOuter = ({
         )
       } else {
         ops.push(
-          // biome-ignore lint/style/useTemplate: readability
           `M ${x} ${y}` +
             `v ${FINDER_PATTERN_SIZE}` +
             `h ${FINDER_PATTERN_SIZE}` +
