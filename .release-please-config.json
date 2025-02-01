@@ -3,11 +3,22 @@
     "packages/react-qr-code": {
       "changelog-path": "CHANGELOG.md",
       "release-type": "node",
-      "bump-minor-pre-major": false,
-      "bump-patch-for-minor-pre-major": false,
-      "draft": false,
-      "prerelease": false,
-      "include-component-in-tag": false
+      "include-v-in-tag": true,
+      "include-component-in-tag": false,
+      "changelog-sections": [
+        { "type": "feat", "section": "Features" },
+        { "type": "fix", "section": "Bug Fixes" },
+        { "type": "docs", "section": "Documentation" },
+        { "type": "perf", "section": "Performance Improvements" },
+        { "type": "refactor", "section": "Code Refactoring" }
+      ],
+      "package-name": "@lglab/react-qr-code",
+      "monorepo-tags": true,
+      "pull-request-header": "🚀 Release @lglab/react-qr-code",
+      "release-search-depth": 100,
+      "pull-request-title-pattern": "chore: release ${component} ${version}",
+      "extra-files": ["packages/react-qr-code/package.json"],
+      "path": "packages/react-qr-code"
     }
   },
   "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json"
