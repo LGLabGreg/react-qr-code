@@ -24,8 +24,7 @@
     }
   },
   "files": [
-    "dist",
-    "../../README.md"
+    "dist"
   ],
   "peerDependencies": {
     "react": "^18 || ^19"
