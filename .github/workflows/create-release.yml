@@ -30,8 +30,8 @@ jobs:
           prerelease: false
           body: |
             Release version v${{ steps.get-version.outputs.version }}
-            
-            For full changes, please see the [pull request]({{ github.event.pull_request.html_url }})
+
+            For full changes, please see the [pull request](${{ github.event.pull_request.html_url }})
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
