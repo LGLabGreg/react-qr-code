@@ -59,11 +59,11 @@ jobs:
           echo "NEW_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
 
       - name: Generate Changelog
-          id: changelog
-          uses: googleapis/release-please-action@v4
-          with:
-            command: manifest
-            config-file: .release-please-manifest.json
+        id: changelog
+        uses: googleapis/release-please-action@v4
+        with:
+          command: manifest
+          config-file: .release-please-manifest.json
 
       - name: Build library
         run: pnpm run build:lib
@@ -79,7 +79,7 @@ jobs:
         uses: repo-sync/pull-request@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          destination_branch: "main"
-          source_branch: "release/v${{ env.NEW_VERSION }}"
-          pr_title: "chore: release v${{ env.NEW_VERSION }}"
-          pr_body: "🎉 New Release Version: v${{ env.NEW_VERSION }}"
+          destination_branch: 'main'
+          source_branch: 'release/v${{ env.NEW_VERSION }}'
+          pr_title: 'chore: release v${{ env.NEW_VERSION }}'
+          pr_body: '🎉 New Release Version: v${{ env.NEW_VERSION }}'
