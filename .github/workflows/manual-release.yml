@@ -1,0 +1,85 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Release Type (patch/minor/major)'
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Setup Git
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Update version
+        working-directory: ./packages/react-qr-code
+        run: |
+          npm version ${{ github.event.inputs.release_type }} --no-git-tag-version
+          echo "NEW_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+
+      - name: Generate Changelog
+        id: changelog
+        uses: google-github-actions/release-please-action@v4
+        with:
+          command: manifest
+          config-file: .release-please-config.json
+
+      - name: Build library
+        run: pnpm run build:lib
+
+      - name: Create release branch
+        run: |
+          git checkout -b release/v${{ env.NEW_VERSION }}
+          git add .
+          git commit -m "chore: release v${{ env.NEW_VERSION }}"
+          git push origin release/v${{ env.NEW_VERSION }}
+
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          destination_branch: "main"
+          source_branch: "release/v${{ env.NEW_VERSION }}"
+          pr_title: "chore: release v${{ env.NEW_VERSION }}"
+          pr_body: "🎉 New Release Version: v${{ env.NEW_VERSION }}"
