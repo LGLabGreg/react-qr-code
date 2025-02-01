@@ -7,8 +7,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/LGLabGreg/react-qr-code.git",
-    "directory": "lib"
+    "directory": "packages/react-qr-code"
   },
+  "homepage": "https://reactqrcode.com",
   "type": "module",
   "scripts": {
     "build": "tsc -b && vite build"
@@ -26,8 +27,7 @@
     "dist"
   ],
   "peerDependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react": "^18 || ^19"
   },
   "devDependencies": {
     "@types/node": "^22.12.0",
