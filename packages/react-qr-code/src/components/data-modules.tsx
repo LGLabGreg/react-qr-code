@@ -118,6 +118,30 @@ export const DataModules = ({
           } else {
             ops.push(square(xPos, yPos, 1))
           }
+        } else if (style === 'vertical-line') {
+          const { left, right, top, bottom, count } = getModuleNeighbours(x, y, modules)
+
+          if (count === 0 || (left && !(top || bottom)) || (right && !(top || bottom))) {
+            ops.push(circle(xPos, yPos, 1))
+          } else if (top && bottom) {
+            ops.push(square(xPos, yPos, 1))
+          } else if (top && !bottom) {
+            ops.push(bottomRounded(xPos, yPos))
+          } else if (bottom && !top) {
+            ops.push(topRounded(xPos, yPos))
+          }
+        } else if (style === 'horizontal-line') {
+          const { left, right, top, bottom, count } = getModuleNeighbours(x, y, modules)
+
+          if (count === 0 || (top && !(left || right)) || (bottom && !(left || right))) {
+            ops.push(circle(xPos, yPos, 1))
+          } else if (left && right) {
+            ops.push(square(xPos, yPos, 1))
+          } else if (left && !right) {
+            ops.push(rightRounded(xPos, yPos))
+          } else if (right && !left) {
+            ops.push(leftRounded(xPos, yPos))
+          }
         }
       }
     })
