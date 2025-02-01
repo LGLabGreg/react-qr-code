@@ -59,11 +59,11 @@ jobs:
           echo "NEW_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
 
       - name: Generate Changelog
-        id: changelog
-        uses: google-github-actions/release-please-action@v4
-        with:
-          command: manifest
-          config-file: .release-please-config.json
+          id: changelog
+          uses: googleapis/release-please-action@v4
+          with:
+            command: manifest
+            config-file: .release-please-manifest.json
 
       - name: Build library
         run: pnpm run build:lib
