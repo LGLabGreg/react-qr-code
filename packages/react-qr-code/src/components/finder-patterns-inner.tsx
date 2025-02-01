@@ -5,6 +5,7 @@ import {
   FINDER_PATTERN_INNER_RADIUSES,
   FINDER_PATTERN_INNER_SIZE,
   FINDER_PATTERN_OUTER_ROTATIONS,
+  FINDER_PATTERN_SIZE,
 } from '../constants'
 import type { FinderPatternsInnerProps } from '../types/utils'
 import {
@@ -27,8 +28,8 @@ export const FinderPatternsInner = ({
   const coordinates = useMemo(
     () => [
       { x: margin + 2, y: margin + 2 },
-      { x: modules.length - margin + 1, y: margin + 2 },
-      { x: margin + 2, y: modules.length - margin + 1 },
+      { x: modules.length + margin - FINDER_PATTERN_SIZE + 2, y: margin + 2 },
+      { x: margin + 2, y: modules.length + margin - FINDER_PATTERN_SIZE + 2 },
     ],
     [margin, modules.length],
   )

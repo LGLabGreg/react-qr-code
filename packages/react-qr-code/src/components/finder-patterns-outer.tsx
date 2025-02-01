@@ -28,11 +28,14 @@ export const FinderPatternsOuter = ({
   const coordinates = useMemo(
     () => [
       { x: margin, y: margin },
-      { x: modules.length - margin - 1, y: margin },
-      { x: margin, y: modules.length - margin - 1 },
+      { x: modules.length + margin - FINDER_PATTERN_SIZE, y: margin },
+      { x: margin, y: modules.length + margin - FINDER_PATTERN_SIZE },
     ],
     [margin, modules.length],
   )
+
+  console.log('modules.length', modules.length)
+  console.log('coordinates', coordinates)
 
   if (['rounded-sm', 'rounded', 'rounded-lg', 'circle', 'square'].includes(style)) {
     for (const coordinate of coordinates) {
