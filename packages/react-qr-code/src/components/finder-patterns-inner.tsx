@@ -1,27 +1,28 @@
 import { type ReactNode, useMemo } from 'react'
 
 import {
-  DEFAULT_FINDER_PATTERN_INNER_STYLE,
   DEFAULT_NUM_STAR_POINTS,
   FINDER_PATTERN_INNER_RADIUSES,
   FINDER_PATTERN_INNER_SIZE,
   FINDER_PATTERN_OUTER_ROTATIONS,
 } from '../constants'
-import type { FinderPatternInnerStyle } from '../types/lib'
 import type { FinderPatternsInnerProps } from '../types/utils'
 import {
   finderPatternsInnerInOutPoint,
   finderPatternsInnerLeaf,
 } from '../utils/finder-patterns-inner'
-import { calculateStarPoints, heartPaths, numToAttr } from '../utils/svg'
+import { sanitizeFinderPatternInnerSettings } from '../utils/settings'
+import { heart, star } from '../utils/svg'
 
 export const FinderPatternsInner = ({
   modules,
   margin,
   settings,
 }: FinderPatternsInnerProps): ReactNode => {
-  const style: FinderPatternInnerStyle =
-    settings.style || DEFAULT_FINDER_PATTERN_INNER_STYLE
+  const { color, style } = useMemo(
+    () => sanitizeFinderPatternInnerSettings(settings),
+    [settings],
+  )
 
   const coordinates = useMemo(
     () => [
@@ -50,7 +51,7 @@ export const FinderPatternsInner = ({
           y={y}
           width={FINDER_PATTERN_INNER_SIZE}
           height={FINDER_PATTERN_INNER_SIZE}
-          fill={settings.color}
+          fill={color}
           rx={FINDER_PATTERN_INNER_RADIUSES[style]}
         />
       )
@@ -70,7 +71,7 @@ export const FinderPatternsInner = ({
           y={y + posDiff / 2}
           width={size}
           height={size}
-          fill={settings.color}
+          fill={color}
           style={{
             transform: `rotate(${45}deg)`,
             transformOrigin: 'center',
@@ -110,7 +111,7 @@ export const FinderPatternsInner = ({
         return (
           <path
             key={key(x, y)}
-            fill={settings.color}
+            fill={color}
             d={path}
             style={{
               transform: `rotate(${rotation}deg)`,
@@ -124,24 +125,9 @@ export const FinderPatternsInner = ({
 
   if (style === 'heart') {
     return coordinates.map(({ x, y }) => {
-      let move = false
-      let i = 0
-      const path = heartPaths
-        .map((v) => {
-          if (typeof v == 'string') {
-            i = 0
-            move = v.toUpperCase() == v
-            return v
-          }
-          i++
-          v = v * FINDER_PATTERN_INNER_SIZE
-          if (move) {
-            v += i % 2 == 1 ? x : y
-          }
-          return numToAttr(v)
-        })
-        .join(' ')
-      return <path key={key(x, y)} fill={settings.color} d={path} />
+      return (
+        <path key={key(x, y)} fill={color} d={heart(x, y, FINDER_PATTERN_INNER_SIZE)} />
+      )
     })
   }
 
@@ -149,13 +135,8 @@ export const FinderPatternsInner = ({
     return coordinates.map(({ x, y }) => {
       const cx = x + FINDER_PATTERN_INNER_SIZE / 2
       const cy = y + FINDER_PATTERN_INNER_SIZE / 2
-      const path = calculateStarPoints(
-        cx,
-        cy,
-        FINDER_PATTERN_INNER_SIZE,
-        DEFAULT_NUM_STAR_POINTS,
-      )
-      return <path key={key(x, y)} fill={settings.color} d={path} />
+      const path = star(cx, cy, FINDER_PATTERN_INNER_SIZE * 1.2, DEFAULT_NUM_STAR_POINTS)
+      return <path key={key(x, y)} fill={color} d={path} />
     })
   }
 

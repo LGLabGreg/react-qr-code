@@ -1,26 +1,28 @@
 import { type ReactNode, useMemo } from 'react'
 
 import {
-  DEFAULT_FINDER_PATTERN_OUTER_STYLE,
   FINDER_PATTERN_OUTER_RADIUSES,
   FINDER_PATTERN_OUTER_ROTATIONS,
   FINDER_PATTERN_SIZE,
 } from '../constants'
-import type { FinderPatternOuterStyle } from '../types/lib'
 import type { FinderPatternsOuterProps } from '../types/utils'
 import {
   finderPatternsOuterInOutPoint,
   finderPatternsOuterLeaf,
   finderPatternsOuterRoundedSquare,
 } from '../utils/finder-patterns-outer'
+import { sanitizeFinderPatternOuterSettings } from '../utils/settings'
 
 export const FinderPatternsOuter = ({
   modules,
   margin,
   settings,
 }: FinderPatternsOuterProps): ReactNode => {
-  const style: FinderPatternOuterStyle =
-    settings.style || DEFAULT_FINDER_PATTERN_OUTER_STYLE
+  const { style, color } = useMemo(
+    () => sanitizeFinderPatternOuterSettings(settings),
+    [settings],
+  )
+
   const ops: Array<string> = []
 
   const coordinates = useMemo(
@@ -45,7 +47,6 @@ export const FinderPatternsOuter = ({
         )
       } else if (style === 'circle') {
         ops.push(
-          // biome-ignore lint/style/useTemplate: readability
           `M ${x + FINDER_PATTERN_SIZE / 2} ${y}` +
             `a ${FINDER_PATTERN_SIZE / 2} ${FINDER_PATTERN_SIZE / 2} 0 1 0 0.01 0z` +
             'z' +
@@ -57,7 +58,6 @@ export const FinderPatternsOuter = ({
         )
       } else {
         ops.push(
-          // biome-ignore lint/style/useTemplate: readability
           `M ${x} ${y}` +
             `v ${FINDER_PATTERN_SIZE}` +
             `h ${FINDER_PATTERN_SIZE}` +
@@ -71,7 +71,7 @@ export const FinderPatternsOuter = ({
         )
       }
     }
-    return <path fill={settings.color} d={ops.join('')} />
+    return <path fill={color} d={ops.join('')} />
   }
 
   if (
@@ -103,7 +103,7 @@ export const FinderPatternsOuter = ({
         return (
           <path
             key={`finder-patterns-outer-${style}-${x}-${y}`}
-            fill={settings.color}
+            fill={color}
             d={path}
             style={{
               transform: `rotate(${rotation}deg)`,

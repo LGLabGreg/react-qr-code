@@ -1,4 +1,5 @@
 import type {
+  DataModulesStyle,
   FinderPatternInnerStyle,
   FinderPatternOuterStyle,
 } from '@lglab/react-qr-code'
@@ -38,4 +39,17 @@ export const FINDER_PATTERN_INNER_STYLES: FinderPatternInnerStyle[] = [
   'diamond',
   'heart',
   'star',
+]
+
+export const DATA_MODULES_STYLES: DataModulesStyle[] = [
+  'square',
+  'square-sm',
+  'rounded',
+  'leaf',
+  'vertical-line',
+  'horizontal-line',
+  'circle',
+  'diamond',
+  'star',
+  'heart',
 ]

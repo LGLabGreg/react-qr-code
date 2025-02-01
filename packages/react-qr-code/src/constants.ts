@@ -1,5 +1,6 @@
 import qrcodegen from './lib/qrcodegen'
 import type {
+  DataModulesStyle,
   ERROR_LEVEL_MAPPED_TYPE,
   ErrorCorrectionLevel,
   FinderPatternInnerStyle,
@@ -30,6 +31,7 @@ export const DEFAULT_NUM_STAR_POINTS = 5
 export const DEFAULT_DATA_MODULES_COLOR = '#000000'
 export const DEFAULT_FINDER_PATTERN_OUTER_STYLE: FinderPatternOuterStyle = 'square'
 export const DEFAULT_FINDER_PATTERN_INNER_STYLE: FinderPatternInnerStyle = 'square'
+export const DEFAULT_DATA_MODULES_STYLE: DataModulesStyle = 'square'
 
 // This is *very* rough estimate of max amount of QRCode allowed to be covered.
 // It is "wrong" in a lot of ways (area is a terrible way to estimate, it

@@ -17,10 +17,22 @@ export type ERROR_LEVEL_MAPPED_TYPE = {
 /**
  * ReactQRCode props.
  */
-export type DataModulesStyle = 'square' | 'rounded'
+export type DataModulesStyle =
+  | 'square'
+  | 'square-sm'
+  | 'rounded'
+  | 'leaf'
+  | 'vertical-line'
+  | 'horizontal-line'
+  | 'circle'
+  | 'diamond'
+  | 'star'
+  | 'heart'
+
 export interface DataModulesSettings {
   color?: string
   style?: DataModulesStyle
+  randomSize?: boolean
 }
 
 export type FinderPatternOuterStyle =

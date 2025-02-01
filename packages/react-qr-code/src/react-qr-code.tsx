@@ -1,5 +1,4 @@
-import { useMemo } from 'react'
-
+import { DataModules } from './components/data-modules'
 import { FinderPatternsInner } from './components/finder-patterns-inner'
 import { FinderPatternsOuter } from './components/finder-patterns-outer'
 import {
@@ -10,13 +9,7 @@ import {
 } from './constants'
 import { useQRCode } from './hooks/use-qr-code'
 import type { ReactQRCodeProps } from './types/lib'
-import { generateDataModulesPath } from './utils/data-modules'
 import { excavateModules } from './utils/qr-code'
-import {
-  sanitizeDataModulesSettings,
-  sanitizeFinderPatternInnerSettings,
-  sanitizeFinderPatternOuterSettings,
-} from './utils/settings'
 
 const ReactQRCode = (props: ReactQRCodeProps) => {
   const {
@@ -28,24 +21,12 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     minVersion = DEFAULT_MINVERSION,
     boostLevel,
     marginSize,
+    finderPatternOuterSettings,
+    finderPatternInnerSettings,
+    dataModulesSettings,
     imageSettings,
     svgProps,
   } = props
-
-  const dataModulesSettings = useMemo(
-    () => sanitizeDataModulesSettings(props.dataModulesSettings),
-    [props.dataModulesSettings],
-  )
-
-  const finderPatternOuterSettings = useMemo(
-    () => sanitizeFinderPatternOuterSettings(props.finderPatternOuterSettings),
-    [props.finderPatternOuterSettings],
-  )
-
-  const finderPatternInnerSettings = useMemo(
-    () => sanitizeFinderPatternInnerSettings(props.finderPatternInnerSettings),
-    [props.finderPatternInnerSettings],
-  )
 
   const { margin, cells, numCells, calculatedImageSettings } = useQRCode({
     value,
@@ -79,12 +60,6 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     )
   }
 
-  const dataModulesPath = generateDataModulesPath({
-    modules,
-    margin,
-    settings: dataModulesSettings,
-  })
-
   return (
     <svg
       height={size}
@@ -106,11 +81,7 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
         margin={margin}
         settings={finderPatternInnerSettings}
       />
-      <path
-        fill={dataModulesSettings.color}
-        d={dataModulesPath}
-        shapeRendering='crispEdges'
-      />
+      <DataModules modules={modules} margin={margin} settings={dataModulesSettings} />
       {image}
     </svg>
   )

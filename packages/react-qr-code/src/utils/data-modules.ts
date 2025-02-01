@@ -1,58 +1,107 @@
-import type { GeneratePathFnProps } from '../types/utils'
-import { isFinderPatternInnerModule } from './finder-patterns-inner'
-import { isFinderPatternOuterModule } from './finder-patterns-outer'
+import type { DataModulesStyle, Modules } from '../types/lib'
 
-export const generateDataModulesPath = ({
-  modules,
-  margin,
-  settings,
-}: GeneratePathFnProps): string => {
-  console.log('generateDataModulesPath', settings)
-  const ops: Array<string> = []
-  const numCells = modules.length
+export const dataModuleCanBeRandomSize = (style: DataModulesStyle): boolean =>
+  style === 'square' ||
+  style === 'circle' ||
+  style === 'star' ||
+  style === 'heart' ||
+  style === 'diamond'
 
-  modules.forEach((row, y) => {
-    let start: number | null = null
-    row.forEach((cell, x) => {
-      // Skip the finder patterns
-      if (
-        isFinderPatternOuterModule({ x, y, numCells }) ||
-        isFinderPatternInnerModule({ x, y, numCells })
-      ) {
-        return
-      }
+export const getModuleNeighbours = (x: number, y: number, modules: Modules) => {
+  const sides = {
+    left: x === 0 ? 0 : modules[y][x - 1],
+    right: x === modules[y].length - 1 ? 0 : modules[y][x + 1],
+    top: y === 0 ? 0 : modules[y - 1][x],
+    bottom: y === modules.length - 1 ? 0 : modules[y + 1][x],
+  }
 
-      if (!cell && start !== null) {
-        // M0 0h7v1H0z injects the space with the move and drops the comma,
-        // saving a char per operation
-        ops.push(`M${start + margin} ${y + margin}h${x - start}v1H${start + margin}z`)
-        start = null
-        return
-      }
+  return {
+    ...sides,
+    count: Object.values(sides).filter(Boolean).length,
+  }
+}
 
-      // end of row, clean up or skip
-      if (x === row.length - 1) {
-        if (!cell) {
-          // We would have closed the op above already so this can only mean
-          // 2+ light modules in a row.
-          return
-        }
-        if (start === null) {
-          // Just a single dark module.
-          ops.push(`M${x + margin},${y + margin} h1v1H${x + margin}z`)
-        } else {
-          // Otherwise finish the current line.
-          ops.push(
-            `M${start + margin},${y + margin} h${x + 1 - start}v1H${start + margin}z`,
-          )
-        }
-        return
-      }
+export const square = (x: number, y: number, size: number) =>
+  `M${x},${y}h${size}v${size}h-${size}Z`
 
-      if (cell && start === null) {
-        start = x
-      }
-    })
-  })
-  return ops.join('')
+export const circle = (x: number, y: number, size: number) =>
+  `M${x},${y + size / 2}a${size / 2},${size / 2} 0 1,0 ${size},0a${size / 2},${size / 2} 0 1,0 -${size},0Z`
+
+export const diamond = (x: number, y: number, size: number) =>
+  `M${x},${y + size / 2}l${size / 2},-${size / 2}l${size / 2},${size / 2}l-${size / 2},${size / 2}Z`
+
+export const topRightRounded = (x: number, y: number) =>
+  `M ${x} ${y} 
+   v 1 
+   h 1 
+   v -0.5 
+   a 0.5 0.5, 0, 0, 0, -0.5 -0.5`
+
+export const topLeftRounded = (x: number, y: number) =>
+  `M ${x + 1} ${y} 
+   v 1 
+   h -1 
+   v -0.5 
+   a 0.5 0.5, 0, 0, 1, 0.5 -0.5`
+
+export const bottomRightRounded = (x: number, y: number) =>
+  `M ${x} ${y} 
+   v 1 
+   h 0.5 
+   a 0.5 0.5, 0, 0, 0, 0.5 -0.5
+   v -0.5
+   h -1`
+
+export const bottomLeftRounded = (x: number, y: number) =>
+  `M ${x + 1} ${y} 
+   v 1 
+   h -0.5 
+   a 0.5 0.5, 0, 0, 1, -0.5 -0.5 
+   v -0.5 
+   h 1`
+
+export const rightRounded = (x: number, y: number) =>
+  `M ${x} ${y} 
+   v 1 
+   h 0.5 
+   a 0.5 0.5, 0, 0, 0, 0 -1`
+
+export const leftRounded = (x: number, y: number) =>
+  `M ${x + 1} ${y} 
+   v 1 
+   h -0.5 
+   a 0.5 0.5, 0, 0, 1, 0 -1`
+
+export const topRounded = (x: number, y: number) =>
+  `M ${x} ${y + 1} 
+   h 1 
+   v -0.5 
+   a 0.5 0.5, 0, 0, 0, -1 0`
+
+export const bottomRounded = (x: number, y: number) =>
+  `M ${x} ${y} 
+   h 1 
+   v 0.5 
+   a 0.5 0.5, 0, 0, 1, -1 0`
+
+export const leaf = (x: number, y: number, size: number) => {
+  return (
+    `M ${x + 1} ${y}` +
+    `h -${size / 2}` +
+    `a ${size / 2.5} ${size / 2.5}, 0, 0, 0, ${-size / 2.5} ${size / 2.5}` +
+    `v ${size / 2}` +
+    `h ${size / 2}` +
+    `a ${size / 2.5} ${size / 2.5}, 0, 0, 0, ${size / 2.5} ${-size / 2.5}`
+  )
+}
+
+export const leafLeft = (x: number, y: number, size: number) => {
+  return (
+    `M ${x} ${y}` +
+    `v ${size / 2}` +
+    `a ${size / 2} ${size / 2}, 0, 0, 0, ${size / 2} ${size / 2}` +
+    `h ${size / 2}` +
+    `v ${-size / 2}` +
+    `a ${size / 2} ${size / 2}, 0, 0, 0, ${-size / 2} ${-size / 2}`
+  )
 }

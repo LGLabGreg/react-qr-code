@@ -62,7 +62,6 @@ export const finderPatternsOuterLeaf = ({
   const arc = radius / 2
   const arcSize = FINDER_PATTERN_SIZE - arc
   return (
-    // biome-ignore lint/style/useTemplate: readability
     `M ${x} ${y + arc}` +
     `v ${size}` +
     `a ${arc} ${arc}, 0, 0, 0, ${arc} ${arc}` +
