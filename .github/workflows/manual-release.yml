@@ -18,15 +18,6 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Debug Repository State
-        run: |
-          echo "Current directory contents:"
-          ls -la
-          echo "\nRepository status:"
-          git status
-          echo "\n.changeset directory contents:"
-          ls -la .changeset/ || echo ".changeset directory not found"
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
