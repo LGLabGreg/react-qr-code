@@ -2,15 +2,6 @@ name: Manual Release
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version Type (patch/minor/major)'
-        required: true
-        type: choice
-        options:
-          - patch
-          - minor
-          - major
 
 jobs:
   release:
@@ -31,7 +22,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v3
         with:
-          version: 8
+          version: 9
 
       - name: Get pnpm store directory
         shell: bash
@@ -54,13 +45,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: Create Changeset
-        run: |
-          pnpm changeset add --empty
-          echo "# @lglab/react-qr-code\n\n${{ github.event.inputs.version }} release" > .changeset/release.md
-
-      - name: Update Version
-        id: create_version_pr
+      - name: Changeset Version
         run: |
           pnpm changeset version
           NEW_VERSION=$(node -p "require('./packages/react-qr-code/package.json').version")
