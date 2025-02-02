@@ -3,6 +3,10 @@ name: Manual Release
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   release:
     name: Create Release PR
@@ -50,6 +54,18 @@ jobs:
           pnpm changeset version
           NEW_VERSION=$(node -p "require('./packages/react-qr-code/package.json').version")
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+      - name: Debug Changesets
+        run: |
+          echo "Contents of .changeset directory:"
+          ls -la .changeset/
+          echo "Content of heavy-moose-rush.md:"
+          cat .changeset/heavy-moose-rush.md
+
+      - name: Debug Git Status
+        run: |
+          git status
+          git diff
 
       - name: Create PR
         uses: changesets/action@v1
