@@ -65,23 +65,19 @@ jobs:
           NEW_VERSION=$(node -p "require('./packages/react-qr-code/package.json').version")
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
 
-      - name: Debug Changesets
+      - name: Create Branch and Commit
         run: |
-          echo "Contents of .changeset directory:"
-          ls -la .changeset/
-          echo "Content of heavy-moose-rush.md:"
-          cat .changeset/heavy-moose-rush.md
+          git checkout -b release-v${{ env.NEW_VERSION }}
+          git add .
+          git commit -m "chore: release v${{ env.NEW_VERSION }}"
+          git push origin release-v${{ env.NEW_VERSION }}
 
-      - name: Debug Git Status
-        run: |
-          git status
-          git diff
-
-      - name: Create PR
-        uses: changesets/action@v1
-        with:
-          commit: 'chore: release v${{ env.NEW_VERSION }}'
-          title: 'New release v${{ env.NEW_VERSION }}'
-          createGithubReleases: false
+      - name: Create Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --title "New release v${{ env.NEW_VERSION }}" \
+            --body "This PR was created by the release workflow to create a new release." \
+            --base main \
+            --head release-v${{ env.NEW_VERSION }}
