@@ -1,0 +1,45 @@
+name: Publish Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Publish Release
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.title, 'New release v')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm run build:lib
+
+      - name: Create Release
+        id: create-release
+        uses: changesets/action@v1
+        with:
+          publish: pnpm changeset publish
+          createGithubReleases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

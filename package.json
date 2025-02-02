@@ -23,6 +23,7 @@
     ]
   },
   "devDependencies": {
+    "@changesets/cli": "^2.27.12",
     "@eslint/js": "^9.19.0",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "concurrently": "^9.1.2",
