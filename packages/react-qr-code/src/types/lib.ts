@@ -107,10 +107,6 @@ export interface ReactQRCodeProps {
    */
   marginSize?: number
   /**
-   * The title to assign to the QR Code. Used for accessibility reasons.
-   */
-  title?: string
-  /**
    * The minimum version used when encoding the QR Code. Valid values are 1-40
    * with higher values resulting in more complex QR Codes. The optimal
    * (lowest) version is determined for the `value` provided, using `minVersion`
