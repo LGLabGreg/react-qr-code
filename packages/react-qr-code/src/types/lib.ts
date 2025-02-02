@@ -80,8 +80,20 @@ export interface FinderPatternInnerSettings {
   style?: FinderPatternInnerStyle
 }
 
+export type DownloadFileFormat = 'svg' | 'png' | 'jpeg'
+export interface DownloadOptions {
+  name?: string
+  format?: DownloadFileFormat
+  size?: number
+}
+
+export interface ReactQRCodeRef {
+  svg: SVGSVGElement | null
+  download: (options: DownloadOptions) => void
+}
+
 export interface ReactQRCodeProps {
-  ref?: Ref<SVGSVGElement>
+  ref?: Ref<ReactQRCodeRef>
   /**
    * The value to encode into the QR Code. An array of strings can be passed in
    * to represent multiple segments to further optimize the QR Code.

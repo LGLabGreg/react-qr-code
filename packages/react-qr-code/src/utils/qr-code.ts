@@ -1,5 +1,6 @@
 import { DEFAULT_IMG_SCALE, DEFAULT_MARGIN_SIZE } from '../constants'
-import type { CrossOrigin, Excavation, ImageSettings, Modules } from '../types/lib'
+import type { Excavation, ImageSettings, Modules } from '../types/lib'
+import type { CalculatedImageSettings } from '../types/utils'
 
 export const excavateModules = (modules: Modules, excavation: Excavation): Modules => {
   return modules.slice().map((row, y) => {
@@ -20,15 +21,7 @@ export const getImageSettings = (
   size: number,
   margin: number,
   imageSettings?: ImageSettings,
-): null | {
-  x: number
-  y: number
-  h: number
-  w: number
-  excavation: Excavation | null
-  opacity: number
-  crossOrigin: CrossOrigin
-} => {
+): CalculatedImageSettings | null => {
   if (imageSettings == null) {
     return null
   }

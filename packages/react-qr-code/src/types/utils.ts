@@ -1,7 +1,13 @@
+import { type RefObject } from 'react'
+
 import type {
+  CrossOrigin,
   DataModulesSettings,
+  DownloadFileFormat,
+  Excavation,
   FinderPatternInnerSettings,
   FinderPatternOuterSettings,
+  ImageSettings,
   Modules,
 } from './lib'
 
@@ -26,4 +32,32 @@ export interface FinderPatternsInnerProps extends GeneratePathFnProps {
 
 export interface DataModulesProps extends GeneratePathFnProps {
   settings?: DataModulesSettings
+}
+
+export interface DownloadSVGProps {
+  svgRef: RefObject<SVGSVGElement | null>
+  fileSize: number
+  fileName: string
+}
+
+export interface DownloadRasterProps {
+  svgRef: RefObject<SVGSVGElement | null>
+  fileSize: number
+  fileName: string
+  imageSettings: ImageSettings | undefined
+  calculatedImageSettings: CalculatedImageSettings | null
+  fileFormat: DownloadFileFormat
+  size: number
+  numCells: number
+  margin: number
+}
+
+export interface CalculatedImageSettings {
+  x: number
+  y: number
+  h: number
+  w: number
+  excavation: Excavation | null
+  opacity: number
+  crossOrigin: CrossOrigin
 }
