@@ -1,11 +1,13 @@
 import {
   type DataModulesStyle,
+  type DownloadOptions,
   type FinderPatternInnerStyle,
   type FinderPatternOuterStyle,
   ReactQRCode,
   type ReactQRCodeProps,
+  type ReactQRCodeRef,
 } from '@lglab/react-qr-code'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { Select } from './components/ui/select'
 import {
@@ -22,7 +24,10 @@ function App() {
   const [dataModulesStyle, setDataModulesStyle] = useState<DataModulesStyle>('square')
   const [dataModulesRandomSize, setDataModulesRandomSize] = useState<boolean>(false)
 
+  const ref = useRef<ReactQRCodeRef>(null)
+
   const qrCodeOptions: ReactQRCodeProps = {
+    ref,
     value: 'https://github.com/LGLabGreg/react-qr-code.git',
     size: 500,
     marginSize: 3,
@@ -45,8 +50,15 @@ function App() {
       width: 60,
       height: 60,
       excavate: true,
+      x: 100,
+      y: 100,
     },
   }
+
+  const download = ({ format = 'svg', size = 400 }: DownloadOptions) => {
+    ref.current?.download({ format, size, name: 'demo-qr-code' })
+  }
+
   return (
     <div className='max-w-4xl mx-auto px-5 py-8'>
       <h1 className='text-4xl font-semibold mb-8 text-center'>React QR Code</h1>
@@ -93,6 +105,9 @@ function App() {
               type='checkbox'
             />
           </form>
+          <button onClick={() => download({ format: 'svg' })}>Download SVG</button>
+          <button onClick={() => download({ format: 'png' })}>Download PNG</button>
+          <button onClick={() => download({ format: 'jpeg' })}>Download JPEG</button>
         </div>
         <ReactQRCode {...qrCodeOptions} />
       </div>

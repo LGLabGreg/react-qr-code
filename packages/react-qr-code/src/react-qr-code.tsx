@@ -1,3 +1,5 @@
+import { useImperativeHandle, useRef } from 'react'
+
 import { DataModules } from './components/data-modules'
 import { FinderPatternsInner } from './components/finder-patterns-inner'
 import { FinderPatternsOuter } from './components/finder-patterns-outer'
@@ -8,7 +10,8 @@ import {
   DEFAULT_SIZE,
 } from './constants'
 import { useQRCode } from './hooks/use-qr-code'
-import type { ReactQRCodeProps } from './types/lib'
+import type { DownloadOptions, ReactQRCodeProps } from './types/lib'
+import { downloadRaster, downloadSVG } from './utils/download'
 import { excavateModules } from './utils/qr-code'
 
 const ReactQRCode = (props: ReactQRCodeProps) => {
@@ -28,6 +31,8 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     svgProps,
   } = props
 
+  const svgRef = useRef<SVGSVGElement | null>(null)
+
   const { margin, cells, numCells, calculatedImageSettings } = useQRCode({
     value,
     level,
@@ -37,6 +42,33 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     imageSettings,
     size,
   })
+
+  useImperativeHandle(ref, () => ({
+    svg: svgRef.current,
+    download: ({
+      name: fileName = 'qr-code',
+      format: fileFormat = 'svg',
+      size: fileSize = 500,
+    }: DownloadOptions) => {
+      if (!svgRef.current) return
+
+      if (fileFormat === 'svg') {
+        downloadSVG({ svgRef, fileSize, fileName })
+      } else {
+        downloadRaster({
+          svgRef,
+          fileSize,
+          fileName,
+          fileFormat,
+          imageSettings,
+          calculatedImageSettings,
+          size,
+          numCells,
+          margin,
+        })
+      }
+    },
+  }))
 
   let modules = cells
   let image = null
@@ -65,7 +97,7 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
       height={size}
       width={size}
       viewBox={`0 0 ${numCells} ${numCells}`}
-      ref={ref}
+      ref={svgRef}
       role='img'
       aria-label={svgProps?.['aria-label'] || 'QR Code'}
       {...svgProps}
