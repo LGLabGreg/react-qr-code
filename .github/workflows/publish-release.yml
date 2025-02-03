@@ -28,18 +28,20 @@ jobs:
         with:
           version: 9
 
+      - name: Setup npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+
       - name: Install Dependencies
         run: pnpm install
 
       - name: Build
         run: pnpm run build:lib
 
-      - name: Create Release
+      - name: Publish and Create Release
         id: create-release
         uses: changesets/action@v1
         with:
-          publish: pnpm changeset publish
+          publish: pnpm ci:publish
           createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

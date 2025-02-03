@@ -13,6 +13,7 @@
     "watch:apps": "pnpm --filter \"./apps/**\" run dev",
     "build:lib": "pnpm --filter \"./packages/**\" run build",
     "build:app": "pnpm --filter \"./apps/**\" run build",
+    "ci:publish": "pnpm publish -r",
     "lint": "eslint .",
     "prepare": "husky"
   },
