@@ -28,6 +28,7 @@ export default [
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
       'react/react-in-jsx-scope': 'off',
       '@typescript-eslint/consistent-type-imports': 'error',
+      'no-console': 'error',
     },
   },
 ]
