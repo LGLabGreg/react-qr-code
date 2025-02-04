@@ -41,7 +41,7 @@ jobs:
         id: create-release
         uses: changesets/action@v1
         with:
-          publish: pnpm ci:publish
+          publish: pnpm ci:publish --no-git-checks
           createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
