@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/LGLabGreg/react-qr-code.git"
   },
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.2.0",
   "type": "module",
   "scripts": {
     "dev": "pnpm concurrently --names packages,apps \"pnpm watch:packages\" \"pnpm watch:apps\"",
@@ -38,7 +38,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "typescript": "~5.7.3",
-    "typescript-eslint": "^8.22.0",
+    "typescript-eslint": "^8.23.0",
     "vite": "^6.0.5"
   }
 }

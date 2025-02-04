@@ -1,10 +1,12 @@
 import { useImperativeHandle, useRef } from 'react'
 
+import { Background } from './components/background'
 import { DataModules } from './components/data-modules'
 import { FinderPatternsInner } from './components/finder-patterns-inner'
 import { FinderPatternsOuter } from './components/finder-patterns-outer'
+import { Gradient } from './components/gradient'
 import {
-  DEFAULT_BGCOLOR,
+  DEFAULT_FILENAME,
   DEFAULT_LEVEL,
   DEFAULT_MINVERSION,
   DEFAULT_SIZE,
@@ -20,7 +22,8 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     value,
     size = DEFAULT_SIZE,
     level = DEFAULT_LEVEL,
-    bgColor = DEFAULT_BGCOLOR,
+    background,
+    gradient,
     minVersion = DEFAULT_MINVERSION,
     boostLevel,
     marginSize,
@@ -46,7 +49,7 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
   useImperativeHandle(ref, () => ({
     svg: svgRef.current,
     download: ({
-      name: fileName = 'qr-code',
+      name: fileName = DEFAULT_FILENAME,
       format: fileFormat = 'svg',
       size: fileSize = 500,
     }: DownloadOptions) => {
@@ -92,6 +95,12 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     )
   }
 
+  const svgElementsProps = {
+    modules,
+    margin,
+    gradient,
+  }
+
   return (
     <svg
       height={size}
@@ -102,18 +111,11 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
       aria-label={svgProps?.['aria-label'] || 'QR Code'}
       {...svgProps}
     >
-      <path fill={bgColor} d={`M0,0 h${numCells}v${numCells}H0z`} />
-      <FinderPatternsOuter
-        modules={modules}
-        margin={margin}
-        settings={finderPatternOuterSettings}
-      />
-      <FinderPatternsInner
-        modules={modules}
-        margin={margin}
-        settings={finderPatternInnerSettings}
-      />
-      <DataModules modules={modules} margin={margin} settings={dataModulesSettings} />
+      <Gradient gradient={gradient} />
+      <Background background={background} numCells={numCells} />
+      <FinderPatternsOuter settings={finderPatternOuterSettings} {...svgElementsProps} />
+      <FinderPatternsInner settings={finderPatternInnerSettings} {...svgElementsProps} />
+      <DataModules settings={dataModulesSettings} {...svgElementsProps} />
       {image}
     </svg>
   )

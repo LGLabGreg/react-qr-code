@@ -31,7 +31,15 @@ function App() {
     value: 'https://github.com/LGLabGreg/react-qr-code.git',
     size: 500,
     marginSize: 3,
-    bgColor: '#f1f1f1',
+    background: '#f9f9f9',
+    gradient: {
+      type: 'linear',
+      rotation: 0,
+      stops: [
+        { offset: '0%', color: '#4568DC' },
+        { offset: '100%', color: '#B06AB3' },
+      ],
+    },
     dataModulesSettings: {
       color: '#560bad',
       style: dataModulesStyle,
@@ -56,7 +64,7 @@ function App() {
   }
 
   const download = ({ format = 'svg', size = 400 }: DownloadOptions) => {
-    ref.current?.download({ format, size, name: 'demo-qr-code' })
+    ref.current?.download({ format, size })
   }
 
   return (

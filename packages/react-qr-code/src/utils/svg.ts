@@ -4,6 +4,22 @@ export function numToAttr(value: number) {
   return value.toFixed(7).replace(rx, '')
 }
 
+export const calculateGradientVectors = (rotation: number) => {
+  const angle = (rotation % 360) * (Math.PI / 180)
+
+  const x1 = Math.max(0, Math.min(100, 50 - 50 * Math.cos(angle)))
+  const y1 = Math.max(0, Math.min(100, 50 - 50 * Math.sin(angle)))
+  const x2 = Math.max(0, Math.min(100, 50 + 50 * Math.cos(angle)))
+  const y2 = Math.max(0, Math.min(100, 50 + 50 * Math.sin(angle)))
+
+  return {
+    x1: `${x1}%`,
+    y1: `${y1}%`,
+    x2: `${x2}%`,
+    y2: `${y2}%`,
+  }
+}
+
 export const star = (cx: number, cy: number, size: number, spikes: number): string => {
   const outerRadius = size / 2 // Outer radius of the star
   const innerRadius = outerRadius / 2 // Inner radius for the star

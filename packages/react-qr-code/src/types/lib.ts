@@ -1,5 +1,3 @@
-import type { Ref } from 'react'
-
 import type qrcodegen from '../lib/qrcodegen'
 
 /**
@@ -17,6 +15,19 @@ export type ERROR_LEVEL_MAPPED_TYPE = {
 /**
  * ReactQRCode props.
  */
+export type BackgroundSettings = string | GradientSettings
+
+export type GradientSettingsType = 'linear' | 'radial'
+export interface GradientSettingsStop {
+  offset: string
+  color: string
+}
+export interface GradientSettings {
+  type: GradientSettingsType
+  stops: GradientSettingsStop[]
+  rotation?: number
+}
+
 export type DataModulesStyle =
   | 'square'
   | 'square-sm'
@@ -93,7 +104,7 @@ export interface ReactQRCodeRef {
 }
 
 export interface ReactQRCodeProps {
-  ref?: Ref<ReactQRCodeRef>
+  ref?: React.Ref<ReactQRCodeRef>
   /**
    * The value to encode into the QR Code. An array of strings can be passed in
    * to represent multiple segments to further optimize the QR Code.
@@ -134,11 +145,14 @@ export interface ReactQRCodeProps {
    */
   boostLevel?: boolean
   /**
-   * The background color used to render the QR Code.
-   * @see https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+   * The QR code background either a hex color or GradientSettings.
    * @defaultValue #FFFFFF
    */
-  bgColor?: string
+  background?: BackgroundSettings
+  /**
+   * The gradient settings applied to the qr code data modules and finder patterns.
+   */
+  gradient?: GradientSettings
   /**
    * The settings for the data modules.
    */

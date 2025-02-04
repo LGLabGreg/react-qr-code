@@ -7,6 +7,7 @@ import type {
   Excavation,
   FinderPatternInnerSettings,
   FinderPatternOuterSettings,
+  GradientSettings,
   ImageSettings,
   Modules,
 } from './lib'
@@ -20,6 +21,7 @@ export interface FilterFnProps {
 export interface GeneratePathFnProps {
   modules: Modules
   margin: number
+  gradient?: GradientSettings
 }
 
 export interface FinderPatternsOuterProps extends GeneratePathFnProps {
