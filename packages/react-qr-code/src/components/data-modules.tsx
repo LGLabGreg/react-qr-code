@@ -1,6 +1,6 @@
 import { type ReactNode, useCallback, useMemo } from 'react'
 
-import { DEFAULT_NUM_STAR_POINTS } from '../constants'
+import { DEFAULT_NUM_STAR_POINTS, GRADIENT_ID } from '../constants'
 import type { DataModulesProps } from '../types/utils'
 import {
   bottomRounded,
@@ -29,6 +29,7 @@ export const DataModules = ({
   modules,
   margin,
   settings,
+  gradient,
 }: DataModulesProps): ReactNode => {
   const { color, style, randomSize } = useMemo(
     () => sanitizeDataModulesSettings(settings),
@@ -148,7 +149,7 @@ export const DataModules = ({
   })
   return (
     <path
-      fill={color}
+      fill={gradient ? `url(#${GRADIENT_ID})` : color}
       d={ops.join('')}
       shapeRendering={style === 'square' ? 'crispEdges' : 'geometricPrecision'}
     />

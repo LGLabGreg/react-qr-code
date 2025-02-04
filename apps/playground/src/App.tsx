@@ -32,6 +32,14 @@ function App() {
     size: 500,
     marginSize: 3,
     bgColor: '#f1f1f1',
+    gradient: {
+      type: 'linear',
+      rotation: 0,
+      stops: [
+        { offset: '0%', color: '#ff0000' },
+        { offset: '100%', color: '#0000ff' },
+      ],
+    },
     dataModulesSettings: {
       color: '#560bad',
       style: dataModulesStyle,

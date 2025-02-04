@@ -6,6 +6,7 @@ import {
   FINDER_PATTERN_INNER_SIZE,
   FINDER_PATTERN_OUTER_ROTATIONS,
   FINDER_PATTERN_SIZE,
+  GRADIENT_ID,
 } from '../constants'
 import type { FinderPatternsInnerProps } from '../types/utils'
 import {
@@ -19,11 +20,13 @@ export const FinderPatternsInner = ({
   modules,
   margin,
   settings,
+  gradient,
 }: FinderPatternsInnerProps): ReactNode => {
   const { color, style } = useMemo(
     () => sanitizeFinderPatternInnerSettings(settings),
     [settings],
   )
+  const fill = gradient ? `url(#${GRADIENT_ID})` : color
 
   const coordinates = useMemo(
     () => [
@@ -52,7 +55,7 @@ export const FinderPatternsInner = ({
           y={y}
           width={FINDER_PATTERN_INNER_SIZE}
           height={FINDER_PATTERN_INNER_SIZE}
-          fill={color}
+          fill={fill}
           rx={FINDER_PATTERN_INNER_RADIUSES[style]}
         />
       )
@@ -72,7 +75,7 @@ export const FinderPatternsInner = ({
           y={y + posDiff / 2}
           width={size}
           height={size}
-          fill={color}
+          fill={fill}
           style={{
             transform: `rotate(${45}deg)`,
             transformOrigin: 'center',
@@ -112,7 +115,7 @@ export const FinderPatternsInner = ({
         return (
           <path
             key={key(x, y)}
-            fill={color}
+            fill={fill}
             d={path}
             style={{
               transform: `rotate(${rotation}deg)`,
@@ -127,7 +130,7 @@ export const FinderPatternsInner = ({
   if (style === 'heart') {
     return coordinates.map(({ x, y }) => {
       return (
-        <path key={key(x, y)} fill={color} d={heart(x, y, FINDER_PATTERN_INNER_SIZE)} />
+        <path key={key(x, y)} fill={fill} d={heart(x, y, FINDER_PATTERN_INNER_SIZE)} />
       )
     })
   }
@@ -137,7 +140,7 @@ export const FinderPatternsInner = ({
       const cx = x + FINDER_PATTERN_INNER_SIZE / 2
       const cy = y + FINDER_PATTERN_INNER_SIZE / 2
       const path = star(cx, cy, FINDER_PATTERN_INNER_SIZE * 1.2, DEFAULT_NUM_STAR_POINTS)
-      return <path key={key(x, y)} fill={color} d={path} />
+      return <path key={key(x, y)} fill={fill} d={path} />
     })
   }
 

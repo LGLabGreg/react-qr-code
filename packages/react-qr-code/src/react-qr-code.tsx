@@ -3,6 +3,7 @@ import { useImperativeHandle, useRef } from 'react'
 import { DataModules } from './components/data-modules'
 import { FinderPatternsInner } from './components/finder-patterns-inner'
 import { FinderPatternsOuter } from './components/finder-patterns-outer'
+import { Gradient } from './components/gradient'
 import {
   DEFAULT_BGCOLOR,
   DEFAULT_LEVEL,
@@ -21,6 +22,7 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     size = DEFAULT_SIZE,
     level = DEFAULT_LEVEL,
     bgColor = DEFAULT_BGCOLOR,
+    gradient,
     minVersion = DEFAULT_MINVERSION,
     boostLevel,
     marginSize,
@@ -92,6 +94,12 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     )
   }
 
+  const svgElementsProps = {
+    modules,
+    margin,
+    gradient,
+  }
+
   return (
     <svg
       height={size}
@@ -102,18 +110,11 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
       aria-label={svgProps?.['aria-label'] || 'QR Code'}
       {...svgProps}
     >
+      <Gradient gradient={gradient} />
       <path fill={bgColor} d={`M0,0 h${numCells}v${numCells}H0z`} />
-      <FinderPatternsOuter
-        modules={modules}
-        margin={margin}
-        settings={finderPatternOuterSettings}
-      />
-      <FinderPatternsInner
-        modules={modules}
-        margin={margin}
-        settings={finderPatternInnerSettings}
-      />
-      <DataModules modules={modules} margin={margin} settings={dataModulesSettings} />
+      <FinderPatternsOuter settings={finderPatternOuterSettings} {...svgElementsProps} />
+      <FinderPatternsInner settings={finderPatternInnerSettings} {...svgElementsProps} />
+      <DataModules settings={dataModulesSettings} {...svgElementsProps} />
       {image}
     </svg>
   )

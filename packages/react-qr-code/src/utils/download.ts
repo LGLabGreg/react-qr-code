@@ -79,7 +79,7 @@ export const downloadRaster = ({
         a.click()
         document.body.removeChild(a)
       }
-
+      // eslint-disable-next-line no-console
       logoImg.onerror = (err) => console.error('Error loading logo:', err)
     } else {
       const imageType = fileFormat === 'png' ? 'image/png' : 'image/jpeg'
@@ -91,6 +91,6 @@ export const downloadRaster = ({
       document.body.removeChild(a)
     }
   }
-
+  // eslint-disable-next-line no-console
   qrImg.onerror = (err) => console.error('Error loading QR code:', err)
 }

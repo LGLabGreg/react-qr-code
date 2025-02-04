@@ -4,6 +4,7 @@ import {
   FINDER_PATTERN_OUTER_RADIUSES,
   FINDER_PATTERN_OUTER_ROTATIONS,
   FINDER_PATTERN_SIZE,
+  GRADIENT_ID,
 } from '../constants'
 import type { FinderPatternsOuterProps } from '../types/utils'
 import {
@@ -17,11 +18,13 @@ export const FinderPatternsOuter = ({
   modules,
   margin,
   settings,
+  gradient,
 }: FinderPatternsOuterProps): ReactNode => {
   const { style, color } = useMemo(
     () => sanitizeFinderPatternOuterSettings(settings),
     [settings],
   )
+  const fill = gradient ? `url(#${GRADIENT_ID})` : color
 
   const ops: Array<string> = []
 
@@ -33,9 +36,6 @@ export const FinderPatternsOuter = ({
     ],
     [margin, modules.length],
   )
-
-  console.log('modules.length', modules.length)
-  console.log('coordinates', coordinates)
 
   if (['rounded-sm', 'rounded', 'rounded-lg', 'circle', 'square'].includes(style)) {
     for (const coordinate of coordinates) {
@@ -74,7 +74,7 @@ export const FinderPatternsOuter = ({
         )
       }
     }
-    return <path fill={color} d={ops.join('')} />
+    return <path fill={fill} d={ops.join('')} />
   }
 
   if (
@@ -106,7 +106,7 @@ export const FinderPatternsOuter = ({
         return (
           <path
             key={`finder-patterns-outer-${style}-${x}-${y}`}
-            fill={color}
+            fill={fill}
             d={path}
             style={{
               transform: `rotate(${rotation}deg)`,
