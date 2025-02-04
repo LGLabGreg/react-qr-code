@@ -1,6 +1,6 @@
 {
   "name": "@lglab/react-qr-code",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "React library to generate QR codes",
   "author": "LGLab",
   "license": "MIT",
