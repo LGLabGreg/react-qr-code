@@ -15,6 +15,8 @@ export type ERROR_LEVEL_MAPPED_TYPE = {
 /**
  * ReactQRCode props.
  */
+export type BackgroundSettings = string | GradientSettings
+
 export type GradientSettingsType = 'linear' | 'radial'
 export interface GradientSettingsStop {
   offset: string
@@ -143,13 +145,12 @@ export interface ReactQRCodeProps {
    */
   boostLevel?: boolean
   /**
-   * The background color used to render the QR Code.
-   * @see https://developer.mozilla.org/en-US/docs/Web/CSS/color_value
+   * The QR code background either a hex color or GradientSettings.
    * @defaultValue #FFFFFF
    */
-  bgColor?: string
+  background?: BackgroundSettings
   /**
-   * The gradient settings applied to the whole qr code.
+   * The gradient settings applied to the qr code data modules and finder patterns.
    */
   gradient?: GradientSettings
   /**

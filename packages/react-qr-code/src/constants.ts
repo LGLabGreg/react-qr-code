@@ -33,7 +33,10 @@ export const DEFAULT_FINDER_PATTERN_OUTER_STYLE: FinderPatternOuterStyle = 'squa
 export const DEFAULT_FINDER_PATTERN_INNER_STYLE: FinderPatternInnerStyle = 'square'
 export const DEFAULT_DATA_MODULES_STYLE: DataModulesStyle = 'square'
 
+export const DEFAULT_FILENAME = 'react-qr-code'
+
 export const GRADIENT_ID = 'react-qr-code-gradient'
+export const BG_GRADIENT_ID = 'react-qr-code-bg-gradient'
 
 // This is *very* rough estimate of max amount of QRCode allowed to be covered.
 // It is "wrong" in a lot of ways (area is a terrible way to estimate, it
