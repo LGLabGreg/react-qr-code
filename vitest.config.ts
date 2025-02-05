@@ -9,6 +9,7 @@ export default defineConfig({
     setupFiles: './vitest.setup.ts',
     coverage: {
       include: ['packages/react-qr-code/src'],
+      exclude: ['packages/react-qr-code/src/index.ts'],
     },
   },
 })

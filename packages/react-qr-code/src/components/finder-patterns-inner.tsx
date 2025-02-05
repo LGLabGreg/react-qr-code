@@ -16,6 +16,10 @@ import {
 import { sanitizeFinderPatternInnerSettings } from '../utils/settings'
 import { heart, star } from '../utils/svg'
 
+const testProps = {
+  'data-testid': 'finder-patterns-inner',
+}
+
 export const FinderPatternsInner = ({
   modules,
   margin,
@@ -57,6 +61,7 @@ export const FinderPatternsInner = ({
           height={FINDER_PATTERN_INNER_SIZE}
           fill={fill}
           rx={FINDER_PATTERN_INNER_RADIUSES[style]}
+          {...testProps}
         />
       )
     })
@@ -81,6 +86,7 @@ export const FinderPatternsInner = ({
             transformOrigin: 'center',
             transformBox: 'fill-box',
           }}
+          {...testProps}
         />
       )
     })
@@ -122,6 +128,7 @@ export const FinderPatternsInner = ({
               transformOrigin: 'center',
               transformBox: 'fill-box',
             }}
+            {...testProps}
           />
         )
       })
@@ -130,7 +137,12 @@ export const FinderPatternsInner = ({
   if (style === 'heart') {
     return coordinates.map(({ x, y }) => {
       return (
-        <path key={key(x, y)} fill={fill} d={heart(x, y, FINDER_PATTERN_INNER_SIZE)} />
+        <path
+          key={key(x, y)}
+          fill={fill}
+          d={heart(x, y, FINDER_PATTERN_INNER_SIZE)}
+          {...testProps}
+        />
       )
     })
   }
@@ -140,7 +152,7 @@ export const FinderPatternsInner = ({
       const cx = x + FINDER_PATTERN_INNER_SIZE / 2
       const cy = y + FINDER_PATTERN_INNER_SIZE / 2
       const path = star(cx, cy, FINDER_PATTERN_INNER_SIZE * 1.2, DEFAULT_NUM_STAR_POINTS)
-      return <path key={key(x, y)} fill={fill} d={path} />
+      return <path key={key(x, y)} fill={fill} d={path} {...testProps} />
     })
   }
 

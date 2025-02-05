@@ -152,6 +152,7 @@ export const DataModules = ({
       fill={gradient ? `url(#${GRADIENT_ID})` : color}
       d={ops.join('')}
       shapeRendering={style === 'square' ? 'crispEdges' : 'geometricPrecision'}
+      data-testid='data-modules'
     />
   )
 }

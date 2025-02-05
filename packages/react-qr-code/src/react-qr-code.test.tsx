@@ -2,10 +2,14 @@ import { render, screen } from '@testing-library/react'
 import { createRef } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { BG_GRADIENT_ID, DEFAULT_BGCOLOR, DEFAULT_SIZE } from './constants'
+import { BG_GRADIENT_ID, DEFAULT_BGCOLOR, DEFAULT_SIZE, GRADIENT_ID } from './constants'
 import { ReactQRCode } from './react-qr-code'
 import type {
   BackgroundSettings,
+  DataModulesSettings,
+  FinderPatternInnerSettings,
+  FinderPatternOuterSettings,
+  GradientSettings,
   GradientSettingsType,
   ReactQRCodeRef,
 } from './types/lib'
@@ -44,7 +48,57 @@ describe('ReactQRCode', () => {
     expect(svg).toHaveAttribute('aria-label', customLabel)
   })
 
-  describe('background', () => {
+  describe('Data modules', () => {
+    it('renders the path with correct color', () => {
+      const dataModulesSettings: DataModulesSettings = {
+        color: '#560bad',
+      }
+      render(<ReactQRCode value='test' dataModulesSettings={dataModulesSettings} />)
+
+      const path = screen.getByTestId('data-modules')
+
+      expect(path).toBeInTheDocument()
+      expect(path).toHaveAttribute('fill', dataModulesSettings.color)
+    })
+  })
+
+  describe('Finder patterns outer', () => {
+    it('renders the path with correct color', () => {
+      const finderPatternOuterSettings: FinderPatternOuterSettings = {
+        color: '#560bad',
+      }
+      render(
+        <ReactQRCode
+          value='test'
+          finderPatternOuterSettings={finderPatternOuterSettings}
+        />,
+      )
+
+      screen.getAllByTestId('finder-patterns-outer').forEach((path) => {
+        expect(path).toHaveAttribute('fill', finderPatternOuterSettings.color)
+      })
+    })
+  })
+
+  describe('Finder patterns inner', () => {
+    it('renders the path with correct color', () => {
+      const finderPatternInnerSettings: FinderPatternInnerSettings = {
+        color: '#560bad',
+      }
+      render(
+        <ReactQRCode
+          value='test'
+          finderPatternInnerSettings={finderPatternInnerSettings}
+        />,
+      )
+
+      screen.getAllByTestId('finder-patterns-inner').forEach((path) => {
+        expect(path).toHaveAttribute('fill', finderPatternInnerSettings.color)
+      })
+    })
+  })
+
+  describe('Background', () => {
     it('renders with default background color', () => {
       render(<ReactQRCode value='test' />)
 
@@ -74,11 +128,49 @@ describe('ReactQRCode', () => {
       }
       const { container } = render(<ReactQRCode value='test' background={gradient} />)
 
-      const background = screen.getByTestId('background')
-      const stops = container.querySelectorAll(`${selector} stop`)
+      const backgroundPath = screen.getByTestId('background')
+      const stops = container.querySelectorAll(`${selector}#${BG_GRADIENT_ID} stop`)
 
-      expect(background).toHaveAttribute('fill', `url(#${BG_GRADIENT_ID})`)
+      expect(backgroundPath).toHaveAttribute('fill', `url(#${BG_GRADIENT_ID})`)
       expect(container.querySelector(`${selector}`)).toBeInTheDocument()
+      expect(stops).toHaveLength(2)
+      expect(stops[0]).toHaveAttribute('stop-color', gradient.stops[0].color)
+      expect(stops[0]).toHaveAttribute('offset', gradient.stops[0].offset)
+      expect(stops[1]).toHaveAttribute('stop-color', gradient.stops[1].color)
+      expect(stops[1]).toHaveAttribute('offset', gradient.stops[1].offset)
+    })
+  })
+
+  describe('QR code data gradient', () => {
+    it.each([
+      ['linear', 'linearGradient'],
+      ['radial', 'radialGradient'],
+    ])('renders with %s gradient for QR code data', (type, selector) => {
+      const gradient: GradientSettings = {
+        type: type as GradientSettingsType,
+        rotation: 0,
+        stops: [
+          { offset: '0%', color: '#4568DC' },
+          { offset: '100%', color: '#B06AB3' },
+        ],
+      }
+      const { container } = render(<ReactQRCode value='test' gradient={gradient} />)
+
+      const gradientElement = container.querySelector(`${selector}#${GRADIENT_ID}`)
+      const stops = container.querySelectorAll(`${selector}#${GRADIENT_ID} stop`)
+
+      expect(gradientElement).toBeInTheDocument()
+      expect(screen.getByTestId('data-modules')).toHaveAttribute(
+        'fill',
+        `url(#${GRADIENT_ID})`,
+      )
+      screen.getAllByTestId('finder-patterns-outer').forEach((path) => {
+        expect(path).toHaveAttribute('fill', `url(#${GRADIENT_ID})`)
+      })
+      screen.getAllByTestId('finder-patterns-inner').forEach((path) => {
+        expect(path).toHaveAttribute('fill', `url(#${GRADIENT_ID})`)
+      })
+
       expect(stops).toHaveLength(2)
       expect(stops[0]).toHaveAttribute('stop-color', gradient.stops[0].color)
       expect(stops[0]).toHaveAttribute('offset', gradient.stops[0].offset)

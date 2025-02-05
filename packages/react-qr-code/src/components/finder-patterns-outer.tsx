@@ -14,6 +14,10 @@ import {
 } from '../utils/finder-patterns-outer'
 import { sanitizeFinderPatternOuterSettings } from '../utils/settings'
 
+const testProps = {
+  'data-testid': 'finder-patterns-outer',
+}
+
 export const FinderPatternsOuter = ({
   modules,
   margin,
@@ -74,7 +78,7 @@ export const FinderPatternsOuter = ({
         )
       }
     }
-    return <path fill={fill} d={ops.join('')} />
+    return <path fill={fill} d={ops.join('')} {...testProps} />
   }
 
   if (
@@ -113,6 +117,7 @@ export const FinderPatternsOuter = ({
               transformOrigin: 'center',
               transformBox: 'fill-box',
             }}
+            {...testProps}
           />
         )
       })
