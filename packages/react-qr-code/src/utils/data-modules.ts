@@ -1,4 +1,5 @@
 import type { DataModulesStyle, Modules } from '../types/lib'
+import type { DataModulesNeighbours } from '../types/utils'
 
 export const dataModuleCanBeRandomSize = (style: DataModulesStyle): boolean =>
   style === 'square' ||
@@ -7,12 +8,25 @@ export const dataModuleCanBeRandomSize = (style: DataModulesStyle): boolean =>
   style === 'heart' ||
   style === 'diamond'
 
-export const getModuleNeighbours = (x: number, y: number, modules: Modules) => {
+export const getScaleFactor = (style: string, isRandom: boolean) => {
+  if (style === 'square-sm') {
+    return 0.75
+  } else if (isRandom) {
+    return Math.random() * (1 - 0.75) + 0.75
+  }
+  return 1
+}
+
+export const getModuleNeighbours = (
+  x: number,
+  y: number,
+  modules: Modules,
+): DataModulesNeighbours => {
   const sides = {
-    left: x === 0 ? 0 : modules[y][x - 1],
-    right: x === modules[y].length - 1 ? 0 : modules[y][x + 1],
-    top: y === 0 ? 0 : modules[y - 1][x],
-    bottom: y === modules.length - 1 ? 0 : modules[y + 1][x],
+    left: x === 0 ? false : modules[y][x - 1],
+    right: x === modules[y].length - 1 ? false : modules[y][x + 1],
+    top: y === 0 ? false : modules[y - 1][x],
+    bottom: y === modules.length - 1 ? false : modules[y + 1][x],
   }
 
   return {

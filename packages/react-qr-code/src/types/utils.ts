@@ -36,6 +36,14 @@ export interface DataModulesProps extends GeneratePathFnProps {
   settings?: DataModulesSettings
 }
 
+export interface DataModulesNeighbours {
+  left: boolean
+  right: boolean
+  top: boolean
+  bottom: boolean
+  count: number
+}
+
 export interface DownloadSVGProps {
   svgRef: RefObject<SVGSVGElement | null>
   fileSize: number
