@@ -108,14 +108,3 @@ export const leaf = (x: number, y: number, size: number) => {
     `a ${size / 2.5} ${size / 2.5}, 0, 0, 0, ${size / 2.5} ${-size / 2.5}`
   )
 }
-
-export const leafLeft = (x: number, y: number, size: number) => {
-  return (
-    `M ${x} ${y}` +
-    `v ${size / 2}` +
-    `a ${size / 2} ${size / 2}, 0, 0, 0, ${size / 2} ${size / 2}` +
-    `h ${size / 2}` +
-    `v ${-size / 2}` +
-    `a ${size / 2} ${size / 2}, 0, 0, 0, ${-size / 2} ${-size / 2}`
-  )
-}
