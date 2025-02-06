@@ -72,8 +72,8 @@ importers:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
       tailwindcss:
-        specifier: ^4.0.1
-        version: 4.0.3
+        specifier: ^4.0.4
+        version: 4.0.4
     devDependencies:
       '@types/node':
         specifier: ^22.13.1
