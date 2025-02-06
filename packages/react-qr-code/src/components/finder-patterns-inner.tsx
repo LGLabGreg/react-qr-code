@@ -155,6 +155,4 @@ export const FinderPatternsInner = ({
       return <path key={key(x, y)} fill={fill} d={path} {...testProps} />
     })
   }
-
-  return null
 }
