@@ -7,6 +7,7 @@ import {
   circle,
   dataModuleCanBeRandomSize,
   diamond,
+  getScaleFactor,
   leaf,
   leftRounded,
   rightRounded,
@@ -40,14 +41,10 @@ export const DataModules = ({
   const numCells = modules.length
   const isRandom = dataModuleCanBeRandomSize(style) && randomSize
 
-  const getScaleFactor = useCallback(() => {
-    if (style === 'square-sm') {
-      return 0.75
-    } else if (isRandom) {
-      return Math.random() * (1 - 0.75) + 0.75
-    }
-    return 1
-  }, [style, isRandom])
+  const scaleFactor = useCallback(
+    () => getScaleFactor(style, isRandom),
+    [style, isRandom],
+  )
 
   modules.forEach((row, y) => {
     row.forEach((cell, x) => {
@@ -59,9 +56,9 @@ export const DataModules = ({
         return
       }
 
-      const scaleFactor = getScaleFactor()
-      const size = 1 * scaleFactor
-      const posOffset = (1 - 1 * scaleFactor) / 2
+      const scale = scaleFactor()
+      const size = 1 * scale
+      const posOffset = (1 - 1 * scale) / 2
       const xPos = x + margin + posOffset
       const yPos = y + margin + posOffset
 
@@ -152,6 +149,7 @@ export const DataModules = ({
       fill={gradient ? `url(#${GRADIENT_ID})` : color}
       d={ops.join('')}
       shapeRendering={style === 'square' ? 'crispEdges' : 'geometricPrecision'}
+      data-testid='data-modules'
     />
   )
 }

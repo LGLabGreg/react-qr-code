@@ -7,13 +7,25 @@ interface BackgroundProps {
   numCells: number
 }
 
+const testProps = {
+  'data-testid': 'background',
+}
+
 export const Background = ({ background, numCells }: BackgroundProps) => {
   if (!background) {
-    return <path fill={DEFAULT_BGCOLOR} d={`M0,0 h${numCells}v${numCells}H0z`} />
+    return (
+      <path
+        fill={DEFAULT_BGCOLOR}
+        d={`M0,0 h${numCells}v${numCells}H0z`}
+        {...testProps}
+      />
+    )
   }
 
   if (typeof background === 'string') {
-    return <path fill={background} d={`M0,0 h${numCells}v${numCells}H0z`} />
+    return (
+      <path fill={background} d={`M0,0 h${numCells}v${numCells}H0z`} {...testProps} />
+    )
   }
 
   const vectors = calculateGradientVectors(background?.rotation || 0)
@@ -41,7 +53,11 @@ export const Background = ({ background, numCells }: BackgroundProps) => {
           </radialGradient>
         )}
       </defs>
-      <path fill={`url(#${BG_GRADIENT_ID})`} d={`M0,0 h${numCells}v${numCells}H0z`} />
+      <path
+        fill={`url(#${BG_GRADIENT_ID})`}
+        d={`M0,0 h${numCells}v${numCells}H0z`}
+        {...testProps}
+      />
     </>
   )
 }

@@ -37,6 +37,7 @@ export const getImageSettings = (
   let excavation = null
   if (imageSettings.excavate) {
     const floorX = Math.floor(x)
+
     const floorY = Math.floor(y)
     const ceilW = Math.ceil(w + x - floorX)
     const ceilH = Math.ceil(h + y - floorY)
