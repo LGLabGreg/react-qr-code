@@ -2,7 +2,13 @@ import { render, screen } from '@testing-library/react'
 import { createRef } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
-import { BG_GRADIENT_ID, DEFAULT_BGCOLOR, DEFAULT_SIZE, GRADIENT_ID } from './constants'
+import {
+  BG_GRADIENT_ID,
+  DEFAULT_BGCOLOR,
+  DEFAULT_MARGIN_SIZE,
+  DEFAULT_SIZE,
+  GRADIENT_ID,
+} from './constants'
 import { ReactQRCode } from './react-qr-code'
 import type {
   BackgroundSettings,
@@ -29,6 +35,22 @@ describe('ReactQRCode', () => {
     expect(svg).toHaveAttribute('height', DEFAULT_SIZE.toString())
     expect(svg).toHaveAttribute('width', DEFAULT_SIZE.toString())
     expect(svg).toHaveAttribute('aria-label', 'QR Code')
+  })
+
+  it.each([
+    [2, 2],
+    [10, 10],
+    [undefined, DEFAULT_MARGIN_SIZE],
+  ])('applies margin %s', (marginSize, expected) => {
+    render(<ReactQRCode value='test' marginSize={marginSize} />)
+
+    const finderPattern = screen.getAllByTestId('finder-patterns-outer')
+    expect(
+      finderPattern[0]
+        .getAttribute('d')!
+        .toString()
+        .startsWith(`M ${expected} ${expected}`),
+    ).toBe(true)
   })
 
   it('applies custom size', () => {

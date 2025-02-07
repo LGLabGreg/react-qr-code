@@ -122,6 +122,4 @@ export const FinderPatternsOuter = ({
         )
       })
   }
-
-  return null
 }
