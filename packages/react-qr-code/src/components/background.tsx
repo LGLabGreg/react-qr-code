@@ -1,4 +1,4 @@
-import { BG_GRADIENT_ID, DEFAULT_BGCOLOR } from '../constants'
+import { BG_GRADIENT_ID } from '../constants'
 import type { BackgroundSettings } from '../types/lib'
 import { calculateGradientVectors } from '../utils/svg'
 
@@ -13,13 +13,7 @@ const testProps = {
 
 export const Background = ({ background, numCells }: BackgroundProps) => {
   if (!background) {
-    return (
-      <path
-        fill={DEFAULT_BGCOLOR}
-        d={`M0,0 h${numCells}v${numCells}H0z`}
-        {...testProps}
-      />
-    )
+    return null
   }
 
   if (typeof background === 'string') {

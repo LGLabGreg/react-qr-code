@@ -4,7 +4,6 @@ import { describe, expect, it, vi } from 'vitest'
 
 import {
   BG_GRADIENT_ID,
-  DEFAULT_BGCOLOR,
   DEFAULT_MARGIN_SIZE,
   DEFAULT_SIZE,
   GRADIENT_ID,
@@ -121,11 +120,11 @@ describe('ReactQRCode', () => {
   })
 
   describe('Background', () => {
-    it('renders with default background color', () => {
+    it('renders without background if not provided', () => {
       render(<ReactQRCode value='test' />)
 
-      const background = screen.getByTestId('background')
-      expect(background).toHaveAttribute('fill', DEFAULT_BGCOLOR)
+      const background = screen.queryByTestId('background')
+      expect(background).not.toBeInTheDocument()
     })
 
     it('renders with custom background color', () => {
