@@ -10,6 +10,25 @@
     "directory": "packages/react-qr-code"
   },
   "homepage": "https://reactqrcode.com",
+  "keywords": [
+    "react",
+    "react-component",
+    "react-library",
+    "qr",
+    "code",
+    "qrcode",
+    "qr-code",
+    "qr-code-generator",
+    "qr-code-library",
+    "qr-code-react",
+    "customizable-qr-code",
+    "qr-code-with-logo",
+    "qr-code-svg",
+    "qr-code-image",
+    "qr-code-download",
+    "typescript",
+    "open-source"
+  ],
   "type": "module",
   "scripts": {
     "build": "tsc -b && vite build"
