@@ -130,4 +130,20 @@ describe('DataModules', () => {
       expect(path.getAttribute('fill')).toBe('#ff0000')
     })
   })
+
+  it('renders correctly with style hashtag', () => {
+    const spy = vi.spyOn(svgUtils, 'hashtag')
+    render(
+      <FinderPatternsInner
+        {...defaultProps}
+        settings={{ style: 'hashtag', color: '#ff0000' }}
+      />,
+    )
+    const paths = screen.getAllByTestId('finder-patterns-inner')
+    expect(paths).toHaveLength(3)
+    paths.forEach((path) => {
+      expect(spy).toHaveBeenCalled()
+      expect(path.getAttribute('fill')).toBe('#ff0000')
+    })
+  })
 })

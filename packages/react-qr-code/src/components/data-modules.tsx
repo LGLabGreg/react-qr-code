@@ -24,7 +24,7 @@ import {
 import { isFinderPatternInnerModule } from '../utils/finder-patterns-inner'
 import { isFinderPatternOuterModule } from '../utils/finder-patterns-outer'
 import { sanitizeDataModulesSettings } from '../utils/settings'
-import { heart, star } from '../utils/svg'
+import { hashtag, heart, star } from '../utils/svg'
 
 export const DataModules = ({
   modules,
@@ -75,6 +75,8 @@ export const DataModules = ({
           )
         } else if (style === 'heart') {
           ops.push(heart(xPos, yPos, size))
+        } else if (style === 'hashtag') {
+          ops.push(hashtag(xPos, yPos, size))
         } else if (style === 'rounded') {
           const { left, right, top, bottom, count } = getModuleNeighbours(x, y, modules)
 

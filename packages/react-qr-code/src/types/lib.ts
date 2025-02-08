@@ -39,6 +39,7 @@ export type DataModulesStyle =
   | 'diamond'
   | 'star'
   | 'heart'
+  | 'hashtag'
 
 export interface DataModulesSettings {
   color?: string
@@ -85,6 +86,7 @@ export type FinderPatternInnerStyle =
   | 'diamond'
   | 'star'
   | 'heart'
+  | 'hashtag'
 
 export interface FinderPatternInnerSettings {
   color?: string

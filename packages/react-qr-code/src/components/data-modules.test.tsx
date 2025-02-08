@@ -34,10 +34,13 @@ describe('DataModules', () => {
       diamond: 'diamond',
       heart: 'heart',
       star: 'star',
+      hashtag: 'hashtag',
     }
 
     Object.entries(stylesToMethods).forEach(([style, method]) => {
-      const utils = style === 'heart' || style === 'star' ? svgUtils : dataModulesUtils
+      const utils = ['heart', 'star', 'hashtag'].includes(style)
+        ? svgUtils
+        : dataModulesUtils
       const spy = vi.spyOn(utils, method as keyof typeof utils)
 
       render(
