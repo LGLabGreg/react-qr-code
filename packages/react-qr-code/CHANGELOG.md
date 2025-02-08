@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.2.2
+
+### Patch Changes
+
+- 3963391: Add new hashtag option for modules and finder patter inner
+
 ## 1.2.1
 
 ### Patch Changes
