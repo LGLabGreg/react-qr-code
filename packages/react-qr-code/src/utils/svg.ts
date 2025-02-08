@@ -21,19 +21,53 @@ export const calculateGradientVectors = (rotation: number) => {
 }
 
 export const star = (cx: number, cy: number, size: number, spikes: number): string => {
-  const outerRadius = size / 2 // Outer radius of the star
-  const innerRadius = outerRadius / 2 // Inner radius for the star
-  const step = Math.PI / spikes // Angle step for star points
+  const outerRadius = size / 2
+  const innerRadius = outerRadius / 2
+  const step = Math.PI / spikes
   let path = ''
 
   for (let i = 0; i < 2 * spikes; i++) {
-    const angle = i * step - Math.PI / 2 // Start angle at the top
-    const radius = i % 2 === 0 ? outerRadius : innerRadius // Alternate between outer and inner radius
+    const angle = i * step - Math.PI / 2
+    const radius = i % 2 === 0 ? outerRadius : innerRadius
     const px = cx + radius * Math.cos(angle)
     const py = cy + radius * Math.sin(angle)
     path += `${i === 0 ? 'M' : 'L'} ${px},${py} `
   }
   return path + 'Z' // Close the path
+}
+
+export const hashtag = (x: number, y: number, size: number) => {
+  const eigth = size / 8
+  return `M ${x + size} ${y + eigth * 3} 
+   V ${y + eigth}
+   h -${eigth}
+   V ${y}
+   H ${x + eigth * 5}
+   v ${eigth}
+   H ${x + eigth * 3}
+   V ${y}
+   H ${x + eigth}
+   v ${eigth}
+   H ${x}
+   v ${eigth * 2}
+   h ${eigth}
+   v ${eigth * 2}
+   H ${x}
+   v ${eigth * 2}
+   h ${eigth}
+   v ${eigth}
+   h ${eigth * 2}
+   v -${eigth}
+   h ${eigth * 2}
+   v ${eigth}
+   h ${eigth * 2}
+   v -${eigth}
+   h ${eigth}
+   V ${y + eigth * 5}
+   h -${eigth}
+   V ${y + eigth * 3}
+   h ${eigth}
+   Z`
 }
 
 export const heart = (x: number, y: number, size: number) => {

@@ -39,6 +39,7 @@ export const FINDER_PATTERN_INNER_STYLES: FinderPatternInnerStyle[] = [
   'diamond',
   'heart',
   'star',
+  'hashtag',
 ]
 
 export const DATA_MODULES_STYLES: DataModulesStyle[] = [
@@ -52,4 +53,5 @@ export const DATA_MODULES_STYLES: DataModulesStyle[] = [
   'diamond',
   'star',
   'heart',
+  'hashtag',
 ]

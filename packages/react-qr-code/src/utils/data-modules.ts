@@ -6,7 +6,8 @@ export const dataModuleCanBeRandomSize = (style: DataModulesStyle): boolean =>
   style === 'circle' ||
   style === 'star' ||
   style === 'heart' ||
-  style === 'diamond'
+  style === 'diamond' ||
+  style === 'hashtag'
 
 export const getScaleFactor = (style: string, isRandom: boolean) => {
   if (style === 'square-sm') {
