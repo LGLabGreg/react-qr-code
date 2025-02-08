@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.2.1
+
+### Patch Changes
+
+- 2a5fa40: Allow transparent background
+
 ## 1.2.0
 
 ### Minor Changes
