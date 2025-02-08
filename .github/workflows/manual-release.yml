@@ -30,6 +30,7 @@ jobs:
           version: 10
 
       - name: Get pnpm store directory
+        id: pnpm-cache
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
@@ -37,7 +38,7 @@ jobs:
       - uses: actions/cache@v4
         name: Setup pnpm cache
         with:
-          path: ${{ env.STORE_PATH }}
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
@@ -54,6 +55,7 @@ jobs:
           git config user.email 'github-actions[bot]@users.noreply.github.com'
 
       - name: Changeset Version
+        id: changeset-version
         run: |
           pnpm changeset version
           NEW_VERSION=$(node -p "require('./packages/react-qr-code/package.json').version")
@@ -61,17 +63,17 @@ jobs:
 
       - name: Create Branch and Commit
         run: |
-          git checkout -b release-v${{ env.NEW_VERSION }}
+          git checkout -b release-v${{ steps.changeset-version.outputs.NEW_VERSION }}
           git add .
-          git commit -m "chore: release v${{ env.NEW_VERSION }}"
-          git push origin release-v${{ env.NEW_VERSION }}
+          git commit -m "chore: release v${{ steps.changeset-version.outputs.NEW_VERSION }}"
+          git push origin release-v${{ steps.changeset-version.outputs.NEW_VERSION }}
 
       - name: Create Pull Request
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr create \
-            --title "New release v${{ env.NEW_VERSION }}" \
+            --title "New release v${{ steps.changeset-version.outputs.NEW_VERSION }}" \
             --body "This PR was created by the release workflow to create a new release." \
             --base main \
-            --head release-v${{ env.NEW_VERSION }}
+            --head release-v${{ steps.changeset-version.outputs.NEW_VERSION }}
