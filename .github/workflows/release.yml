@@ -1,20 +1,15 @@
-name: Publish Release
+name: Release
 
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches:
       - main
 
-permissions:
-  contents: write
-  pull-requests: write
-  issues: write
+concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   release:
-    name: Publish Release
-    if: github.event.pull_request.merged == true && contains(github.event.pull_request.title, 'New release v')
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -39,14 +34,10 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Build
-        run: pnpm run build:lib
-
-      - name: Publish and Create Release
-        id: create-release
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
         uses: changesets/action@v1
         with:
           publish: pnpm ci:publish --no-git-checks
-          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -23,7 +23,8 @@
   "lint-staged": {
     "**/*.{ts,tsx}": [
       "eslint --max-warnings=0",
-      "prettier --write --config .prettierrc"
+      "prettier --write --config .prettierrc",
+      "pnpm test"
     ]
   },
   "devDependencies": {
