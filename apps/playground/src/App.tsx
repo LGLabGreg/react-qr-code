@@ -31,7 +31,7 @@ function App() {
     value: 'https://github.com/LGLabGreg/react-qr-code.git',
     size: 500,
     marginSize: 3,
-    //background: '#f9f9f9',
+    background: '#f9f9f9',
     gradient: {
       type: 'linear',
       rotation: 0,
