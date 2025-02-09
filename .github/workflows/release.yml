@@ -33,7 +33,7 @@ jobs:
 
       - name: Create Release Pull Request or Publish to npm
         id: changesets
-        uses: changesets/action@v1
+        uses: changesets/action@v1.4.9
         with:
           commit: 'chore(release): version packages'
           title: 'chore(release): version packages'
