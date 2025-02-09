@@ -1,6 +1,6 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.5/schema.json",
-  "changelog": ["@changesets/cli/changelog", { "repo": "LGLabGreg/react-qr-code" }],
+  "changelog": ["@changesets/changelog-github", { "repo": "LGLabGreg/react-qr-code" }],
   "commit": false,
   "fixed": [],
   "linked": [],
