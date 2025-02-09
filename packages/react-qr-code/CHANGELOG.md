@@ -1,5 +1,17 @@
 # @lglab/react-qr-code
 
+## 1.3.0
+
+### Minor Changes
+
+- [#46](https://github.com/LGLabGreg/react-qr-code/pull/46) [`4a528f0`](https://github.com/LGLabGreg/react-qr-code/commit/4a528f0f2d1c179a7995f773ad8e9023564eb424) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Add 'pinched-square' style for modules and finder patterns
+
+### Patch Changes
+
+- [#48](https://github.com/LGLabGreg/react-qr-code/pull/48) [`525172d`](https://github.com/LGLabGreg/react-qr-code/commit/525172d6f2ef15598f4e75f840bd912805dc6092) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - use secrets npm token vs creating npmrc
+
+- [#47](https://github.com/LGLabGreg/react-qr-code/pull/47) [`ea61d2b`](https://github.com/LGLabGreg/react-qr-code/commit/ea61d2bddabd1c95f98ffd34162ee44f5516bf99) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - changeset github changelog
+
 ## 1.2.2
 
 ### Patch Changes
