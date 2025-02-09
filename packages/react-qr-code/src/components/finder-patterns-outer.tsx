@@ -41,7 +41,16 @@ export const FinderPatternsOuter = ({
     [margin, modules.length],
   )
 
-  if (['rounded-sm', 'rounded', 'rounded-lg', 'circle', 'square'].includes(style)) {
+  if (
+    [
+      'rounded-sm',
+      'rounded',
+      'rounded-lg',
+      'circle',
+      'square',
+      'pinched-square',
+    ].includes(style)
+  ) {
     for (const coordinate of coordinates) {
       const { x, y } = coordinate
       if (style === 'rounded-sm' || style === 'rounded' || style === 'rounded-lg') {
@@ -63,6 +72,21 @@ export const FinderPatternsOuter = ({
             } 0 1 1 -0.01 0` +
             'Z',
         )
+      } else if (style === 'pinched-square') {
+        ops.push(
+          `M ${x} ${y}` +
+            `Q ${x + 0.5} ${y + FINDER_PATTERN_SIZE / 2}, ${x} ${y + FINDER_PATTERN_SIZE}` +
+            `Q ${x + FINDER_PATTERN_SIZE / 2} ${y + FINDER_PATTERN_SIZE - 0.5}, ${x + FINDER_PATTERN_SIZE} ${y + FINDER_PATTERN_SIZE}` +
+            `Q ${x + FINDER_PATTERN_SIZE - 0.5} ${y + FINDER_PATTERN_SIZE / 2}, ${x + FINDER_PATTERN_SIZE} ${y}` +
+            `Q ${x + FINDER_PATTERN_SIZE / 2} ${y + 0.5}, ${x} ${y}` +
+            'z' +
+            `M ${x + 1} ${y + 1}` +
+            `Q ${x + FINDER_PATTERN_SIZE / 2} ${y + 1.25}, ${x + FINDER_PATTERN_SIZE - 1} ${y + 1}` +
+            `Q ${x + FINDER_PATTERN_SIZE - 1.25} ${y + FINDER_PATTERN_SIZE / 2}, ${x + FINDER_PATTERN_SIZE - 1} ${y + FINDER_PATTERN_SIZE - 1}` +
+            `Q ${x + FINDER_PATTERN_SIZE / 2} ${y + FINDER_PATTERN_SIZE - 1.25}, ${x + 1} ${y + FINDER_PATTERN_SIZE - 1}` +
+            `Q ${x + 1.25} ${y + FINDER_PATTERN_SIZE / 2}, ${x + 1} ${y + 1}` +
+            'z',
+        )
       } else {
         ops.push(
           `M ${x} ${y}` +
@@ -71,9 +95,9 @@ export const FinderPatternsOuter = ({
             `v ${-FINDER_PATTERN_SIZE}` +
             'z' +
             `M ${x + 1} ${y + 1}` +
-            `h ${FINDER_PATTERN_SIZE - 2 * 1}` +
-            `v ${FINDER_PATTERN_SIZE - 2 * 1}` +
-            `h ${-FINDER_PATTERN_SIZE + 2 * 1}` +
+            `h ${FINDER_PATTERN_SIZE - 2}` +
+            `v ${FINDER_PATTERN_SIZE - 2}` +
+            `h ${-FINDER_PATTERN_SIZE + 2}` +
             'z',
         )
       }

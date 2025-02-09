@@ -67,6 +67,21 @@ describe('DataModules', () => {
     )
   })
 
+  it('renders correctly with style pinched-square', () => {
+    render(
+      <FinderPatternsOuter
+        {...defaultProps}
+        settings={{ style: 'pinched-square', color: '#ff0000' }}
+      />,
+    )
+    const paths = screen.getAllByTestId('finder-patterns-outer')
+    expect(paths).toHaveLength(1)
+    expect(paths[0].getAttribute('fill')).toBe('#ff0000')
+    expect(paths[0].getAttribute('d')).toBe(
+      'M 2 2Q 2.5 5.5, 2 9Q 5.5 8.5, 9 9Q 8.5 5.5, 9 2Q 5.5 2.5, 2 2zM 3 3Q 5.5 3.25, 8 3Q 7.75 5.5, 8 8Q 5.5 7.75, 3 8Q 3.25 5.5, 3 3zM -2 2Q -1.5 5.5, -2 9Q 1.5 8.5, 5 9Q 4.5 5.5, 5 2Q 1.5 2.5, -2 2zM -1 3Q 1.5 3.25, 4 3Q 3.75 5.5, 4 8Q 1.5 7.75, -1 8Q -0.75 5.5, -1 3zM 2 -2Q 2.5 1.5, 2 5Q 5.5 4.5, 9 5Q 8.5 1.5, 9 -2Q 5.5 -1.5, 2 -2zM 3 -1Q 5.5 -0.75, 8 -1Q 7.75 1.5, 8 4Q 5.5 3.75, 3 4Q 3.25 1.5, 3 -1z',
+    )
+  })
+
   it('calls the correct shape function based on style prop', () => {
     const stylesToMethods = {
       'inpoint-sm': 'finderPatternsOuterInOutPoint',

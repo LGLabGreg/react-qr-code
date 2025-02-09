@@ -35,10 +35,11 @@ describe('DataModules', () => {
       heart: 'heart',
       star: 'star',
       hashtag: 'hashtag',
+      'pinched-square': 'pinchedSquare',
     }
 
     Object.entries(stylesToMethods).forEach(([style, method]) => {
-      const utils = ['heart', 'star', 'hashtag'].includes(style)
+      const utils = ['heart', 'star', 'hashtag', 'pinched-square'].includes(style)
         ? svgUtils
         : dataModulesUtils
       const spy = vi.spyOn(utils, method as keyof typeof utils)

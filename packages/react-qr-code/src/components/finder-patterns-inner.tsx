@@ -14,7 +14,7 @@ import {
   finderPatternsInnerLeaf,
 } from '../utils/finder-patterns-inner'
 import { sanitizeFinderPatternInnerSettings } from '../utils/settings'
-import { hashtag, heart, star } from '../utils/svg'
+import { hashtag, heart, pinchedSquare, star } from '../utils/svg'
 
 const testProps = {
   'data-testid': 'finder-patterns-inner',
@@ -64,6 +64,14 @@ export const FinderPatternsInner = ({
           {...testProps}
         />
       )
+    })
+  }
+
+  if (style === 'pinched-square') {
+    return coordinates.map((coordinate) => {
+      const { x, y } = coordinate
+      const path = pinchedSquare(x, y, FINDER_PATTERN_INNER_SIZE, 0.25)
+      return <path key={key(x, y)} fill={fill} d={path} {...testProps} />
     })
   }
 

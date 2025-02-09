@@ -33,8 +33,21 @@ export const star = (cx: number, cy: number, size: number, spikes: number): stri
     const py = cy + radius * Math.sin(angle)
     path += `${i === 0 ? 'M' : 'L'} ${px},${py} `
   }
-  return path + 'Z' // Close the path
+  return path + 'Z'
 }
+
+export const pinchedSquare = (
+  x: number,
+  y: number,
+  size: number,
+  controlOffset: number,
+) =>
+  `M ${x} ${y}` +
+  `Q ${x + controlOffset} ${y + size / 2}, ${x} ${y + size}` +
+  `Q ${x + size / 2} ${y + size - controlOffset}, ${x + size} ${y + size}` +
+  `Q ${x + size - controlOffset} ${y + size / 2}, ${x + size} ${y}` +
+  `Q ${x + size / 2} ${y + controlOffset}, ${x} ${y}` +
+  'z'
 
 export const hashtag = (x: number, y: number, size: number) => {
   const eigth = size / 8

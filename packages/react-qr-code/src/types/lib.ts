@@ -31,6 +31,7 @@ export interface GradientSettings {
 export type DataModulesStyle =
   | 'square'
   | 'square-sm'
+  | 'pinched-square'
   | 'rounded'
   | 'leaf'
   | 'vertical-line'
@@ -49,6 +50,7 @@ export interface DataModulesSettings {
 
 export type FinderPatternOuterStyle =
   | 'square'
+  | 'pinched-square'
   | 'rounded-sm'
   | 'rounded'
   | 'rounded-lg'
@@ -70,6 +72,7 @@ export interface FinderPatternOuterSettings {
 
 export type FinderPatternInnerStyle =
   | 'square'
+  | 'pinched-square'
   | 'rounded-sm'
   | 'rounded'
   | 'rounded-lg'

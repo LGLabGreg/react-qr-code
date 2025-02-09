@@ -24,7 +24,7 @@ import {
 import { isFinderPatternInnerModule } from '../utils/finder-patterns-inner'
 import { isFinderPatternOuterModule } from '../utils/finder-patterns-outer'
 import { sanitizeDataModulesSettings } from '../utils/settings'
-import { hashtag, heart, star } from '../utils/svg'
+import { hashtag, heart, pinchedSquare, star } from '../utils/svg'
 
 export const DataModules = ({
   modules,
@@ -65,6 +65,8 @@ export const DataModules = ({
       if (cell) {
         if (style === 'square' || style === 'square-sm') {
           ops.push(square(xPos, yPos, size))
+        } else if (style === 'pinched-square') {
+          ops.push(pinchedSquare(xPos, yPos, size, 0.25))
         } else if (style === 'circle') {
           ops.push(circle(xPos, yPos, size))
         } else if (style === 'diamond') {
