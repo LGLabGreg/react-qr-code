@@ -37,7 +37,7 @@ jobs:
         with:
           commit: 'chore(release): version packages'
           title: 'chore(release): version packages'
-          publish: npx changet publish
+          publish: pnpm ci:publish --no-git-checks
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
