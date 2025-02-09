@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.4.0
+
+### Minor Changes
+
+- [#58](https://github.com/LGLabGreg/react-qr-code/pull/58) [`ebc64e1`](https://github.com/LGLabGreg/react-qr-code/commit/ebc64e1cfa2f1746c76e91e22637aab81e3837c7) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - support random size for pinched-square
+
 ## 1.3.4
 
 ### Patch Changes
