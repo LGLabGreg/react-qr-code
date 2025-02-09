@@ -18,9 +18,9 @@ import {
 
 function App() {
   const [finderPatternOuterStyle, setFinderPatternOuterStyle] =
-    useState<FinderPatternOuterStyle>('square')
+    useState<FinderPatternOuterStyle>('pinched-square')
   const [finderPatternInnerStyle, setFinderPatternInnerStyle] =
-    useState<FinderPatternInnerStyle>('square')
+    useState<FinderPatternInnerStyle>('pinched-square')
   const [dataModulesStyle, setDataModulesStyle] = useState<DataModulesStyle>('square')
   const [dataModulesRandomSize, setDataModulesRandomSize] = useState<boolean>(false)
 

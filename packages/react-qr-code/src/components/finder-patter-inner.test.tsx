@@ -146,4 +146,20 @@ describe('DataModules', () => {
       expect(path.getAttribute('fill')).toBe('#ff0000')
     })
   })
+
+  it('renders correctly with style pinched-square', () => {
+    const spy = vi.spyOn(svgUtils, 'pinchedSquare')
+    render(
+      <FinderPatternsInner
+        {...defaultProps}
+        settings={{ style: 'pinched-square', color: '#ff0000' }}
+      />,
+    )
+    const paths = screen.getAllByTestId('finder-patterns-inner')
+    expect(paths).toHaveLength(3)
+    paths.forEach((path) => {
+      expect(spy).toHaveBeenCalled()
+      expect(path.getAttribute('fill')).toBe('#ff0000')
+    })
+  })
 })
