@@ -47,7 +47,7 @@ export const pinchedSquare = (
   `Q ${x + size / 2} ${y + size - controlOffset}, ${x + size} ${y + size}` +
   `Q ${x + size - controlOffset} ${y + size / 2}, ${x + size} ${y}` +
   `Q ${x + size / 2} ${y + controlOffset}, ${x} ${y}` +
-  'z'
+  'Z'
 
 export const hashtag = (x: number, y: number, size: number) => {
   const eigth = size / 8
