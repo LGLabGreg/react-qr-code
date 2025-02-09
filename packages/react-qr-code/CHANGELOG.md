@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.3.1
+
+### Patch Changes
+
+- [#50](https://github.com/LGLabGreg/react-qr-code/pull/50) [`f6e997b`](https://github.com/LGLabGreg/react-qr-code/commit/f6e997bb88a157717fec9649622aefa6133bad3f) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - add NODE_AUTH_TOKEN in release.yml
+
 ## 1.3.0
 
 ### Minor Changes
