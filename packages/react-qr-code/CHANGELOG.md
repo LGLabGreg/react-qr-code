@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.3.2
+
+### Patch Changes
+
+- [#52](https://github.com/LGLabGreg/react-qr-code/pull/52) [`8f7e092`](https://github.com/LGLabGreg/react-qr-code/commit/8f7e0921cef73afe2234813d3dc06c1c4f1c3683) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - use changet publish in release.yml
+
 ## 1.3.1
 
 ### Patch Changes
