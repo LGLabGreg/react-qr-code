@@ -1,4 +1,5 @@
 <img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=b9bf5f33-2c37-42c7-ab18-9de06e6937a7" />
+
 ![React QR Code Header](https://github.com/LGLabGreg/react-qr-code/raw/main/media/repo-header.png)
 
 # @lglab/react-qr-code
