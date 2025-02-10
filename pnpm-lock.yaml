@@ -99,8 +99,8 @@ importers:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
       tailwindcss:
-        specifier: ^4.0.4
-        version: 4.0.4
+        specifier: ^4.0.6
+        version: 4.0.6
     devDependencies:
       '@types/node':
         specifier: ^22.13.1
@@ -751,12 +751,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [android]
-
-  '@tailwindcss/oxide-darwin-arm64@4.0.4':
-    resolution: {integrity: sha512-vTca+ysNl8BYmYJTni9pLC+L3S4bvrj0ai1eUV3yYXYa5Cpugr5Fni6ylV0gcTZOyETm2RCCJ/0azU6MgqE6HA==}
-    engines: {node: '>= 10'}
-    cpu: [arm64]
-    os: [darwin]
 
   '@tailwindcss/oxide-darwin-x64@4.0.4':
     resolution: {integrity: sha512-rxPWb5AQJ/aAM/5UDCjaQaMYIcrZHe/Dr9xZu9+P9nJf3WAweNsGi+e+SW9EYGRiF3hkBtP2dvxVNAkTiEbNQQ==}
@@ -2698,6 +2692,9 @@ packages:
   tailwindcss@4.0.4:
     resolution: {integrity: sha512-/ezDLEkOLf1lXkr9F2iI5BHJbexJpty5zkV2B8bGHCqAdbc9vk85Jgdkq+ZOvNkNPa3yAaqJ8DjRt584Bc84kw==}
 
+  tailwindcss@4.0.6:
+    resolution: {integrity: sha512-mysewHYJKaXgNOW6pp5xon/emCsfAMnO8WMaGKZZ35fomnR/T5gYnRg2/yRTTrtXiEl1tiVkeRt0eMO6HxEZqw==}
+
   tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
@@ -3680,9 +3677,6 @@ snapshots:
   '@tailwindcss/oxide-android-arm64@4.0.4':
     optional: true
 
-  '@tailwindcss/oxide-darwin-arm64@4.0.4':
-    optional: true
-
   '@tailwindcss/oxide-darwin-x64@4.0.4':
     optional: true
 
@@ -3713,7 +3707,6 @@ snapshots:
   '@tailwindcss/oxide@4.0.4':
     optionalDependencies:
       '@tailwindcss/oxide-android-arm64': 4.0.4
-      '@tailwindcss/oxide-darwin-arm64': 4.0.4
       '@tailwindcss/oxide-darwin-x64': 4.0.4
       '@tailwindcss/oxide-freebsd-x64': 4.0.4
       '@tailwindcss/oxide-linux-arm-gnueabihf': 4.0.4
@@ -5844,6 +5837,8 @@ snapshots:
   symbol-tree@3.2.4: {}
 
   tailwindcss@4.0.4: {}
+
+  tailwindcss@4.0.6: {}
 
   tapable@2.2.1: {}
 
