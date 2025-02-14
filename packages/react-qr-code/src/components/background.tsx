@@ -1,3 +1,5 @@
+import { useId } from 'react'
+
 import { BG_GRADIENT_ID } from '../constants'
 import type { BackgroundSettings } from '../types/lib'
 import { calculateGradientVectors } from '../utils/svg'
@@ -12,6 +14,8 @@ const testProps = {
 }
 
 export const Background = ({ background, numCells }: BackgroundProps) => {
+  const uuid = useId()
+  const backgroundId = `${BG_GRADIENT_ID}-${uuid}`
   if (!background) {
     return null
   }
@@ -28,14 +32,14 @@ export const Background = ({ background, numCells }: BackgroundProps) => {
     <>
       <defs>
         {background.type === 'linear' ? (
-          <linearGradient id={BG_GRADIENT_ID} gradientUnits='userSpaceOnUse' {...vectors}>
+          <linearGradient id={backgroundId} gradientUnits='userSpaceOnUse' {...vectors}>
             {background.stops?.map((stop, index) => (
               <stop key={index} offset={stop.offset} stopColor={stop.color} />
             ))}
           </linearGradient>
         ) : (
           <radialGradient
-            id={BG_GRADIENT_ID}
+            id={backgroundId}
             gradientUnits='userSpaceOnUse'
             cx='50%'
             cy='50%'
@@ -48,7 +52,7 @@ export const Background = ({ background, numCells }: BackgroundProps) => {
         )}
       </defs>
       <path
-        fill={`url(#${BG_GRADIENT_ID})`}
+        fill={`url(#${backgroundId})`}
         d={`M0,0 h${numCells}v${numCells}H0z`}
         {...testProps}
       />

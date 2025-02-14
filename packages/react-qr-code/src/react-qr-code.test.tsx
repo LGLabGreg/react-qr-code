@@ -150,15 +150,22 @@ describe('ReactQRCode', () => {
       const { container } = render(<ReactQRCode value='test' background={gradient} />)
 
       const backgroundPath = screen.getByTestId('background')
-      const stops = container.querySelectorAll(`${selector}#${BG_GRADIENT_ID} stop`)
+      const gradientElement = container.querySelector(
+        `${selector}[id^="${BG_GRADIENT_ID}-"]`,
+      )
 
-      expect(backgroundPath).toHaveAttribute('fill', `url(#${BG_GRADIENT_ID})`)
+      const stops = gradientElement?.querySelectorAll('stop')
+
+      expect(backgroundPath).toHaveAttribute('fill', `url(#${gradientElement?.id})`)
       expect(container.querySelector(`${selector}`)).toBeInTheDocument()
-      expect(stops).toHaveLength(2)
-      expect(stops[0]).toHaveAttribute('stop-color', gradient.stops[0].color)
-      expect(stops[0]).toHaveAttribute('offset', gradient.stops[0].offset)
-      expect(stops[1]).toHaveAttribute('stop-color', gradient.stops[1].color)
-      expect(stops[1]).toHaveAttribute('offset', gradient.stops[1].offset)
+      expect(stops?.length).toBe(2)
+
+      if (stops) {
+        expect(stops[0]).toHaveAttribute('stop-color', gradient.stops[0].color)
+        expect(stops[0]).toHaveAttribute('offset', gradient.stops[0].offset)
+        expect(stops[1]).toHaveAttribute('stop-color', gradient.stops[1].color)
+        expect(stops[1]).toHaveAttribute('offset', gradient.stops[1].offset)
+      }
     })
   })
 
