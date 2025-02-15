@@ -29,7 +29,7 @@ function App() {
   const qrCodeOptions: ReactQRCodeProps = {
     ref,
     value: 'https://github.com/LGLabGreg/react-qr-code.git',
-    size: 500,
+    size: 256,
     marginSize: 3,
     background: '#f9f9f9',
     gradient: {
@@ -55,8 +55,8 @@ function App() {
     },
     imageSettings: {
       src: 'https://jd279l8p5w.ufs.sh/f/9xWilHEwGmJB6M4WMqmNVvfeTgSFGJm94uCp2xbtk87Zs1a3',
-      width: 60,
-      height: 60,
+      width: 30,
+      height: 30,
       excavate: true,
       x: 100,
       y: 100,
@@ -118,6 +118,41 @@ function App() {
           <button onClick={() => download({ format: 'jpeg' })}>Download JPEG</button>
         </div>
         <ReactQRCode {...qrCodeOptions} />
+        <ReactQRCode
+          background={{
+            type: 'linear',
+            rotation: 45,
+            stops: [
+              { offset: '0%', color: '#00f' },
+              { offset: '100%', color: '#f00' },
+            ],
+          }}
+          size={256}
+          value='https://reactqrcode.com'
+        />
+        <ReactQRCode
+          background={{
+            type: 'radial',
+            stops: [
+              { offset: '0%', color: '#f00' },
+              { offset: '100%', color: '#0f0' },
+            ],
+          }}
+          size={256}
+          value='https://reactqrcode.com'
+        />
+        <ReactQRCode
+          gradient={{
+            type: 'linear',
+            rotation: 45,
+            stops: [
+              { offset: '0%', color: '#f00' },
+              { offset: '100%', color: '#0f0' },
+            ],
+          }}
+          size={256}
+          value='https://reactqrcode.com'
+        />
       </div>
     </div>
   )

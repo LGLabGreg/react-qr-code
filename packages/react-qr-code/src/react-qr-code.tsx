@@ -11,6 +11,7 @@ import {
   DEFAULT_MINVERSION,
   DEFAULT_SIZE,
 } from './constants'
+import { useIds } from './hooks/use-ids'
 import { useQRCode } from './hooks/use-qr-code'
 import type { DownloadOptions, ReactQRCodeProps } from './types/lib'
 import { downloadRaster, downloadSVG } from './utils/download'
@@ -35,7 +36,7 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
   } = props
 
   const svgRef = useRef<SVGSVGElement | null>(null)
-
+  const { gradientId, bgGradientId } = useIds()
   const { margin, cells, numCells, calculatedImageSettings } = useQRCode({
     value,
     level,
@@ -99,6 +100,7 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
     modules,
     margin,
     gradient,
+    gradientId,
   }
 
   return (
@@ -111,8 +113,12 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
       aria-label={svgProps?.['aria-label'] || 'QR Code'}
       {...svgProps}
     >
-      <Gradient gradient={gradient} />
-      <Background background={background} numCells={numCells} />
+      <Gradient gradient={gradient} gradientId={gradientId} />
+      <Background
+        background={background}
+        bgGradientId={bgGradientId}
+        numCells={numCells}
+      />
       <FinderPatternsOuter settings={finderPatternOuterSettings} {...svgElementsProps} />
       <FinderPatternsInner settings={finderPatternInnerSettings} {...svgElementsProps} />
       <DataModules settings={dataModulesSettings} {...svgElementsProps} />
