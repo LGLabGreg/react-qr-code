@@ -25,6 +25,7 @@ describe('DataModules', () => {
   const defaultProps = {
     modules: mockModules,
     margin: 2,
+    gradientId: 'mock-gradient-id',
   }
 
   it('calls the correct shape function based on style prop', () => {

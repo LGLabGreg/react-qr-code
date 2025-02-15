@@ -1,2 +1,3 @@
 npx --no-install lint-staged
+pnpm build:lib
 pnpm test
