@@ -184,26 +184,30 @@ describe('ReactQRCode', () => {
       }
       const { container } = render(<ReactQRCode value='test' gradient={gradient} />)
 
-      const gradientElement = container.querySelector(`${selector}#${GRADIENT_ID}`)
-      const stops = container.querySelectorAll(`${selector}#${GRADIENT_ID} stop`)
+      const gradientElement = container.querySelector(
+        `${selector}[id^="${GRADIENT_ID}-"]`,
+      )
+      const stops = gradientElement?.querySelectorAll('stop')
 
       expect(gradientElement).toBeInTheDocument()
       expect(screen.getByTestId('data-modules')).toHaveAttribute(
         'fill',
-        `url(#${GRADIENT_ID})`,
+        `url(#${gradientElement?.id})`,
       )
       screen.getAllByTestId('finder-patterns-outer').forEach((path) => {
-        expect(path).toHaveAttribute('fill', `url(#${GRADIENT_ID})`)
+        expect(path).toHaveAttribute('fill', `url(#${gradientElement?.id})`)
       })
       screen.getAllByTestId('finder-patterns-inner').forEach((path) => {
-        expect(path).toHaveAttribute('fill', `url(#${GRADIENT_ID})`)
+        expect(path).toHaveAttribute('fill', `url(#${gradientElement?.id})`)
       })
 
       expect(stops).toHaveLength(2)
-      expect(stops[0]).toHaveAttribute('stop-color', gradient.stops[0].color)
-      expect(stops[0]).toHaveAttribute('offset', gradient.stops[0].offset)
-      expect(stops[1]).toHaveAttribute('stop-color', gradient.stops[1].color)
-      expect(stops[1]).toHaveAttribute('offset', gradient.stops[1].offset)
+      if (stops) {
+        expect(stops[0]).toHaveAttribute('stop-color', gradient.stops[0].color)
+        expect(stops[0]).toHaveAttribute('offset', gradient.stops[0].offset)
+        expect(stops[1]).toHaveAttribute('stop-color', gradient.stops[1].color)
+        expect(stops[1]).toHaveAttribute('offset', gradient.stops[1].offset)
+      }
     })
   })
 

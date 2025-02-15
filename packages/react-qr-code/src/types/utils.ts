@@ -22,6 +22,7 @@ export interface GeneratePathFnProps {
   modules: Modules
   margin: number
   gradient?: GradientSettings
+  gradientId: string
 }
 
 export interface FinderPatternsOuterProps extends GeneratePathFnProps {

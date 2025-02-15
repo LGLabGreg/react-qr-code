@@ -1,12 +1,12 @@
-import { GRADIENT_ID } from '../constants'
 import type { GradientSettings } from '../types/lib'
 import { calculateGradientVectors } from '../utils/svg'
 
 interface GradientProps {
   gradient?: GradientSettings
+  gradientId: string
 }
 
-export const Gradient = ({ gradient }: GradientProps) => {
+export const Gradient = ({ gradient, gradientId }: GradientProps) => {
   if (!gradient) {
     return null
   }
@@ -16,14 +16,14 @@ export const Gradient = ({ gradient }: GradientProps) => {
   return (
     <defs>
       {gradient.type === 'linear' ? (
-        <linearGradient id={GRADIENT_ID} gradientUnits='userSpaceOnUse' {...vectors}>
+        <linearGradient id={gradientId} gradientUnits='userSpaceOnUse' {...vectors}>
           {gradient.stops?.map((stop, index) => (
             <stop key={index} offset={stop.offset} stopColor={stop.color} />
           ))}
         </linearGradient>
       ) : (
         <radialGradient
-          id={GRADIENT_ID}
+          id={gradientId}
           gradientUnits='userSpaceOnUse'
           cx='50%'
           cy='50%'

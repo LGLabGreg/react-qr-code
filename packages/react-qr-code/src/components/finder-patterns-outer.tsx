@@ -4,7 +4,6 @@ import {
   FINDER_PATTERN_OUTER_RADIUSES,
   FINDER_PATTERN_OUTER_ROTATIONS,
   FINDER_PATTERN_SIZE,
-  GRADIENT_ID,
 } from '../constants'
 import type { FinderPatternsOuterProps } from '../types/utils'
 import {
@@ -23,12 +22,13 @@ export const FinderPatternsOuter = ({
   margin,
   settings,
   gradient,
+  gradientId,
 }: FinderPatternsOuterProps): ReactNode => {
   const { style, color } = useMemo(
     () => sanitizeFinderPatternOuterSettings(settings),
     [settings],
   )
-  const fill = gradient ? `url(#${GRADIENT_ID})` : color
+  const fill = gradient ? `url(#${gradientId})` : color
 
   const ops: Array<string> = []
 

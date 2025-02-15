@@ -6,7 +6,6 @@ import {
   FINDER_PATTERN_INNER_SIZE,
   FINDER_PATTERN_OUTER_ROTATIONS,
   FINDER_PATTERN_SIZE,
-  GRADIENT_ID,
 } from '../constants'
 import type { FinderPatternsInnerProps } from '../types/utils'
 import {
@@ -25,12 +24,13 @@ export const FinderPatternsInner = ({
   margin,
   settings,
   gradient,
+  gradientId,
 }: FinderPatternsInnerProps): ReactNode => {
   const { color, style } = useMemo(
     () => sanitizeFinderPatternInnerSettings(settings),
     [settings],
   )
-  const fill = gradient ? `url(#${GRADIENT_ID})` : color
+  const fill = gradient ? `url(#${gradientId})` : color
 
   const coordinates = useMemo(
     () => [

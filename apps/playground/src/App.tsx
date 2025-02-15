@@ -123,8 +123,8 @@ function App() {
             type: 'linear',
             rotation: 45,
             stops: [
-              { offset: '0%', color: '#ff7e5f' },
-              { offset: '100%', color: '#feb47b' },
+              { offset: '0%', color: '#00f' },
+              { offset: '100%', color: '#f00' },
             ],
           }}
           size={256}
@@ -133,6 +133,18 @@ function App() {
         <ReactQRCode
           background={{
             type: 'radial',
+            stops: [
+              { offset: '0%', color: '#f00' },
+              { offset: '100%', color: '#0f0' },
+            ],
+          }}
+          size={256}
+          value='https://reactqrcode.com'
+        />
+        <ReactQRCode
+          gradient={{
+            type: 'linear',
+            rotation: 45,
             stops: [
               { offset: '0%', color: '#f00' },
               { offset: '100%', color: '#0f0' },
