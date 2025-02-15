@@ -17,6 +17,7 @@ describe('DataModules', () => {
   const defaultProps = {
     modules: mockModules,
     margin: 2,
+    gradientId: 'mock-gradient-id',
   }
 
   it.each([['rounded-sm'], ['rounded'], ['rounded-lg'], ['circle'], ['square']])(
