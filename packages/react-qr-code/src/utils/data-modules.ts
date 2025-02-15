@@ -3,6 +3,7 @@ import type { DataModulesNeighbours } from '../types/utils'
 
 export const dataModuleCanBeRandomSize = (style: DataModulesStyle): boolean =>
   style === 'square' ||
+  style === 'pinched-square' ||
   style === 'circle' ||
   style === 'star' ||
   style === 'heart' ||
