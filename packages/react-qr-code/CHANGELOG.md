@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.4.1
+
+### Patch Changes
+
+- [#68](https://github.com/LGLabGreg/react-qr-code/pull/68) [`ed288c2`](https://github.com/LGLabGreg/react-qr-code/commit/ed288c20e5c24413f1777b47ef3f5eec2252cb19) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Fix issue with multiple QR codes sharing same gradient
+
 ## 1.4.0
 
 ### Minor Changes
