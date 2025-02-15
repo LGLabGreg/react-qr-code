@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.4.2
+
+### Patch Changes
+
+- [#70](https://github.com/LGLabGreg/react-qr-code/pull/70) [`4555720`](https://github.com/LGLabGreg/react-qr-code/commit/4555720ca64e8aa9c91196ac8b983e051be2e371) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Fix tests missing gradientId
+
 ## 1.4.1
 
 ### Patch Changes
