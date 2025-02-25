@@ -1,5 +1,13 @@
 # @lglab/react-qr-code
 
+## 1.4.3
+
+### Patch Changes
+
+- [#90](https://github.com/LGLabGreg/react-qr-code/pull/90) [`d03576b`](https://github.com/LGLabGreg/react-qr-code/commit/d03576b0ce20ac9dfc989352a807b7816ee9f93a) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Add ref to ReactQRCodeProps
+
+- [#90](https://github.com/LGLabGreg/react-qr-code/pull/90) [`601cd2e`](https://github.com/LGLabGreg/react-qr-code/commit/601cd2e7a7931a0e7a858e743e9b0e8a56b4b316) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Use forwardRef to support React 18
+
 ## 1.4.2
 
 ### Patch Changes
