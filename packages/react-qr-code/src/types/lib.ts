@@ -109,6 +109,7 @@ export interface ReactQRCodeRef {
 }
 
 export interface ReactQRCodeProps {
+  ref?: React.Ref<ReactQRCodeRef>
   /**
    * The value to encode into the QR Code. An array of strings can be passed in
    * to represent multiple segments to further optimize the QR Code.
