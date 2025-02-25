@@ -1,4 +1,4 @@
-import { useImperativeHandle, useRef } from 'react'
+import { forwardRef, useImperativeHandle, useRef } from 'react'
 
 import { Background } from './components/background'
 import { DataModules } from './components/data-modules'
@@ -13,13 +13,12 @@ import {
 } from './constants'
 import { useIds } from './hooks/use-ids'
 import { useQRCode } from './hooks/use-qr-code'
-import type { DownloadOptions, ReactQRCodeProps } from './types/lib'
+import type { DownloadOptions, ReactQRCodeProps, ReactQRCodeRef } from './types/lib'
 import { downloadRaster, downloadSVG } from './utils/download'
 import { excavateModules } from './utils/qr-code'
 
-const ReactQRCode = (props: ReactQRCodeProps) => {
+const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) => {
   const {
-    ref,
     value,
     size = DEFAULT_SIZE,
     level = DEFAULT_LEVEL,
@@ -125,7 +124,7 @@ const ReactQRCode = (props: ReactQRCodeProps) => {
       {image}
     </svg>
   )
-}
+})
 
 ReactQRCode.displayName = 'ReactQRCode'
 
