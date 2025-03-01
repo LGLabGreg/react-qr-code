@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "prebuild": "pnpm --filter \"./packages/**\" run build",
+    "prebuild": "cd ../.. && pnpm --filter \"./packages/**\" run build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
