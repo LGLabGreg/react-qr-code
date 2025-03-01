@@ -1,108 +1,34 @@
 import type { MetadataRoute } from 'next'
 
+const BASE_URL = 'https://reactqrcode.com'
+const DEFAULT_OPTIONS = {
+  lastModified: new Date(),
+  changeFrequency: 'monthly' as const,
+}
+const PAGES = [
+  { path: '', priority: 1 },
+  { path: '/installation', priority: 0.8 },
+  { path: '/quick-start', priority: 0.8 },
+  { path: '/demo', priority: 0.9 },
+  { path: '/react-qr-code-props', priority: 0.7 },
+  { path: '/data-modules-settings', priority: 0.7 },
+  { path: '/finder-pattern-outer-settings', priority: 0.7 },
+  { path: '/finder-pattern-inner-settings', priority: 0.7 },
+  { path: '/gradient-settings', priority: 0.7 },
+  { path: '/image-settings', priority: 0.7 },
+  { path: '/ref-api', priority: 0.7 },
+  { path: '/examples/basic', priority: 0.7 },
+  { path: '/examples/data-modules', priority: 0.7 },
+  { path: '/examples/finder-patterns', priority: 0.7 },
+  { path: '/examples/background', priority: 0.7 },
+  { path: '/examples/image', priority: 0.7 },
+  { path: '/examples/download', priority: 0.7 },
+]
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: 'https://reactqrcode.com',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    {
-      url: 'https://reactqrcode.com/installation',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://reactqrcode.com/quick-start',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://reactqrcode.com/demo',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: 'https://reactqrcode.com/react-qr-code-props',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/data-modules-settings',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/finder-pattern-outer-settings',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/finder-pattern-inner-settings',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/gradient-settings',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/image-settings',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/ref-api',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/examples/basic',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/examples/data-modules',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/examples/finder-patterns',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/examples/background',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/examples/image',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: 'https://reactqrcode.com/examples/download',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-  ]
+  return PAGES.map(({ path, priority }) => ({
+    url: `${BASE_URL}${path}`,
+    priority,
+    ...DEFAULT_OPTIONS,
+  }))
 }
