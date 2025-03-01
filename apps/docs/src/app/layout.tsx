@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   description:
     'React QR Code is a highly customizable and lightweight QR code generator for React applications. Easily style QR codes with unique finder patterns, rounded corners, and customizable colors. Explore the documentation and live demo to get started quickly!',
   verification: {
-    google: 'Goj4S4p5vftypzgOYaMYR-93W3hdlgOT_1qpFmW2gfE',
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
 }
 
@@ -41,7 +41,7 @@ export default function RootLayout({
         {IS_PRODUCTION && (
           <Script
             src='https://cloud.umami.is/script.js'
-            data-website-id='f474cb7d-6ce8-44e3-8174-96bdd5ecdffb'
+            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
           />
         )}
       </body>
