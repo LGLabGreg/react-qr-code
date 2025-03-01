@@ -18,7 +18,7 @@ import { ImageSettingsDemo } from './image-settings'
 import { MainSettings } from './main-settings'
 
 export const defaultImageSettings = {
-  src: 'https://j2f4u60ri0.ufs.sh/f/SP31UeyNJl0QZ6JHB40s0b6HcXRBOL2IGNzKC4E7g5uiQdkm',
+  src: 'https://reactqrcode.com/images/logo-60.png',
   width: 60,
   height: 60,
   excavate: true,
