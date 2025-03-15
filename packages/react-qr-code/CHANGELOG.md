@@ -1,5 +1,13 @@
 # @lglab/react-qr-code
 
+## 1.4.4
+
+### Patch Changes
+
+- [#114](https://github.com/LGLabGreg/react-qr-code/pull/114) [`1e59666`](https://github.com/LGLabGreg/react-qr-code/commit/1e59666f4b1073bc03fe106259f298dc36953da8) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Fix readme
+
+- [#114](https://github.com/LGLabGreg/react-qr-code/pull/114) [`e76ae62`](https://github.com/LGLabGreg/react-qr-code/commit/e76ae622ea7a7be7924a60efd7edc1b04b91a956) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Update deps
+
 ## 1.4.3
 
 ### Patch Changes
