@@ -14,8 +14,7 @@ A highly customizable and lightweight QR code generator for React applications.
 - **Highly Customizable** - Style the finder patterns, modules, and colors exactly how you want.
 - **Performance Optimized** - Generates QR codes efficiently without sacrificing quality.
 - **SVG-Based Rendering** - Crisp and scalable output for web and print
-- **Developer-Friendly** - Style the finder patterns, modules, and colors exactly how you want.
-- **Highly Customizable** - Built with TypeScript, easy to use, and well-documented
+- **Developer-Friendly** - Built with TypeScript, easy to use, and well-documented.
 
 ## Install
 
