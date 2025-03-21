@@ -62,7 +62,7 @@
     "vitest": "^3.0.7"
   },
   "dependencies": {
-    "@eslint/eslintrc": "^3.3.0",
+    "@eslint/eslintrc": "^3.3.1",
     "eslint-config-next": "15.2.3"
   }
 }
