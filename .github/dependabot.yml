@@ -10,3 +10,27 @@ updates:
     target-branch: 'next'
     schedule:
       interval: 'daily'
+    groups:
+      react:
+        patterns:
+          - 'react*'
+      typescript:
+        patterns:
+          - '@types*'
+          - 'ts*'
+          - 'typescript*'
+      eslint:
+        patterns:
+          - 'eslint*'
+          - '@eslint*'
+      radix:
+        patterns:
+          - '@radix-ui*'
+      vite|vitest:
+        patterns:
+          - 'vite*'
+          - '@vite*'
+      tailwind:
+        patterns:
+          - 'tailwind*'
+          - '@tailwind*'
