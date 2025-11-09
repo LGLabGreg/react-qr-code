@@ -28,6 +28,9 @@ jobs:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
 
+      - name: Install latest npm
+        run: npm install -g npm@latest
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 

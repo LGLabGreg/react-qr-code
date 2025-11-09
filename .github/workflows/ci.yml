@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install latest npm
+        run: npm install -g npm@latest
+
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
