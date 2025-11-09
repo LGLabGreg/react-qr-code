@@ -66,11 +66,11 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.4",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",
-    "@types/node": "^22.14.1",
+    "@types/node": "^24.10.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.1.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   }
 }
