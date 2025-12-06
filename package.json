@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/LGLabGreg/react-qr-code.git"
   },
-  "packageManager": "pnpm@10.20.0",
+  "packageManager": "pnpm@10.24.0",
   "type": "module",
   "scripts": {
     "dev": "pnpm concurrently --names packages,apps \"pnpm watch:packages\" \"pnpm watch:playground\" \"pnpm watch:docs\"",
@@ -35,16 +35,16 @@
     ]
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.5.1",
-    "@changesets/cli": "^2.29.7",
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.29.8",
     "@eslint/js": "^9.39.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@trivago/prettier-plugin-sort-imports": "^6.0.0",
     "@types/jsdom": "^27.0.0",
-    "@types/node": "^24.10.0",
-    "@vitejs/plugin-react": "^5.1.0",
-    "@vitest/coverage-v8": "4.0.8",
+    "@types/node": "^24.10.1",
+    "@vitejs/plugin-react": "^5.1.1",
+    "@vitest/coverage-v8": "4.0.15",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react": "^7.37.5",
@@ -52,17 +52,17 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
-    "jsdom": "^27.1.0",
-    "lint-staged": "^16.2.6",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "jsdom": "^27.2.0",
+    "lint-staged": "^16.2.7",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.46.3",
-    "vite": "^7.2.2",
-    "vitest": "^4.0.8"
+    "typescript-eslint": "^8.48.1",
+    "vite": "^7.2.6",
+    "vitest": "^4.0.15"
   },
   "dependencies": {
-    "@eslint/eslintrc": "^3.3.1",
-    "eslint-config-next": "16.0.1"
+    "@eslint/eslintrc": "^3.3.3",
+    "eslint-config-next": "16.0.7"
   }
 }
