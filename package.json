@@ -63,6 +63,6 @@
   },
   "dependencies": {
     "@eslint/eslintrc": "^3.3.3",
-    "eslint-config-next": "16.0.8"
+    "eslint-config-next": "16.0.9"
   }
 }
