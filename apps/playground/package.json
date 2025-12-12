@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "@lglab/react-qr-code": "workspace:*",
-    "@tailwindcss/vite": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.18",
     "react": "^19.2.2",
     "react-dom": "^19.2.2",
-    "tailwindcss": "^4.1.17"
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
     "@types/node": "^24.10.2",
