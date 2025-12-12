@@ -9,18 +9,18 @@
   },
   "dependencies": {
     "@lglab/react-qr-code": "workspace:*",
-    "@tailwindcss/vite": "^4.1.17",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
-    "tailwindcss": "^4.1.17"
+    "@tailwindcss/vite": "^4.1.18",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "@types/node": "^24.10.1",
+    "@types/node": "^25.0.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
+    "@vitejs/plugin-react": "^5.1.2",
     "globals": "^16.5.0",
     "typescript": "~5.9.3",
-    "vite": "^7.2.6"
+    "vite": "^7.2.7"
   }
 }
