@@ -32,7 +32,7 @@ importers:
         version: 16.3.1(@testing-library/dom@10.4.0)(@types/react-dom@19.2.3(@types/react@19.2.7))(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^6.0.0
-        version: 6.0.0(@vue/compiler-sfc@3.5.25)(prettier@3.5.2)
+        version: 6.0.0(@vue/compiler-sfc@3.5.25)(prettier@3.7.4)
       '@types/jsdom':
         specifier: ^27.0.0
         version: 27.0.0
@@ -72,6 +72,9 @@ importers:
       lint-staged:
         specifier: ^16.2.7
         version: 16.2.7
+      prettier:
+        specifier: ^3.7.4
+        version: 3.7.4
       react:
         specifier: ^19.2.3
         version: 19.2.3
@@ -95,7 +98,7 @@ importers:
     dependencies:
       '@hookform/resolvers':
         specifier: ^5.2.2
-        version: 5.2.2(react-hook-form@7.68.0(react@19.2.3))
+        version: 5.2.2(react-hook-form@7.69.0(react@19.2.3))
       '@lglab/react-qr-code':
         specifier: workspace:*
         version: link:../../packages/react-qr-code
@@ -160,8 +163,8 @@ importers:
         specifier: 16.1.0
         version: 16.1.0(@typescript-eslint/parser@8.50.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
       lucide-react:
-        specifier: ^0.561.0
-        version: 0.561.0(react@19.2.3)
+        specifier: ^0.562.0
+        version: 0.562.0(react@19.2.3)
       next:
         specifier: 16.1.0
         version: 16.1.0(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -178,8 +181,8 @@ importers:
         specifier: ^19.2.3
         version: 19.2.3(react@19.2.3)
       react-hook-form:
-        specifier: ^7.68.0
-        version: 7.68.0(react@19.2.3)
+        specifier: ^7.69.0
+        version: 7.69.0(react@19.2.3)
       react-icons:
         specifier: ^5.5.0
         version: 5.5.0(react@19.2.3)
@@ -195,7 +198,7 @@ importers:
         version: 4.1.18
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^6.0.0
-        version: 6.0.0(@vue/compiler-sfc@3.5.25)(prettier@3.5.2)
+        version: 6.0.0(@vue/compiler-sfc@3.5.25)(prettier@3.7.4)
       '@types/node':
         specifier: ^25.0.3
         version: 25.0.3
@@ -3445,8 +3448,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  lucide-react@0.561.0:
-    resolution: {integrity: sha512-Y59gMY38tl4/i0qewcqohPdEbieBy7SovpBL9IFebhc2mDd8x4PZSOsiFRkpPcOq6bj1r/mjH/Rk73gSlIJP2A==}
+  lucide-react@0.562.0:
+    resolution: {integrity: sha512-82hOAu7y0dbVuFfmO4bYF1XEwYk/mEbM5E+b1jgci/udUBEE/R7LF5Ip0CCEmXe8AybRM8L+04eP+LGZeDvkiw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
@@ -3735,8 +3738,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.5.2:
-    resolution: {integrity: sha512-lc6npv5PH7hVqozBR7lkBNOGXV9vMwROAPlumdBkX0wTbbzPu/U1hk5yL8p2pt4Xoc+2mkT8t/sow2YrV/M5qg==}
+  prettier@3.7.4:
+    resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -3767,8 +3770,8 @@ packages:
     peerDependencies:
       react: ^19.2.3
 
-  react-hook-form@7.68.0:
-    resolution: {integrity: sha512-oNN3fjrZ/Xo40SWlHf1yCjlMK417JxoSJVUXQjGdvdRCU07NTFei1i1f8ApUAts+IVh14e4EdakeLEA+BEAs/Q==}
+  react-hook-form@7.69.0:
+    resolution: {integrity: sha512-yt6ZGME9f4F6WHwevrvpAjh42HMvocuSnSIHUGycBqXIJdhqGSPQzTpGF+1NLREk/58IdPxEMfPcFCjlMhclGw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -4972,10 +4975,10 @@ snapshots:
 
   '@floating-ui/utils@0.2.10': {}
 
-  '@hookform/resolvers@5.2.2(react-hook-form@7.68.0(react@19.2.3))':
+  '@hookform/resolvers@5.2.2(react-hook-form@7.69.0(react@19.2.3))':
     dependencies:
       '@standard-schema/utils': 0.3.0
-      react-hook-form: 7.68.0(react@19.2.3)
+      react-hook-form: 7.69.0(react@19.2.3)
 
   '@humanfs/core@0.19.1': {}
 
@@ -5924,7 +5927,7 @@ snapshots:
       '@types/react': 19.2.7
       '@types/react-dom': 19.2.3(@types/react@19.2.7)
 
-  '@trivago/prettier-plugin-sort-imports@6.0.0(@vue/compiler-sfc@3.5.25)(prettier@3.5.2)':
+  '@trivago/prettier-plugin-sort-imports@6.0.0(@vue/compiler-sfc@3.5.25)(prettier@3.7.4)':
     dependencies:
       '@babel/generator': 7.28.5
       '@babel/parser': 7.28.5
@@ -5934,7 +5937,7 @@ snapshots:
       lodash-es: 4.17.21
       minimatch: 9.0.5
       parse-imports-exports: 0.2.4
-      prettier: 3.5.2
+      prettier: 3.7.4
     optionalDependencies:
       '@vue/compiler-sfc': 3.5.25
     transitivePeerDependencies:
@@ -7926,7 +7929,7 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  lucide-react@0.561.0(react@19.2.3):
+  lucide-react@0.562.0(react@19.2.3):
     dependencies:
       react: 19.2.3
 
@@ -8194,7 +8197,7 @@ snapshots:
 
   prettier@2.8.8: {}
 
-  prettier@3.5.2: {}
+  prettier@3.7.4: {}
 
   pretty-format@27.5.1:
     dependencies:
@@ -8225,7 +8228,7 @@ snapshots:
       react: 19.2.3
       scheduler: 0.27.0
 
-  react-hook-form@7.68.0(react@19.2.3):
+  react-hook-form@7.69.0(react@19.2.3):
     dependencies:
       react: 19.2.3
 

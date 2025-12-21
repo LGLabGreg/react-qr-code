@@ -21,6 +21,10 @@ export const mainNav: MenuItemProps[] = [
         title: 'Demo',
         url: '/demo',
       },
+      {
+        title: 'llms.txt',
+        url: '/llms-txt',
+      },
     ],
   },
   {
