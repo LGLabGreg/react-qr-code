@@ -1,0 +1,138 @@
+# @lglab/react-qr-code Technical Reference
+
+> Comprehensive technical documentation for @lglab/react-qr-code, a highly customizable React QR code generator.
+
+This file provides all technical details including component props, types, and API references to enable LLMs to work with the library without fetching additional context.
+
+## ReactQRCode Component
+
+The main component exported by the library.
+
+### Props (ReactQRCodeProps)
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string \| string[]` | - | **Required.** The value to encode. Use an array for multi-segment optimization. |
+| `size` | `number` | `128` | The size in pixels of the rendered QR code. |
+| `level` | `'L' \| 'M' \| 'Q' \| 'H'` | `'L'` | Error Correction Level. |
+| `marginSize` | `number` | `0` | Number of modules to use for the margin. |
+| `minVersion` | `number` | `1` | Minimum version (1-40) for the QR code. |
+| `boostLevel` | `boolean` | `true` | Boosts ECL if version remains the same. |
+| `background` | `BackgroundSettings` | `'#FFFFFF'` | Background color (hex) or `GradientSettings`. |
+| `gradient` | `GradientSettings` | - | Gradient applied to data modules and finder patterns. |
+| `dataModulesSettings` | `DataModulesSettings` | - | Configuration for data modules styling. |
+| `finderPatternOuterSettings` | `FinderPatternOuterSettings` | - | Configuration for outer finder patterns. |
+| `finderPatternInnerSettings` | `FinderPatternInnerSettings` | - | Configuration for inner finder patterns. |
+| `imageSettings` | `ImageSettings` | - | Settings for an embedded logo or image. |
+| `svgProps` | `React.SVGProps<SVGSVGElement>` | - | Additional props passed to the root SVG element. |
+
+---
+
+## Sub-Settings Interfaces
+
+### DataModulesSettings
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `color` | `string` | - | Color of the data modules (overridden by `gradient`). |
+| `style` | `DataModulesStyle` | `'square'` | Shape of the data modules. |
+| `randomSize` | `boolean` | `false` | If true, modules will have slightly varied sizes. |
+
+**Available Styles (`DataModulesStyle`):**
+`'square'`, `'square-sm'`, `'pinched-square'`, `'rounded'`, `'leaf'`, `'vertical-line'`, `'horizontal-line'`, `'circle'`, `'diamond'`, `'star'`, `'heart'`, `'hashtag'`
+
+### FinderPatternOuterSettings
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `color` | `string` | - | Color of the outer pattern (overridden by `gradient`). |
+| `style` | `FinderPatternOuterStyle` | `'square'` | Shape of the outer finder pattern. |
+
+**Available Styles (`FinderPatternOuterStyle`):**
+`'square'`, `'pinched-square'`, `'rounded-sm'`, `'rounded'`, `'rounded-lg'`, `'circle'`, `'inpoint-sm'`, `'inpoint'`, `'inpoint-lg'`, `'outpoint-sm'`, `'outpoint'`, `'outpoint-lg'`, `'leaf-sm'`, `'leaf'`, `'leaf-lg'`
+
+### FinderPatternInnerSettings
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `color` | `string` | - | Color of the inner pattern (overridden by `gradient`). |
+| `style` | `FinderPatternInnerStyle` | `'square'` | Shape of the inner finder pattern. |
+
+**Available Styles (`FinderPatternInnerStyle`):**
+Includes all `FinderPatternOuterStyle` plus: `'diamond'`, `'star'`, `'heart'`, `'hashtag'`
+
+### ImageSettings
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `src` | `string` | - | **Required.** URL/Source of the image. |
+| `height` | `number` | - | **Required.** Height in pixels. |
+| `width` | `number` | - | **Required.** Width in pixels. |
+| `excavate` | `boolean` | `false` | Remove modules behind the image. |
+| `x` | `number` | - | Horizontal offset (centered by default). |
+| `y` | `number` | - | Vertical offset (centered by default). |
+| `opacity` | `number` | `1` | Image opacity (0-1). |
+| `crossOrigin` | `CrossOrigin` | - | CORS setting for the image. |
+
+### GradientSettings
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `type` | `'linear' \| 'radial'` | - | **Required.** Type of gradient. |
+| `stops` | `GradientSettingsStop[]` | - | **Required.** Array of `{ offset: string, color: string }`. |
+| `rotation` | `number` | `0` | Rotation in degrees (for linear gradients). |
+
+---
+
+## Imperative API (Ref)
+
+The component exposes the following via `forwardRef`:
+
+### ReactQRCodeRef
+
+| Method / Property | Type | Description |
+| --- | --- | --- |
+| `svg` | `SVGSVGElement \| null` | Reference to the underlying SVG element. |
+| `download` | `(options: DownloadOptions) => void` | Triggers a download of the QR code. |
+
+### DownloadOptions
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | `'qr-code'` | Filename without extension. |
+| `format` | `'svg' \| 'png' \| 'jpeg'` | `'svg'` | Target file format. |
+| `size` | `number` | `500` | Target size in pixels for the export. |
+
+---
+
+## Examples
+
+### Basic Usage
+```tsx
+import { ReactQRCode } from '@lglab/react-qr-code';
+
+<ReactQRCode value="https://reactqrcode.com" />
+```
+
+### Advanced Customization
+```tsx
+<ReactQRCode
+  value="https://reactqrcode.com"
+  size={256}
+  level="H"
+  dataModulesSettings={{
+    style: 'rounded',
+    color: '#2563eb'
+  }}
+  finderPatternOuterSettings={{
+    style: 'rounded-lg'
+  }}
+  imageSettings={{
+    src: '/logo.png',
+    width: 40,
+    height: 40,
+    excavate: true
+  }}
+/>
+```
+

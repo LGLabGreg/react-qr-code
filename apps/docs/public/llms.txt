@@ -1,0 +1,26 @@
+# reactqrcode.com
+
+> Official documentation and demo for @lglab/react-qr-code, a highly customizable React QR code generator.
+
+This site serves as the central hub for the `@lglab/react-qr-code` library, providing installation guides, API references, and an interactive demo for generating custom QR codes.
+
+## Documentation Pages
+
+- [Introduction](https://reactqrcode.com/)
+- [Installation](https://reactqrcode.com/installation)
+- [Quick Start](https://reactqrcode.com/quick-start)
+- [Interactive Demo](https://reactqrcode.com/demo)
+- [ReactQRCode Props](https://reactqrcode.com/react-qr-code-props)
+- [Ref API](https://reactqrcode.com/ref-api)
+- [Data Modules Settings](https://reactqrcode.com/data-modules-settings)
+- [Finder Pattern Inner Settings](https://reactqrcode.com/finder-pattern-inner-settings)
+- [Finder Pattern Outer Settings](https://reactqrcode.com/finder-pattern-outer-settings)
+- [Gradient Settings](https://reactqrcode.com/gradient-settings)
+- [Image Settings](https://reactqrcode.com/image-settings)
+- [Examples](https://reactqrcode.com/examples)
+
+## External Links
+
+- [GitHub Repository](https://github.com/LGLabGreg/react-qr-code)
+- [npm Package](https://www.npmjs.com/package/@lglab/react-qr-code)
+
