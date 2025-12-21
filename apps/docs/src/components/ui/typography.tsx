@@ -139,7 +139,7 @@ export function TypographyTable({
             {headers.map((header) => (
               <th
                 key={header}
-                className='border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right'
+                className='border px-4 py-2 text-left font-bold [[align=center]]:text-center [[align=right]]:text-right'
               >
                 {header}
               </th>
@@ -152,7 +152,7 @@ export function TypographyTable({
               {items.map((item) => (
                 <td
                   key={item}
-                  className='border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right'
+                  className='border px-4 py-2 text-left [[align=center]]:text-center [[align=right]]:text-right'
                 >
                   {item}
                 </td>
