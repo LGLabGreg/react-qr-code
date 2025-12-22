@@ -57,7 +57,7 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.50.0",
+    "typescript-eslint": "^8.50.1",
     "vite": "^7.3.0",
     "vite-plugin-dts": "^4.5.4"
   }
