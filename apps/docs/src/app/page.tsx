@@ -17,38 +17,38 @@ export default function Page() {
       title: 'Highly Customizable',
       description:
         'Style finder patterns, modules, and colors exactly how you want with advanced configuration.',
-      icon: <Sparkles className='h-5 w-5 text-primary' />,
+      icon: <Sparkles className='h-4 w-4 text-primary' />,
     },
     {
       title: 'Performance Optimized',
       description:
         'Generates QR codes efficiently without sacrificing quality or bundle size.',
-      icon: <Zap className='h-5 w-5 text-primary' />,
+      icon: <Zap className='h-4 w-4 text-primary' />,
     },
     {
       title: 'SVG-Based Rendering',
       description: 'Crisp and scalable output for web and print, powered by SVG.',
-      icon: <Layers className='h-5 w-5 text-primary' />,
+      icon: <Layers className='h-4 w-4 text-primary' />,
     },
     {
       title: 'Developer-Friendly',
       description:
         'Built with TypeScript, easy to use, and focused on a great developer experience.',
-      icon: <Code className='h-5 w-5 text-primary' />,
+      icon: <Code className='h-4 w-4 text-primary' />,
     },
   ]
 
   return (
     <>
       <Hero />
-      <div className='mb-12 grid grid-cols-1 gap-4 md:grid-cols-2'>
+      <div className='mb-4 grid grid-cols-1 gap-4 lg:grid-cols-2 max-w-full md:max-w-4xl mx-auto'>
         {features.map((feature) => (
-          <Card key={feature.title}>
+          <Card key={feature.title} className='shadow-xs'>
             <CardHeader className='flex-row items-start gap-4 space-y-0'>
-              <div className='mb-2 inline-flex h-9 w-9 items-center justify-center rounded-lg bg-background shadow-sm'>
+              <div className='mb-2 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-background shadow-sm'>
                 {feature.icon}
               </div>
-              <div>
+              <div className='space-y-1'>
                 <CardTitle className='text-lg'>{feature.title}</CardTitle>
                 <CardDescription className='text-sm leading-relaxed'>
                   {feature.description}
@@ -59,10 +59,10 @@ export default function Page() {
         ))}
       </div>
 
-      <Card>
+      <Card className='max-w-full md:max-w-4xl mx-auto shadow-xs'>
         <CardHeader className='flex-row items-start gap-4 space-y-0'>
           <div className='mt-1 shrink-0 rounded-lg bg-background p-2 shadow-sm'>
-            <Sparkles className='h-6 w-6 text-primary' />
+            <Sparkles className='h-4 w-4 text-primary' />
           </div>
           <div>
             <CardTitle className='mb-1 text-xl'>Optimized for AI</CardTitle>
