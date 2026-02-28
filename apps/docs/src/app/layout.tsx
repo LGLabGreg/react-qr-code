@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     'customizable QR codes',
   ],
   alternates: {
-    canonical: '/',
+    canonical: './',
   },
   openGraph: {
     type: 'website',
