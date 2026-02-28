@@ -1,6 +1,14 @@
+import type { Metadata } from 'next'
+
 import { CodeEditor } from '@/components/code-editor'
 import { PageHeading } from '@/components/page-heading'
 import { TypographyP } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'Quick Start',
+  description:
+    'Follow this quick start guide to render your first QR code in React using the @lglab/react-qr-code component.',
+}
 
 const codeBlock = `
 import { ReactQRCode } from '@lglab/react-qr-code'

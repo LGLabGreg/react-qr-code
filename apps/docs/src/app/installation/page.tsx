@@ -1,6 +1,14 @@
+import type { Metadata } from 'next'
+
 import { CodeBlock } from '@/components/code-block'
 import { PageHeading } from '@/components/page-heading'
 import { TypographyBold, TypographyP } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'Installation',
+  description:
+    'Install the @lglab/react-qr-code library using your preferred JavaScript package manager, including pnpm, npm, yarn, or bun.',
+}
 
 export default function Page() {
   return (

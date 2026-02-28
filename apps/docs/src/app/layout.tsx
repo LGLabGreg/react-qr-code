@@ -20,9 +20,37 @@ const mono = Source_Code_Pro({
 })
 
 export const metadata: Metadata = {
-  title: 'React QR Code - Customizable QR Code Generator for React',
+  metadataBase: new URL('https://reactqrcode.com'),
+  title: {
+    default: 'React QR Code – Customizable QR Code Generator for React',
+    template: '%s – React QR Code',
+  },
   description:
-    'React QR Code is a highly customizable and lightweight QR code generator for React applications. Easily style QR codes with unique finder patterns, rounded corners, and customizable colors. Explore the documentation and live demo to get started quickly!',
+    'React QR Code is a highly customizable and lightweight QR code generator for React applications. Easily style QR codes with unique finder patterns, rounded corners, and customizable colors.',
+  keywords: [
+    'React QR Code',
+    'QR code generator',
+    'React QR library',
+    'SVG QR code',
+    'customizable QR codes',
+  ],
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    url: 'https://reactqrcode.com',
+    title: 'React QR Code – Customizable QR Code Generator for React',
+    description:
+      'Generate highly customizable, high-performance QR codes in React using SVG, gradients, and finder pattern controls.',
+    siteName: 'React QR Code',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'React QR Code – Customizable QR Code Generator for React',
+    description:
+      'Lightweight, customizable QR code generator for React with SVG rendering and fine-grained styling.',
+  },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
