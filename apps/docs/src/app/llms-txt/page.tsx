@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+
 import { PageHeading } from '@/components/page-heading'
 import {
   TypographyBold,
@@ -6,6 +8,12 @@ import {
   TypographyList,
   TypographyP,
 } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'llms.txt',
+  description:
+    'Learn how the llms.txt and llms-full.txt files describe the @lglab/react-qr-code library for AI coding assistants such as Cursor.',
+}
 
 export default function Page() {
   return (
@@ -26,7 +34,7 @@ export default function Page() {
         tools to provide accurate code suggestions and documentation.
       </TypographyP>
 
-      <TypographyH2>Available Routes</TypographyH2>
+      <TypographyH2>Available routes</TypographyH2>
       <TypographyP>
         We provide two distinct files to cater to different levels of detail:
       </TypographyP>

@@ -1,4 +1,5 @@
 import { Code, Layers, Sparkles, Zap } from 'lucide-react'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { Hero } from '@/components/hero'
@@ -10,6 +11,12 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { TypographyBold } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'Overview',
+  description:
+    'Overview of the React QR Code library, including key features, performance characteristics, and links to installation, demo, and documentation.',
+}
 
 export default function Page() {
   const features = [

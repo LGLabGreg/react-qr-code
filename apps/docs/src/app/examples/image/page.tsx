@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { Demo, codeBlock } from '@/components/demos/image'
@@ -5,10 +6,16 @@ import { PageHeading } from '@/components/page-heading'
 import { ExampleTabs } from '@/components/ui/example-tabs'
 import { TypographyP } from '@/components/ui/typography'
 
+export const metadata: Metadata = {
+  title: 'Image Example',
+  description:
+    'Example showing how to embed images or logos inside QR codes using the ImageSettings options in @lglab/react-qr-code.',
+}
+
 export default function Page() {
   return (
     <>
-      <PageHeading heading='Data Modules' />
+      <PageHeading heading='Image example' />
       <TypographyP>
         The @lglab/react-qr-code library allows you to embed images or logos within your
         QR codes, enhancing branding and visual appeal. This guide details the

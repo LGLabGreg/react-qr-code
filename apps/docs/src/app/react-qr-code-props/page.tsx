@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import type { Prop } from '@/types/props'
@@ -5,6 +6,12 @@ import type { Prop } from '@/types/props'
 import { PageHeading } from '@/components/page-heading'
 import { PropsTable } from '@/components/props-table'
 import { TypographyBold, TypographyP } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'ReactQRCode Props',
+  description:
+    'Full API reference for the ReactQRCode component in the @lglab/react-qr-code library, including all props and configuration options.',
+}
 
 const props: Prop[] = [
   {

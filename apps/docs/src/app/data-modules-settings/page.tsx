@@ -1,8 +1,16 @@
+import type { Metadata } from 'next'
+
 import type { Prop } from '@/types/props'
 
 import { PageHeading } from '@/components/page-heading'
 import { PropsTable } from '@/components/props-table'
 import { Bold, TypographyP } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'DataModulesSettings',
+  description:
+    'Configuration options for DataModulesSettings in @lglab/react-qr-code, used to control QR code data module color, shape, and random sizing.',
+}
 
 const props: Prop[] = [
   {
