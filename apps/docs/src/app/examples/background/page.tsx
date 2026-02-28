@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+
 import {
   DemoGradient,
   DemoSolid,
@@ -7,6 +9,12 @@ import {
 import { PageHeading } from '@/components/page-heading'
 import { ExampleTabs } from '@/components/ui/example-tabs'
 import { TypographyH3, TypographyP } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'Background Example',
+  description:
+    'Example showing how to customize QR code backgrounds in @lglab/react-qr-code using solid colors and gradients.',
+}
 
 export default function Page() {
   return (

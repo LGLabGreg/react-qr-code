@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { Demo, codeBlock } from '@/components/demos/data-modules'
@@ -5,10 +6,16 @@ import { PageHeading } from '@/components/page-heading'
 import { ExampleTabs } from '@/components/ui/example-tabs'
 import { TypographyP } from '@/components/ui/typography'
 
+export const metadata: Metadata = {
+  title: 'Data Modules Example',
+  description:
+    'Example demonstrating how to customize QR code data modules in @lglab/react-qr-code, including shape, color, and random sizing.',
+}
+
 export default function Page() {
   return (
     <>
-      <PageHeading heading='Data Modules' />
+      <PageHeading heading='Data modules example' />
       <TypographyP>
         The data modules in a QR code are the small squares that encode the actual
         information. With @lglab/react-qr-code, you can customize their shape and color,

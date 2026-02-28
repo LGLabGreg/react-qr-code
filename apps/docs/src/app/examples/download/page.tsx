@@ -1,7 +1,15 @@
+import type { Metadata } from 'next'
+
 import { DemoDownload, codeBlock } from '@/components/demos/demo-download'
 import { PageHeading } from '@/components/page-heading'
 import { ExampleTabs } from '@/components/ui/example-tabs'
 import { TypographyP } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'Download Example',
+  description:
+    'Example demonstrating how to use the download API in @lglab/react-qr-code to export QR codes as SVG, PNG, or JPEG files.',
+}
 
 export default function Page() {
   return (

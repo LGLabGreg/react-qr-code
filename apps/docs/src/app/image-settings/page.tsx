@@ -1,8 +1,16 @@
+import type { Metadata } from 'next'
+
 import type { Prop } from '@/types/props'
 
 import { PageHeading } from '@/components/page-heading'
 import { PropsTable } from '@/components/props-table'
 import { TypographyP } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'ImageSettings',
+  description:
+    'Configuration options for ImageSettings in @lglab/react-qr-code, allowing you to embed and position images or logos inside QR codes.',
+}
 
 const props: Prop[] = [
   {

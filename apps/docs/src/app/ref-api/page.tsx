@@ -1,9 +1,17 @@
+import type { Metadata } from 'next'
+
 import type { Prop } from '@/types/props'
 
 import { APITable } from '@/components/api-table'
 import { PageHeading } from '@/components/page-heading'
 import { PropsTable } from '@/components/props-table'
 import { TypographyH2, TypographyP } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'ReactQRCodeRef API',
+  description:
+    'API reference for ReactQRCodeRef, including access to the SVG element and download helper for exporting QR codes in different formats.',
+}
 
 const props: Prop[] = [
   {

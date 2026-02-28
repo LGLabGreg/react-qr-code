@@ -1,8 +1,16 @@
+import type { Metadata } from 'next'
+
 import type { Prop } from '@/types/props'
 
 import { PageHeading } from '@/components/page-heading'
 import { PropsTable } from '@/components/props-table'
 import { TypographyH2, TypographyP } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'GradientSettings',
+  description:
+    'Configuration options for GradientSettings in @lglab/react-qr-code, including gradient type, stops, and rotation for QR code data or backgrounds.',
+}
 
 const props: Prop[] = [
   {

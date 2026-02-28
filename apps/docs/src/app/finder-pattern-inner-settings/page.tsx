@@ -1,8 +1,16 @@
+import type { Metadata } from 'next'
+
 import type { Prop } from '@/types/props'
 
 import { PageHeading } from '@/components/page-heading'
 import { PropsTable } from '@/components/props-table'
 import { TypographyP } from '@/components/ui/typography'
+
+export const metadata: Metadata = {
+  title: 'FinderPatternInnerSettings',
+  description:
+    'Configuration options for FinderPatternInnerSettings in @lglab/react-qr-code, used to style the inner part of QR code finder patterns.',
+}
 
 const props: Prop[] = [
   {
