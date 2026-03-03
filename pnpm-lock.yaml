@@ -61,8 +61,8 @@ importers:
         specifier: ^0.5.0
         version: 0.5.0(eslint@9.39.2(jiti@2.6.1))
       globals:
-        specifier: ^17.3.0
-        version: 17.3.0
+        specifier: ^17.4.0
+        version: 17.4.0
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -233,8 +233,8 @@ importers:
         specifier: ^5.1.4
         version: 5.1.4(vite@7.3.1(@types/node@25.3.0)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.44.1)(yaml@2.8.2))
       globals:
-        specifier: ^17.3.0
-        version: 17.3.0
+        specifier: ^17.4.0
+        version: 17.4.0
       react:
         specifier: ^19.2.4
         version: 19.2.4
@@ -3113,8 +3113,8 @@ packages:
     resolution: {integrity: sha512-ob/2LcVVaVGCYN+r14cnwnoDPUufjiYgSqRhiFD0Q1iI4Odora5RE8Iv1D24hAz5oMophRGkGz+yuvQmmUMnMw==}
     engines: {node: '>=18'}
 
-  globals@17.3.0:
-    resolution: {integrity: sha512-yMqGUQVVCkD4tqjOJf3TnrvaaHDMYp4VlUSObbkIiuCPe/ofdMBFIAcBbCSRFWOnos6qRiTVStDwqPLUclaxIw==}
+  globals@17.4.0:
+    resolution: {integrity: sha512-hjrNztw/VajQwOLsMNT1cbJiH2muO3OROCHnbehc8eY5JyD2gqz4AcMHPqgaOR59DjgUjYAYLeH699g/eWi2jw==}
     engines: {node: '>=18'}
 
   globalthis@1.0.4:
@@ -7927,7 +7927,7 @@ snapshots:
 
   globals@16.4.0: {}
 
-  globals@17.3.0: {}
+  globals@17.4.0: {}
 
   globalthis@1.0.4:
     dependencies:
