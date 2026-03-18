@@ -8,8 +8,9 @@ interface FormFieldProps extends PropsWithChildren {
   label: string
 }
 
-interface FormCheckboxProps
-  extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
+interface FormCheckboxProps extends React.ComponentPropsWithoutRef<
+  typeof CheckboxPrimitive.Root
+> {
   label: string
 }
 

@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import { type ComponentProps } from 'react'
 
-import { mainNav } from '@/config/navigation'
-
 import {
   Sidebar,
   SidebarContent,
@@ -15,6 +13,7 @@ import {
   SidebarMenuSubItem,
   SidebarRail,
 } from '@/components/ui/sidebar'
+import { mainNav } from '@/config/navigation'
 
 import { PageSidebarButton } from './page-sidebar-button'
 

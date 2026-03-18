@@ -1,5 +1,6 @@
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 
@@ -19,7 +20,7 @@ export default defineConfig({
       fileName: (format) => `index.${format}.js`,
       formats: ['es'],
     },
-    rollupOptions: {
+    rolldownOptions: {
       external: ['react', 'react-dom', 'react/jsx-runtime'],
       output: {
         globals: {
