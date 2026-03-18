@@ -3,9 +3,8 @@ import type { Metadata } from 'next'
 import { Inter, Source_Code_Pro } from 'next/font/google'
 import Script from 'next/script'
 
-import { IS_PRODUCTION } from '@/config/env'
-
 import { PageSkeleton } from '@/components/page-skeleton'
+import { IS_PRODUCTION } from '@/config/env'
 
 import './globals.css'
 

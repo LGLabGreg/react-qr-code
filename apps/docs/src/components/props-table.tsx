@@ -1,5 +1,3 @@
-import type { Prop } from '@/types/props'
-
 import { PropTypeTag } from '@/components/prop-type-tag'
 import { Badge } from '@/components/ui/badge'
 import {
@@ -10,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import type { Prop } from '@/types/props'
 
 export const PropsTable = ({ props }: { props: Prop[] }) => (
   <Table>

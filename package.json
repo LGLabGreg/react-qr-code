@@ -16,50 +16,41 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "lint": "eslint .",
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
     "prepare": "husky"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
-      "prettier --write --config .prettierrc"
+      "oxfmt"
     ],
     "packages/**/*.{ts,tsx}": [
-      "eslint --config eslint.config.js  --max-warnings=0"
+      "oxlint --deny-warnings"
     ],
     "apps/docs/**/*.{ts,tsx}": [
-      "eslint --config apps/docs/eslint.config.mjs  --max-warnings=0"
+      "oxlint --config apps/docs/.oxlintrc.json --deny-warnings"
     ]
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.5.2",
-    "@changesets/cli": "^2.29.8",
-    "@eslint/js": "^9.39.2",
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
-    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "@types/jsdom": "^27.0.0",
-    "@types/node": "^25.3.0",
-    "@vitejs/plugin-react": "^5.1.4",
-    "@vitest/coverage-v8": "4.0.18",
+    "@types/jsdom": "^28.0.0",
+    "@types/node": "^25.5.0",
+    "@vitejs/plugin-react": "^6.0.1",
+    "@vitest/coverage-v8": "4.1.0",
     "concurrently": "^9.2.1",
-    "eslint": "^9.39.2",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.5.0",
-    "globals": "^17.3.0",
     "husky": "^9.1.7",
-    "jsdom": "^28.1.0",
-    "lint-staged": "^16.2.7",
-    "prettier": "^3.8.1",
+    "jsdom": "^29.0.0",
+    "lint-staged": "^16.4.0",
+    "oxfmt": "^0.41.0",
+    "oxlint": "^1.56.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.56.0",
-    "vite": "^7.3.1",
-    "vitest": "^4.0.18"
-  },
-  "dependencies": {
-    "@eslint/eslintrc": "^3.3.3",
-    "eslint-config-next": "16.1.6"
+    "vite": "^8.0.0",
+    "vitest": "^4.1.0"
   }
 }
