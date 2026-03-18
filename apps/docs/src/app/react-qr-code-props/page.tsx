@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-import type { Prop } from '@/types/props'
-
 import { PageHeading } from '@/components/page-heading'
 import { PropsTable } from '@/components/props-table'
 import { TypographyBold, TypographyP } from '@/components/ui/typography'
+import type { Prop } from '@/types/props'
 
 export const metadata: Metadata = {
   title: 'ReactQRCode Props',

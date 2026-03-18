@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
 
-import type { Prop } from '@/types/props'
-
 import { APITable } from '@/components/api-table'
 import { PageHeading } from '@/components/page-heading'
 import { PropsTable } from '@/components/props-table'
 import { TypographyH2, TypographyP } from '@/components/ui/typography'
+import type { Prop } from '@/types/props'
 
 export const metadata: Metadata = {
   title: 'ReactQRCodeRef API',
