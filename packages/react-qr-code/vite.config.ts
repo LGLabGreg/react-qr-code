@@ -10,7 +10,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   plugins: [
     dts({
-      rollupTypes: true,
+      // rollupTypes uses API Extractor with an older bundled TS than the project (TS 6); it emitted empty `export { }`.
+      rollupTypes: false,
     }),
   ],
   build: {
