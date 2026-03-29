@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.4.10
+
+### Patch Changes
+
+- [#497](https://github.com/LGLabGreg/react-qr-code/pull/497) [`db6d6b6`](https://github.com/LGLabGreg/react-qr-code/commit/db6d6b66c690c81a3f00845b9e88c29a2067da6e) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Fix TypeScript declaration output when building with TypeScript 6: disable `vite-plugin-dts` type rollup (API Extractor used an older TS and emitted an empty declaration file). Update `types` / `exports.types` to `./dist/src/index.d.ts`.
+
 ## 1.4.5
 
 ### Patch Changes
