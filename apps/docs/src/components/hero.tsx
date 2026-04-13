@@ -7,7 +7,7 @@ import { TypographyLead } from './ui/typography'
 
 export const Hero = () => {
   return (
-    <section className='py-8 mb-5'>
+    <section className='py-8 mb-5 mx-auto'>
       <div className='container text-center'>
         <div className='mx-auto flex max-w-5xl flex-col gap-6'>
           <h1 className='text-3xl font-semibold lg:text-6xl'>
