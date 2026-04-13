@@ -22,7 +22,7 @@ jobs:
         run: npm install -g npm@latest
 
       - name: Install pnpm
-        uses: pnpm/action-setup@v5
+        uses: pnpm/action-setup@v6
 
       - name: Get pnpm store directory
         id: store-path
