@@ -57,8 +57,8 @@ importers:
         specifier: ^19.2.5
         version: 19.2.5(react@19.2.5)
       typescript:
-        specifier: ~6.0.2
-        version: 6.0.2
+        specifier: ~6.0.3
+        version: 6.0.3
       vite:
         specifier: ^8.0.8
         version: 8.0.8(@types/node@25.6.0)(esbuild@0.27.2)(jiti@2.6.1)(terser@5.44.1)(yaml@2.8.3)
@@ -121,7 +121,7 @@ importers:
         version: 2.9.6(@babel/runtime@7.29.2)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@vercel/analytics':
         specifier: ^2.0.1
-        version: 2.0.1(next@16.2.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5)(vue-router@4.6.3(vue@3.5.25(typescript@6.0.2)))(vue@3.5.25(typescript@6.0.2))
+        version: 2.0.1(next@16.2.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5)(vue-router@4.6.3(vue@3.5.25(typescript@6.0.3)))(vue@3.5.25(typescript@6.0.3))
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -181,8 +181,8 @@ importers:
         specifier: ^4.2.2
         version: 4.2.2
       typescript:
-        specifier: ^6.0.2
-        version: 6.0.2
+        specifier: ^6.0.3
+        version: 6.0.3
 
   packages/react-qr-code:
     devDependencies:
@@ -208,14 +208,14 @@ importers:
         specifier: ^19.2.5
         version: 19.2.5(react@19.2.5)
       typescript:
-        specifier: ~6.0.2
-        version: 6.0.2
+        specifier: ~6.0.3
+        version: 6.0.3
       vite:
         specifier: ^8.0.8
         version: 8.0.8(@types/node@25.6.0)(esbuild@0.27.2)(jiti@2.6.1)(terser@5.44.1)(yaml@2.8.3)
       vite-plugin-dts:
         specifier: ^4.5.4
-        version: 4.5.4(@types/node@25.6.0)(rollup@4.57.1)(typescript@6.0.2)(vite@8.0.8(@types/node@25.6.0)(esbuild@0.27.2)(jiti@2.6.1)(terser@5.44.1)(yaml@2.8.3))
+        version: 4.5.4(@types/node@25.6.0)(rollup@4.57.1)(typescript@6.0.3)(vite@8.0.8(@types/node@25.6.0)(esbuild@0.27.2)(jiti@2.6.1)(terser@5.44.1)(yaml@2.8.3))
 
 packages:
 
@@ -3142,6 +3142,10 @@ packages:
     resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
 
+  postcss@8.5.10:
+    resolution: {integrity: sha512-pMMHxBOZKFU6HgAZ4eyGnwXF/EvPGGqUr0MnZ5+99485wwW41kW91A4LOGxSHhgugZmSChL5AlElNdwlNgcnLQ==}
+    engines: {node: ^10 || ^12 || >=14}
+
   postcss@8.5.8:
     resolution: {integrity: sha512-OW/rX8O/jXnm82Ey1k44pObPtdblfiuWnrd8X7GJ7emImCOstunGbXUpp7HdBrFQX6rJzn3sPT397Wp5aCwCHg==}
     engines: {node: ^10 || ^12 || >=14}
@@ -3498,8 +3502,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@6.0.2:
-    resolution: {integrity: sha512-bGdAIrZ0wiGDo5l8c++HWtbaNCWTS4UTv7RaTH/ThVIgjkveJt83m74bBHMJkuCbslY8ixgLBVZJIOiQlQTjfQ==}
+  typescript@6.0.3:
+    resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -5418,12 +5422,12 @@ snapshots:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
 
-  '@vercel/analytics@2.0.1(next@16.2.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5)(vue-router@4.6.3(vue@3.5.25(typescript@6.0.2)))(vue@3.5.25(typescript@6.0.2))':
+  '@vercel/analytics@2.0.1(next@16.2.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5)(vue-router@4.6.3(vue@3.5.25(typescript@6.0.3)))(vue@3.5.25(typescript@6.0.3))':
     optionalDependencies:
       next: 16.2.3(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       react: 19.2.5
-      vue: 3.5.25(typescript@6.0.2)
-      vue-router: 4.6.3(vue@3.5.25(typescript@6.0.2))
+      vue: 3.5.25(typescript@6.0.3)
+      vue-router: 4.6.3(vue@3.5.25(typescript@6.0.3))
 
   '@vitejs/plugin-react@6.0.1(vite@8.0.8(@types/node@25.6.0)(esbuild@0.27.2)(jiti@2.6.1)(terser@5.44.1)(yaml@2.8.3))':
     dependencies:
@@ -5534,7 +5538,7 @@ snapshots:
       '@vue/shared': 3.5.25
       estree-walker: 2.0.2
       magic-string: 0.30.21
-      postcss: 8.5.9
+      postcss: 8.5.10
       source-map-js: 1.2.1
     optional: true
 
@@ -5552,7 +5556,7 @@ snapshots:
   '@vue/devtools-api@6.6.4':
     optional: true
 
-  '@vue/language-core@2.2.0(typescript@6.0.2)':
+  '@vue/language-core@2.2.0(typescript@6.0.3)':
     dependencies:
       '@volar/language-core': 2.4.28
       '@vue/compiler-dom': 3.5.31
@@ -5563,7 +5567,7 @@ snapshots:
       muggle-string: 0.4.1
       path-browserify: 1.0.1
     optionalDependencies:
-      typescript: 6.0.2
+      typescript: 6.0.3
 
   '@vue/reactivity@3.5.25':
     dependencies:
@@ -5584,11 +5588,11 @@ snapshots:
       csstype: 3.2.3
     optional: true
 
-  '@vue/server-renderer@3.5.25(vue@3.5.25(typescript@6.0.2))':
+  '@vue/server-renderer@3.5.25(vue@3.5.25(typescript@6.0.3))':
     dependencies:
       '@vue/compiler-ssr': 3.5.25
       '@vue/shared': 3.5.25
-      vue: 3.5.25(typescript@6.0.2)
+      vue: 3.5.25(typescript@6.0.3)
     optional: true
 
   '@vue/shared@3.5.25':
@@ -6396,6 +6400,13 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
+  postcss@8.5.10:
+    dependencies:
+      nanoid: 3.3.11
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
+    optional: true
+
   postcss@8.5.8:
     dependencies:
       nanoid: 3.3.11
@@ -6768,7 +6779,7 @@ snapshots:
 
   typescript@5.8.2: {}
 
-  typescript@6.0.2: {}
+  typescript@6.0.3: {}
 
   ufo@1.6.3: {}
 
@@ -6797,18 +6808,18 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.14
 
-  vite-plugin-dts@4.5.4(@types/node@25.6.0)(rollup@4.57.1)(typescript@6.0.2)(vite@8.0.8(@types/node@25.6.0)(esbuild@0.27.2)(jiti@2.6.1)(terser@5.44.1)(yaml@2.8.3)):
+  vite-plugin-dts@4.5.4(@types/node@25.6.0)(rollup@4.57.1)(typescript@6.0.3)(vite@8.0.8(@types/node@25.6.0)(esbuild@0.27.2)(jiti@2.6.1)(terser@5.44.1)(yaml@2.8.3)):
     dependencies:
       '@microsoft/api-extractor': 7.57.7(@types/node@25.6.0)
       '@rollup/pluginutils': 5.3.0(rollup@4.57.1)
       '@volar/typescript': 2.4.28
-      '@vue/language-core': 2.2.0(typescript@6.0.2)
+      '@vue/language-core': 2.2.0(typescript@6.0.3)
       compare-versions: 6.1.1
       debug: 4.4.3
       kolorist: 1.8.0
       local-pkg: 1.1.2
       magic-string: 0.30.21
-      typescript: 6.0.2
+      typescript: 6.0.3
     optionalDependencies:
       vite: 8.0.8(@types/node@25.6.0)(esbuild@0.27.2)(jiti@2.6.1)(terser@5.44.1)(yaml@2.8.3)
     transitivePeerDependencies:
@@ -6863,21 +6874,21 @@ snapshots:
 
   vscode-uri@3.1.0: {}
 
-  vue-router@4.6.3(vue@3.5.25(typescript@6.0.2)):
+  vue-router@4.6.3(vue@3.5.25(typescript@6.0.3)):
     dependencies:
       '@vue/devtools-api': 6.6.4
-      vue: 3.5.25(typescript@6.0.2)
+      vue: 3.5.25(typescript@6.0.3)
     optional: true
 
-  vue@3.5.25(typescript@6.0.2):
+  vue@3.5.25(typescript@6.0.3):
     dependencies:
       '@vue/compiler-dom': 3.5.25
       '@vue/compiler-sfc': 3.5.25
       '@vue/runtime-dom': 3.5.25
-      '@vue/server-renderer': 3.5.25(vue@3.5.25(typescript@6.0.2))
+      '@vue/server-renderer': 3.5.25(vue@3.5.25(typescript@6.0.3))
       '@vue/shared': 3.5.25
     optionalDependencies:
-      typescript: 6.0.2
+      typescript: 6.0.3
     optional: true
 
   w3c-xmlserializer@5.0.0:
