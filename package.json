@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/LGLabGreg/react-qr-code.git"
   },
-  "packageManager": "pnpm@10.33.0",
+  "packageManager": "pnpm@10.33.4",
   "type": "module",
   "scripts": {
     "dev": "pnpm concurrently --names packages,apps \"pnpm watch:packages\" \"pnpm watch:docs\"",
@@ -28,12 +28,12 @@
     "packages/**/*.{ts,tsx}": [
       "oxlint --deny-warnings"
     ],
-    "apps/docs/**/*.{ts,tsx}": [
+    "apps/docs/**/!(*.d).{ts,tsx}": [
       "oxlint --config apps/docs/.oxlintrc.json --deny-warnings"
     ]
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/changelog-github": "^0.7.0",
     "@changesets/cli": "^2.31.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -44,11 +44,11 @@
     "concurrently": "^9.2.1",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
-    "lint-staged": "^16.4.0",
-    "oxfmt": "^0.47.0",
-    "oxlint": "^1.62.0",
-    "react": "^19.2.5",
-    "react-dom": "^19.2.5",
+    "lint-staged": "^17.0.2",
+    "oxfmt": "^0.48.0",
+    "oxlint": "^1.63.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
     "typescript": "~6.0.3",
     "vite": "^8.0.10",
     "vitest": "^4.1.5"
