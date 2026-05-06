@@ -53,11 +53,11 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
-    "globals": "^17.4.0",
+    "globals": "^17.6.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
-    "typescript": "~6.0.2",
-    "vite": "^8.0.5",
+    "typescript": "~6.0.3",
+    "vite": "^8.0.10",
     "vite-plugin-dts": "^4.5.4"
   }
 }
