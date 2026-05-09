@@ -1,7 +1,14 @@
 import { describe, expect, it, vi } from 'vitest'
 
 import type { Modules } from '../types/lib'
-import { getModuleNeighbours, getScaleFactor } from './data-modules'
+import {
+  circuitBoardShouldDrawPad,
+  dataModuleCanBeRandomSize,
+  getModuleNeighbours,
+  getRenderableDataModuleNeighbours,
+  getScaleFactor,
+  isRenderableDataModule,
+} from './data-modules'
 
 describe('getScaleFactor', () => {
   it('returns 0.75 for square-sm style', () => {
@@ -17,6 +24,65 @@ describe('getScaleFactor', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0.9)
     const scaleFactor = getScaleFactor('circle', true)
     expect(scaleFactor).toEqual(0.9 * (1 - 0.75) + 0.75)
+  })
+})
+
+describe('dataModuleCanBeRandomSize', () => {
+  it('does not allow random size for circuit-board modules', () => {
+    expect(dataModuleCanBeRandomSize('circuit-board')).toBe(false)
+  })
+})
+
+describe('circuitBoardShouldDrawPad', () => {
+  it('draws pads only for endpoints', () => {
+    expect(
+      circuitBoardShouldDrawPad({
+        left: true,
+        right: false,
+        top: false,
+        bottom: false,
+        count: 1,
+      }),
+    ).toBe(true)
+  })
+
+  it('does not draw pads for isolated, turn, junction, or straight-through modules', () => {
+    expect(
+      circuitBoardShouldDrawPad({
+        left: false,
+        right: false,
+        top: false,
+        bottom: false,
+        count: 0,
+      }),
+    ).toBe(false)
+    expect(
+      circuitBoardShouldDrawPad({
+        left: true,
+        right: false,
+        top: true,
+        bottom: false,
+        count: 2,
+      }),
+    ).toBe(false)
+    expect(
+      circuitBoardShouldDrawPad({
+        left: true,
+        right: true,
+        top: true,
+        bottom: false,
+        count: 3,
+      }),
+    ).toBe(false)
+    expect(
+      circuitBoardShouldDrawPad({
+        left: false,
+        right: false,
+        top: true,
+        bottom: true,
+        count: 2,
+      }),
+    ).toBe(false)
   })
 })
 
@@ -159,6 +225,32 @@ describe('getModuleNeighbours', () => {
       top: false,
       bottom: false,
       count: 0,
+    })
+  })
+})
+
+describe('isRenderableDataModule', () => {
+  it('returns false for finder pattern modules', () => {
+    const modules: Modules = Array.from({ length: 21 }, () => Array(21).fill(false))
+    modules[0][0] = true
+
+    expect(isRenderableDataModule({ x: 0, y: 0, modules, numCells: 21 })).toBe(false)
+  })
+})
+
+describe('getRenderableDataModuleNeighbours', () => {
+  it('ignores neighbouring finder pattern modules', () => {
+    const modules: Modules = Array.from({ length: 21 }, () => Array(21).fill(false))
+    modules[3][6] = true
+    modules[3][7] = true
+    modules[3][8] = true
+
+    expect(getRenderableDataModuleNeighbours(7, 3, modules, 21)).toEqual({
+      left: false,
+      right: true,
+      top: false,
+      bottom: false,
+      count: 1,
     })
   })
 })

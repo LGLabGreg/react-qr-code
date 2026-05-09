@@ -13,7 +13,7 @@ import {
   finderPatternsInnerLeaf,
 } from '../utils/finder-patterns-inner'
 import { sanitizeFinderPatternInnerSettings } from '../utils/settings'
-import { hashtag, heart, pinchedSquare, star } from '../utils/svg'
+import { hashtag, heart, microchip, pinchedSquare, star } from '../utils/svg'
 
 const testProps = {
   'data-testid': 'finder-patterns-inner',
@@ -160,6 +160,13 @@ export const FinderPatternsInner = ({
       const cx = x + FINDER_PATTERN_INNER_SIZE / 2
       const cy = y + FINDER_PATTERN_INNER_SIZE / 2
       const path = star(cx, cy, FINDER_PATTERN_INNER_SIZE * 1.2, DEFAULT_NUM_STAR_POINTS)
+      return <path key={key(x, y)} fill={fill} d={path} {...testProps} />
+    })
+  }
+
+  if (style === 'microchip') {
+    return coordinates.map(({ x, y }) => {
+      const path = microchip(x, y, FINDER_PATTERN_INNER_SIZE)
       return <path key={key(x, y)} fill={fill} d={path} {...testProps} />
     })
   }

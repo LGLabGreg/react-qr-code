@@ -11,18 +11,19 @@ interface DataModulesProps {
 }
 
 const styles: DataModulesStyle[] = [
-  'square',
-  'square-sm',
+  'circle',
+  'circuit-board',
+  'diamond',
+  'hashtag',
+  'heart',
+  'horizontal-line',
+  'leaf',
   'pinched-square',
   'rounded',
-  'leaf',
-  'vertical-line',
-  'horizontal-line',
-  'circle',
-  'diamond',
+  'square',
+  'square-sm',
   'star',
-  'heart',
-  'hashtag',
+  'vertical-line',
 ]
 
 export const DataModules = ({ qrProps, setQrProps }: DataModulesProps) => {

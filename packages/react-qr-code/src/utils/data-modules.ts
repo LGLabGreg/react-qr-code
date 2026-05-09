@@ -1,5 +1,7 @@
 import type { DataModulesStyle, Modules } from '../types/lib'
 import type { DataModulesNeighbours } from '../types/utils'
+import { isFinderPatternInnerModule } from './finder-patterns-inner'
+import { isFinderPatternOuterModule } from './finder-patterns-outer'
 
 export const dataModuleCanBeRandomSize = (style: DataModulesStyle): boolean =>
   style === 'square' ||
@@ -37,14 +39,66 @@ export const getModuleNeighbours = (
   }
 }
 
-export const square = (x: number, y: number, size: number) =>
-  `M${x},${y}h${size}v${size}h-${size}Z`
+export const isRenderableDataModule = ({
+  x,
+  y,
+  modules,
+  numCells,
+}: {
+  x: number
+  y: number
+  modules: Modules
+  numCells: number
+}) => {
+  return (
+    y >= 0 &&
+    y < modules.length &&
+    x >= 0 &&
+    x < modules[y].length &&
+    modules[y][x] &&
+    !isFinderPatternOuterModule({ x, y, numCells }) &&
+    !isFinderPatternInnerModule({ x, y, numCells })
+  )
+}
+
+export const getRenderableDataModuleNeighbours = (
+  x: number,
+  y: number,
+  modules: Modules,
+  numCells: number,
+): DataModulesNeighbours => {
+  const sides = {
+    left: isRenderableDataModule({ x: x - 1, y, modules, numCells }),
+    right: isRenderableDataModule({ x: x + 1, y, modules, numCells }),
+    top: isRenderableDataModule({ x, y: y - 1, modules, numCells }),
+    bottom: isRenderableDataModule({ x, y: y + 1, modules, numCells }),
+  }
+
+  return {
+    ...sides,
+    count: Object.values(sides).filter(Boolean).length,
+  }
+}
+
+export const rect = (x: number, y: number, width: number, height: number) =>
+  `M${x},${y}h${width}v${height}h${-width}Z`
+
+export const square = (x: number, y: number, size: number) => rect(x, y, size, size)
 
 export const circle = (x: number, y: number, size: number) =>
   `M${x},${y + size / 2}a${size / 2},${size / 2} 0 1,0 ${size},0a${size / 2},${size / 2} 0 1,0 -${size},0Z`
 
 export const diamond = (x: number, y: number, size: number) =>
   `M${x},${y + size / 2}l${size / 2},-${size / 2}l${size / 2},${size / 2}l-${size / 2},${size / 2}Z`
+
+// Wound clockwise (sweep-flag 1) so the pad fills correctly when combined
+// in a single path with clockwise-wound trace rects under nonzero fill.
+// Switching to circle() (counter-clockwise) would XOR the overlap and
+// produce donut-shaped pads.
+export const circuitBoardPad = (cx: number, cy: number, radius: number) =>
+  `M${cx - radius},${cy}a${radius},${radius} 0 1,1 ${radius * 2},0a${radius},${radius} 0 1,1 ${-radius * 2},0Z`
+
+export const circuitBoardShouldDrawPad = ({ count }: DataModulesNeighbours) => count === 1
 
 export const topRightRounded = (x: number, y: number) =>
   `M ${x} ${y} 

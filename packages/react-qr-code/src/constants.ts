@@ -32,6 +32,8 @@ export const DEFAULT_DATA_MODULES_COLOR = '#000000'
 export const DEFAULT_FINDER_PATTERN_OUTER_STYLE: FinderPatternOuterStyle = 'square'
 export const DEFAULT_FINDER_PATTERN_INNER_STYLE: FinderPatternInnerStyle = 'square'
 export const DEFAULT_DATA_MODULES_STYLE: DataModulesStyle = 'square'
+export const CIRCUIT_BOARD_LINE_WIDTH = 0.5
+export const CIRCUIT_BOARD_PAD_RADIUS = 0.5
 
 export const DEFAULT_FILENAME = 'react-qr-code'
 

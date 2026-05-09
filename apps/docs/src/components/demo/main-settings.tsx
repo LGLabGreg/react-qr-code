@@ -21,9 +21,10 @@ const errorCorrectionLevels: ErrorCorrectionLevel[] = ['L', 'M', 'Q', 'H']
 
 export const MainSettings = ({ qrProps, setQrProps }: MainSettingsProps) => {
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>, key: string) => {
+    const { value, type } = e.target
     setQrProps((prevProps) => ({
       ...prevProps,
-      [key]: e.target.value,
+      [key]: type === 'number' && value !== '' ? Number(value) : value,
     }))
   }
   const onValueChange = (value: string, key: string) => {

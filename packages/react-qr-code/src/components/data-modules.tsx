@@ -1,15 +1,23 @@
 import { type ReactNode, useCallback, useMemo } from 'react'
 
-import { DEFAULT_NUM_STAR_POINTS } from '../constants'
+import {
+  CIRCUIT_BOARD_LINE_WIDTH,
+  CIRCUIT_BOARD_PAD_RADIUS,
+  DEFAULT_NUM_STAR_POINTS,
+} from '../constants'
 import type { DataModulesProps } from '../types/utils'
 import {
   bottomRounded,
   circle,
+  circuitBoardPad,
+  circuitBoardShouldDrawPad,
   dataModuleCanBeRandomSize,
   diamond,
+  getRenderableDataModuleNeighbours,
   getScaleFactor,
   leaf,
   leftRounded,
+  rect,
   rightRounded,
   square,
   topRounded,
@@ -64,7 +72,41 @@ export const DataModules = ({
       const yPos = y + margin + posOffset
 
       if (cell) {
-        if (style === 'square' || style === 'square-sm') {
+        if (style === 'circuit-board') {
+          const cx = x + margin + 0.5
+          const cy = y + margin + 0.5
+          const traceHalf = CIRCUIT_BOARD_LINE_WIDTH / 2
+          // Traces extend traceHalf past both endpoints so that adjacent
+          // traces fully cover the cell-center square at every junction
+          // (preventing white notches at L/T/+ bends under nonzero fill).
+          const traceLength = 1 + CIRCUIT_BOARD_LINE_WIDTH
+          const neighbours = getRenderableDataModuleNeighbours(x, y, modules, numCells)
+          const { right, bottom, count } = neighbours
+
+          if (right) {
+            ops.push(
+              rect(cx - traceHalf, cy - traceHalf, traceLength, CIRCUIT_BOARD_LINE_WIDTH),
+            )
+          }
+          if (bottom) {
+            ops.push(
+              rect(cx - traceHalf, cy - traceHalf, CIRCUIT_BOARD_LINE_WIDTH, traceLength),
+            )
+          }
+          if (count === 0) {
+            const isolatedSize = 0.75
+            const isolatedOffset = (1 - isolatedSize) / 2
+            ops.push(
+              square(
+                x + margin + isolatedOffset,
+                y + margin + isolatedOffset,
+                isolatedSize,
+              ),
+            )
+          } else if (circuitBoardShouldDrawPad({ ...neighbours, count })) {
+            ops.push(circuitBoardPad(cx, cy, CIRCUIT_BOARD_PAD_RADIUS))
+          }
+        } else if (style === 'square' || style === 'square-sm') {
           ops.push(square(xPos, yPos, size))
         } else if (style === 'pinched-square') {
           ops.push(pinchedSquare(xPos, yPos, size, 0.25))
@@ -149,9 +191,12 @@ export const DataModules = ({
       }
     })
   })
+
+  const paint = gradient ? `url(#${gradientId})` : color
+
   return (
     <path
-      fill={gradient ? `url(#${gradientId})` : color}
+      fill={paint}
       d={ops.join('')}
       shapeRendering={style === 'square' ? 'crispEdges' : 'geometricPrecision'}
       data-testid='data-modules'

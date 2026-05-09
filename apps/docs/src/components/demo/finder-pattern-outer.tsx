@@ -11,21 +11,21 @@ interface DataModulesProps {
 }
 
 const styles: FinderPatternOuterStyle[] = [
-  'square',
-  'pinched-square',
-  'rounded-sm',
-  'rounded',
-  'rounded-lg',
   'circle',
-  'inpoint-sm',
   'inpoint',
   'inpoint-lg',
-  'outpoint-sm',
-  'outpoint',
-  'outpoint-lg',
-  'leaf-sm',
+  'inpoint-sm',
   'leaf',
   'leaf-lg',
+  'leaf-sm',
+  'outpoint',
+  'outpoint-lg',
+  'outpoint-sm',
+  'pinched-square',
+  'rounded',
+  'rounded-lg',
+  'rounded-sm',
+  'square',
 ]
 
 export const FinderPatternOuter = ({ qrProps, setQrProps }: DataModulesProps) => {
