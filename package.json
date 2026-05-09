@@ -12,7 +12,7 @@
     "watch:packages": "pnpm --filter \"./packages/**\" run build --watch",
     "watch:docs": "pnpm --filter \"./apps/docs/**\" run dev",
     "build:lib": "pnpm --filter \"./packages/**\" run build",
-    "ci:publish": "pnpm build:lib && pnpm publish -r && pnpm changeset tag",
+    "ci:publish": "pnpm build:lib && pnpm publish -r --no-git-checks && pnpm changeset tag",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
