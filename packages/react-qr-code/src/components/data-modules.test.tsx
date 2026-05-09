@@ -69,26 +69,37 @@ describe('DataModules', () => {
       />,
     )
 
-    const group = screen.getByTestId('data-modules')
-    const paths = group.querySelectorAll('path')
+    const path = screen.getByTestId('data-modules')
 
-    expect(group.tagName.toLowerCase()).toBe('g')
-    expect(group).toHaveAttribute('fill', '#ffdd99')
-    expect(group).toHaveAttribute('stroke', '#ffdd99')
-    expect(group).toHaveAttribute('stroke-width', CIRCUIT_BOARD_LINE_WIDTH.toString())
-    expect(paths).toHaveLength(2)
-    expect(paths[0]).toHaveAttribute('fill', 'none')
-    expect(paths[0].getAttribute('d')).toContain('M10.5,10.5L11.5,10.5')
-    expect(paths[0].getAttribute('d')).toContain('M10.5,10.5L10.5,11.5')
-    expect(paths[1]).toHaveAttribute('stroke', 'none')
-    const padPath = paths[1].getAttribute('d') ?? ''
-    expect(padPath).toContain(
+    expect(path.tagName.toLowerCase()).toBe('path')
+    expect(path).toHaveAttribute('fill', '#ffdd99')
+    expect(path).not.toHaveAttribute('stroke')
+    const d = path.getAttribute('d') ?? ''
+    const traceHalf = CIRCUIT_BOARD_LINE_WIDTH / 2
+    const traceLength = 1 + CIRCUIT_BOARD_LINE_WIDTH
+    expect(d).toContain(
+      dataModulesUtils.rect(
+        10.5 - traceHalf,
+        10.5 - traceHalf,
+        traceLength,
+        CIRCUIT_BOARD_LINE_WIDTH,
+      ),
+    )
+    expect(d).toContain(
+      dataModulesUtils.rect(
+        10.5 - traceHalf,
+        10.5 - traceHalf,
+        CIRCUIT_BOARD_LINE_WIDTH,
+        traceLength,
+      ),
+    )
+    expect(d).toContain(
       dataModulesUtils.circuitBoardPad(11.5, 10.5, CIRCUIT_BOARD_PAD_RADIUS),
     )
-    expect(padPath).toContain(
+    expect(d).toContain(
       dataModulesUtils.circuitBoardPad(10.5, 11.5, CIRCUIT_BOARD_PAD_RADIUS),
     )
-    expect(padPath).not.toContain(
+    expect(d).not.toContain(
       dataModulesUtils.circuitBoardPad(10.5, 10.5, CIRCUIT_BOARD_PAD_RADIUS),
     )
   })
@@ -106,12 +117,58 @@ describe('DataModules', () => {
       />,
     )
 
-    const group = screen.getByTestId('data-modules')
-    const paths = group.querySelectorAll('path')
+    const path = screen.getByTestId('data-modules')
 
-    expect(paths).toHaveLength(1)
-    expect(paths[0]).toHaveAttribute('stroke', 'none')
-    expect(paths[0]).toHaveAttribute('d', 'M10.125,10.125h0.75v0.75h-0.75Z')
+    expect(path.tagName.toLowerCase()).toBe('path')
+    expect(path).toHaveAttribute('d', 'M10.125,10.125h0.75v0.75h-0.75Z')
+  })
+
+  it('fully covers the cell centre at circuit-board junctions', () => {
+    // Junction cell at (8,8) with neighbours at (7,8), (9,8), (8,7), (8,9):
+    // it has top+left+right+bottom = count 4 but draws no traces itself
+    // (only right/bottom). The incoming traces from each neighbour must
+    // collectively fill the cell centre or a white notch appears.
+    const modules = Array.from({ length: 12 }, () => Array(12).fill(false))
+    modules[7][8] = true
+    modules[8][7] = true
+    modules[8][8] = true
+    modules[8][9] = true
+    modules[9][8] = true
+
+    render(
+      <DataModules
+        modules={modules}
+        margin={2}
+        gradientId='mock-gradient-id'
+        settings={{ style: 'circuit-board', color: '#000000' }}
+      />,
+    )
+
+    const d = screen.getByTestId('data-modules').getAttribute('d') ?? ''
+    const traceHalf = CIRCUIT_BOARD_LINE_WIDTH / 2
+    const traceLength = 1 + CIRCUIT_BOARD_LINE_WIDTH
+
+    // Incoming horizontal trace from cell (8,7), centre (9.5, 10.5):
+    // must extend past its own end (10.5) by traceHalf so the junction
+    // cell's centre is covered from the left.
+    expect(d).toContain(
+      dataModulesUtils.rect(
+        9.5 - traceHalf,
+        10.5 - traceHalf,
+        traceLength,
+        CIRCUIT_BOARD_LINE_WIDTH,
+      ),
+    )
+    // Incoming vertical trace from cell (7,8), centre (10.5, 9.5):
+    // covers the junction from above.
+    expect(d).toContain(
+      dataModulesUtils.rect(
+        10.5 - traceHalf,
+        9.5 - traceHalf,
+        CIRCUIT_BOARD_LINE_WIDTH,
+        traceLength,
+      ),
+    )
   })
 
   it.each(dataModulesRoundedNeighbours)(

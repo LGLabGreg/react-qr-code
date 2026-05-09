@@ -80,8 +80,10 @@ export const getRenderableDataModuleNeighbours = (
   }
 }
 
-export const square = (x: number, y: number, size: number) =>
-  `M${x},${y}h${size}v${size}h-${size}Z`
+export const rect = (x: number, y: number, width: number, height: number) =>
+  `M${x},${y}h${width}v${height}h${-width}Z`
+
+export const square = (x: number, y: number, size: number) => rect(x, y, size, size)
 
 export const circle = (x: number, y: number, size: number) =>
   `M${x},${y + size / 2}a${size / 2},${size / 2} 0 1,0 ${size},0a${size / 2},${size / 2} 0 1,0 -${size},0Z`
@@ -89,11 +91,12 @@ export const circle = (x: number, y: number, size: number) =>
 export const diamond = (x: number, y: number, size: number) =>
   `M${x},${y + size / 2}l${size / 2},-${size / 2}l${size / 2},${size / 2}l-${size / 2},${size / 2}Z`
 
-export const line = (x1: number, y1: number, x2: number, y2: number) =>
-  `M${x1},${y1}L${x2},${y2}`
-
+// Wound clockwise (sweep-flag 1) so the pad fills correctly when combined
+// in a single path with clockwise-wound trace rects under nonzero fill.
+// Switching to circle() (counter-clockwise) would XOR the overlap and
+// produce donut-shaped pads.
 export const circuitBoardPad = (cx: number, cy: number, radius: number) =>
-  circle(cx - radius, cy - radius, radius * 2)
+  `M${cx - radius},${cy}a${radius},${radius} 0 1,1 ${radius * 2},0a${radius},${radius} 0 1,1 ${-radius * 2},0Z`
 
 export const circuitBoardShouldDrawPad = ({ count }: DataModulesNeighbours) => count === 1
 
