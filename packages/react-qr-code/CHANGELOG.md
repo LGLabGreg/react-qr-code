@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.5.0
+
+### Minor Changes
+
+- [#529](https://github.com/LGLabGreg/react-qr-code/pull/529) [`04ed30a`](https://github.com/LGLabGreg/react-qr-code/commit/04ed30af3d5ce5a4c501a19467bcd883cee3ec58) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Add circuit-board data module style and microchip finder pattern inner style.
+
 ## 1.4.10
 
 ### Patch Changes
