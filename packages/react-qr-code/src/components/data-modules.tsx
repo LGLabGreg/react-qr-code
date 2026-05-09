@@ -87,7 +87,15 @@ export const DataModules = ({
             circuitBoardTraceOps.push(line(cx, cy, cx, cy + 1))
           }
           if (count === 0) {
-            circuitBoardPadOps.push(square(x + margin, y + margin, 1))
+            const isolatedSize = 0.75
+            const isolatedOffset = (1 - isolatedSize) / 2
+            circuitBoardPadOps.push(
+              square(
+                x + margin + isolatedOffset,
+                y + margin + isolatedOffset,
+                isolatedSize,
+              ),
+            )
           } else if (circuitBoardShouldDrawPad({ ...neighbours, count })) {
             circuitBoardPadOps.push(circuitBoardPad(cx, cy, CIRCUIT_BOARD_PAD_RADIUS))
           }
@@ -185,8 +193,8 @@ export const DataModules = ({
         fill={paint}
         stroke={paint}
         strokeWidth={CIRCUIT_BOARD_LINE_WIDTH}
-        strokeLinecap='round'
-        strokeLinejoin='round'
+        strokeLinecap='square'
+        strokeLinejoin='miter'
         shapeRendering='geometricPrecision'
         data-testid='data-modules'
       >

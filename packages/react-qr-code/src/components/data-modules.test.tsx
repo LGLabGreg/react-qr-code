@@ -104,7 +104,7 @@ describe('DataModules', () => {
 
     expect(paths).toHaveLength(1)
     expect(paths[0]).toHaveAttribute('stroke', 'none')
-    expect(paths[0]).toHaveAttribute('d', 'M10,10h1v1h-1Z')
+    expect(paths[0]).toHaveAttribute('d', 'M10.125,10.125h0.75v0.75h-0.75Z')
   })
 
   it.each(dataModulesRoundedNeighbours)(
