@@ -49,6 +49,29 @@ export const pinchedSquare = (
   `Q ${x + size / 2} ${y + controlOffset}, ${x} ${y}` +
   'Z'
 
+const MICROCHIP_LEG_HEIGHT_RATIO = 0.15
+const MICROCHIP_LEG_WIDTH_RATIO = 0.1
+const MICROCHIP_LEG_SPAN_RATIO = 0.7
+const MICROCHIP_NUM_LEGS = 4
+
+export const microchip = (x: number, y: number, size: number) => {
+  const legH = size * MICROCHIP_LEG_HEIGHT_RATIO
+  const legW = size * MICROCHIP_LEG_WIDTH_RATIO
+  const bodyH = size - legH * 2
+  const body = `M${x},${y + legH}h${size}v${bodyH}h${-size}Z`
+  const legSpan = size * MICROCHIP_LEG_SPAN_RATIO
+  const legStart = x + (size - legSpan) / 2
+  const legStep = (legSpan - legW) / (MICROCHIP_NUM_LEGS - 1)
+  const legs = Array.from({ length: MICROCHIP_NUM_LEGS }, (_, i) => {
+    const lx = legStart + legStep * i
+    return (
+      `M${lx},${y}h${legW}v${legH}h${-legW}Z` +
+      `M${lx},${y + size - legH}h${legW}v${legH}h${-legW}Z`
+    )
+  }).join('')
+  return body + legs
+}
+
 export const hashtag = (x: number, y: number, size: number) => {
   const eigth = size / 8
   return `M ${x + size} ${y + eigth * 3} 

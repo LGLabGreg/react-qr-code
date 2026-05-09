@@ -91,6 +91,7 @@ export type FinderPatternInnerStyle =
   | 'star'
   | 'heart'
   | 'hashtag'
+  | 'microchip'
 
 export interface FinderPatternInnerSettings {
   color?: string

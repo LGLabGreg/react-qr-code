@@ -132,6 +132,22 @@ describe('DataModules', () => {
     })
   })
 
+  it('renders correctly with style microchip', () => {
+    const spy = vi.spyOn(svgUtils, 'microchip')
+    render(
+      <FinderPatternsInner
+        {...defaultProps}
+        settings={{ style: 'microchip', color: '#ff0000' }}
+      />,
+    )
+    const paths = screen.getAllByTestId('finder-patterns-inner')
+    expect(paths).toHaveLength(3)
+    paths.forEach((path) => {
+      expect(spy).toHaveBeenCalled()
+      expect(path.getAttribute('fill')).toBe('#ff0000')
+    })
+  })
+
   it('renders correctly with style hashtag', () => {
     const spy = vi.spyOn(svgUtils, 'hashtag')
     render(

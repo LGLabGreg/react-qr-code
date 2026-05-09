@@ -81,7 +81,14 @@ describe('DataModules', () => {
     expect(paths[0].getAttribute('d')).toContain('M10.5,10.5L11.5,10.5')
     expect(paths[0].getAttribute('d')).toContain('M10.5,10.5L10.5,11.5')
     expect(paths[1]).toHaveAttribute('stroke', 'none')
-    expect(paths[1].getAttribute('d')).not.toContain(
+    const padPath = paths[1].getAttribute('d') ?? ''
+    expect(padPath).toContain(
+      dataModulesUtils.circuitBoardPad(11.5, 10.5, CIRCUIT_BOARD_PAD_RADIUS),
+    )
+    expect(padPath).toContain(
+      dataModulesUtils.circuitBoardPad(10.5, 11.5, CIRCUIT_BOARD_PAD_RADIUS),
+    )
+    expect(padPath).not.toContain(
       dataModulesUtils.circuitBoardPad(10.5, 10.5, CIRCUIT_BOARD_PAD_RADIUS),
     )
   })
