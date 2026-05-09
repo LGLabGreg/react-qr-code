@@ -36,6 +36,7 @@ export type DataModulesStyle =
   | 'leaf'
   | 'vertical-line'
   | 'horizontal-line'
+  | 'circuit-board'
   | 'circle'
   | 'diamond'
   | 'star'

@@ -39,7 +39,7 @@ The main component exported by the library.
 | `randomSize` | `boolean` | `false` | If true, modules will have slightly varied sizes. |
 
 **Available Styles (`DataModulesStyle`):**
-`'square'`, `'square-sm'`, `'pinched-square'`, `'rounded'`, `'leaf'`, `'vertical-line'`, `'horizontal-line'`, `'circle'`, `'diamond'`, `'star'`, `'heart'`, `'hashtag'`
+`'square'`, `'square-sm'`, `'pinched-square'`, `'rounded'`, `'leaf'`, `'vertical-line'`, `'horizontal-line'`, `'circuit-board'`, `'circle'`, `'diamond'`, `'star'`, `'heart'`, `'hashtag'`
 
 ### FinderPatternOuterSettings
 

@@ -31,6 +31,7 @@ const props: Prop[] = [
       'leaf',
       'vertical-line',
       'horizontal-line',
+      'circuit-board',
       'circle',
       'diamond',
       'star',

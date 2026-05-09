@@ -1,15 +1,23 @@
 import { type ReactNode, useCallback, useMemo } from 'react'
 
-import { DEFAULT_NUM_STAR_POINTS } from '../constants'
+import {
+  CIRCUIT_BOARD_LINE_WIDTH,
+  CIRCUIT_BOARD_PAD_RADIUS,
+  DEFAULT_NUM_STAR_POINTS,
+} from '../constants'
 import type { DataModulesProps } from '../types/utils'
 import {
   bottomRounded,
   circle,
+  circuitBoardPad,
+  circuitBoardShouldDrawPad,
   dataModuleCanBeRandomSize,
   diamond,
+  getRenderableDataModuleNeighbours,
   getScaleFactor,
   leaf,
   leftRounded,
+  line,
   rightRounded,
   square,
   topRounded,
@@ -39,6 +47,8 @@ export const DataModules = ({
   )
 
   const ops: Array<string> = []
+  const circuitBoardTraceOps: Array<string> = []
+  const circuitBoardPadOps: Array<string> = []
   const numCells = modules.length
   const isRandom = dataModuleCanBeRandomSize(style) && randomSize
 
@@ -64,7 +74,24 @@ export const DataModules = ({
       const yPos = y + margin + posOffset
 
       if (cell) {
-        if (style === 'square' || style === 'square-sm') {
+        if (style === 'circuit-board') {
+          const cx = x + margin + 0.5
+          const cy = y + margin + 0.5
+          const neighbours = getRenderableDataModuleNeighbours(x, y, modules, numCells)
+          const { right, bottom, count } = neighbours
+
+          if (right) {
+            circuitBoardTraceOps.push(line(cx, cy, cx + 1, cy))
+          }
+          if (bottom) {
+            circuitBoardTraceOps.push(line(cx, cy, cx, cy + 1))
+          }
+          if (count === 0) {
+            circuitBoardPadOps.push(square(x + margin, y + margin, 1))
+          } else if (circuitBoardShouldDrawPad({ ...neighbours, count })) {
+            circuitBoardPadOps.push(circuitBoardPad(cx, cy, CIRCUIT_BOARD_PAD_RADIUS))
+          }
+        } else if (style === 'square' || style === 'square-sm') {
           ops.push(square(xPos, yPos, size))
         } else if (style === 'pinched-square') {
           ops.push(pinchedSquare(xPos, yPos, size, 0.25))
@@ -149,9 +176,33 @@ export const DataModules = ({
       }
     })
   })
+
+  const paint = gradient ? `url(#${gradientId})` : color
+
+  if (style === 'circuit-board') {
+    return (
+      <g
+        fill={paint}
+        stroke={paint}
+        strokeWidth={CIRCUIT_BOARD_LINE_WIDTH}
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        shapeRendering='geometricPrecision'
+        data-testid='data-modules'
+      >
+        {circuitBoardTraceOps.length > 0 && (
+          <path fill='none' d={circuitBoardTraceOps.join('')} />
+        )}
+        {circuitBoardPadOps.length > 0 && (
+          <path stroke='none' d={circuitBoardPadOps.join('')} />
+        )}
+      </g>
+    )
+  }
+
   return (
     <path
-      fill={gradient ? `url(#${gradientId})` : color}
+      fill={paint}
       d={ops.join('')}
       shapeRendering={style === 'square' ? 'crispEdges' : 'geometricPrecision'}
       data-testid='data-modules'

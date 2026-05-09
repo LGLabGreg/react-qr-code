@@ -1,6 +1,7 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+import { CIRCUIT_BOARD_LINE_WIDTH, CIRCUIT_BOARD_PAD_RADIUS } from '../constants'
 import {
   dataModulesHorizontalLineNeighbours,
   dataModulesLeafNeighbours,
@@ -51,6 +52,59 @@ describe('DataModules', () => {
 
       expect(spy).toHaveBeenCalled()
     })
+  })
+
+  it('renders circuit-board as traces with pads', () => {
+    const modules = Array.from({ length: 10 }, () => Array(10).fill(false))
+    modules[8][8] = true
+    modules[8][9] = true
+    modules[9][8] = true
+
+    render(
+      <DataModules
+        modules={modules}
+        margin={2}
+        gradientId='mock-gradient-id'
+        settings={{ style: 'circuit-board', color: '#ffdd99' }}
+      />,
+    )
+
+    const group = screen.getByTestId('data-modules')
+    const paths = group.querySelectorAll('path')
+
+    expect(group.tagName.toLowerCase()).toBe('g')
+    expect(group).toHaveAttribute('fill', '#ffdd99')
+    expect(group).toHaveAttribute('stroke', '#ffdd99')
+    expect(group).toHaveAttribute('stroke-width', CIRCUIT_BOARD_LINE_WIDTH.toString())
+    expect(paths).toHaveLength(2)
+    expect(paths[0]).toHaveAttribute('fill', 'none')
+    expect(paths[0].getAttribute('d')).toContain('M10.5,10.5L11.5,10.5')
+    expect(paths[0].getAttribute('d')).toContain('M10.5,10.5L10.5,11.5')
+    expect(paths[1]).toHaveAttribute('stroke', 'none')
+    expect(paths[1].getAttribute('d')).not.toContain(
+      dataModulesUtils.circuitBoardPad(10.5, 10.5, CIRCUIT_BOARD_PAD_RADIUS),
+    )
+  })
+
+  it('renders standalone circuit-board modules as squares', () => {
+    const modules = Array.from({ length: 10 }, () => Array(10).fill(false))
+    modules[8][8] = true
+
+    render(
+      <DataModules
+        modules={modules}
+        margin={2}
+        gradientId='mock-gradient-id'
+        settings={{ style: 'circuit-board', color: '#ffdd99' }}
+      />,
+    )
+
+    const group = screen.getByTestId('data-modules')
+    const paths = group.querySelectorAll('path')
+
+    expect(paths).toHaveLength(1)
+    expect(paths[0]).toHaveAttribute('stroke', 'none')
+    expect(paths[0]).toHaveAttribute('d', 'M10,10h1v1h-1Z')
   })
 
   it.each(dataModulesRoundedNeighbours)(

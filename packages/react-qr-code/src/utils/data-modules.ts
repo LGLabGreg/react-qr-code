@@ -1,5 +1,7 @@
 import type { DataModulesStyle, Modules } from '../types/lib'
 import type { DataModulesNeighbours } from '../types/utils'
+import { isFinderPatternInnerModule } from './finder-patterns-inner'
+import { isFinderPatternOuterModule } from './finder-patterns-outer'
 
 export const dataModuleCanBeRandomSize = (style: DataModulesStyle): boolean =>
   style === 'square' ||
@@ -37,6 +39,47 @@ export const getModuleNeighbours = (
   }
 }
 
+export const isRenderableDataModule = ({
+  x,
+  y,
+  modules,
+  numCells,
+}: {
+  x: number
+  y: number
+  modules: Modules
+  numCells: number
+}) => {
+  return (
+    y >= 0 &&
+    y < modules.length &&
+    x >= 0 &&
+    x < modules[y].length &&
+    modules[y][x] &&
+    !isFinderPatternOuterModule({ x, y, numCells }) &&
+    !isFinderPatternInnerModule({ x, y, numCells })
+  )
+}
+
+export const getRenderableDataModuleNeighbours = (
+  x: number,
+  y: number,
+  modules: Modules,
+  numCells: number,
+): DataModulesNeighbours => {
+  const sides = {
+    left: isRenderableDataModule({ x: x - 1, y, modules, numCells }),
+    right: isRenderableDataModule({ x: x + 1, y, modules, numCells }),
+    top: isRenderableDataModule({ x, y: y - 1, modules, numCells }),
+    bottom: isRenderableDataModule({ x, y: y + 1, modules, numCells }),
+  }
+
+  return {
+    ...sides,
+    count: Object.values(sides).filter(Boolean).length,
+  }
+}
+
 export const square = (x: number, y: number, size: number) =>
   `M${x},${y}h${size}v${size}h-${size}Z`
 
@@ -45,6 +88,14 @@ export const circle = (x: number, y: number, size: number) =>
 
 export const diamond = (x: number, y: number, size: number) =>
   `M${x},${y + size / 2}l${size / 2},-${size / 2}l${size / 2},${size / 2}l-${size / 2},${size / 2}Z`
+
+export const line = (x1: number, y1: number, x2: number, y2: number) =>
+  `M${x1},${y1}L${x2},${y2}`
+
+export const circuitBoardPad = (cx: number, cy: number, radius: number) =>
+  circle(cx - radius, cy - radius, radius * 2)
+
+export const circuitBoardShouldDrawPad = ({ count }: DataModulesNeighbours) => count === 1
 
 export const topRightRounded = (x: number, y: number) =>
   `M ${x} ${y} 
