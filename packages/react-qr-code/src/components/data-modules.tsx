@@ -41,7 +41,7 @@ export const DataModules = ({
   gradient,
   gradientId,
 }: DataModulesProps): ReactNode => {
-  const { color, style, randomSize } = useMemo(
+  const { color, style, randomSize, size } = useMemo(
     () => sanitizeDataModulesSettings(settings),
     [settings],
   )
@@ -51,8 +51,8 @@ export const DataModules = ({
   const isRandom = dataModuleCanBeRandomSize(style) && randomSize
 
   const scaleFactor = useCallback(
-    () => getScaleFactor(style, isRandom),
-    [style, isRandom],
+    () => getScaleFactor(style, isRandom, size),
+    [style, isRandom, size],
   )
 
   modules.forEach((row, y) => {

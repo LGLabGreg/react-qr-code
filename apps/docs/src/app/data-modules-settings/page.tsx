@@ -45,12 +45,28 @@ const props: Prop[] = [
     description: (
       <>
         If true, the modules will have random sizes. Can only be used with styles{' '}
-        <Bold>square</Bold>, <Bold>circle</Bold>, <Bold>diamond</Bold>, <Bold>star</Bold>,{' '}
-        <Bold>heart</Bold> and <Bold>hashtag</Bold>.
+        <Bold>square</Bold>, <Bold>pinched-square</Bold>, <Bold>circle</Bold>,{' '}
+        <Bold>diamond</Bold>, <Bold>star</Bold>, <Bold>heart</Bold> and{' '}
+        <Bold>hashtag</Bold>.
       </>
     ),
     defaultValue: 'false',
     possibleValues: ['true', 'false'],
+  },
+  {
+    name: 'size',
+    type: 'number',
+    description: (
+      <>
+        Fixed size multiplier applied to each data module (1 = full size). Keep between{' '}
+        <Bold>0.75</Bold> and <Bold>1</Bold> for best results — lower values may degrade
+        scannability. Only applies to styles <Bold>square</Bold>,{' '}
+        <Bold>pinched-square</Bold>, <Bold>circle</Bold>, <Bold>diamond</Bold>,{' '}
+        <Bold>star</Bold>, <Bold>heart</Bold> and <Bold>hashtag</Bold>. Ignored when{' '}
+        <Bold>randomSize</Bold> is true.
+      </>
+    ),
+    defaultValue: '1',
   },
 ]
 

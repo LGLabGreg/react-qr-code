@@ -12,11 +12,13 @@ export const dataModuleCanBeRandomSize = (style: DataModulesStyle): boolean =>
   style === 'diamond' ||
   style === 'hashtag'
 
-export const getScaleFactor = (style: string, isRandom: boolean) => {
+export const getScaleFactor = (style: string, isRandom: boolean, size = 1) => {
   if (style === 'square-sm') {
     return 0.75
   } else if (isRandom) {
     return Math.random() * (1 - 0.75) + 0.75
+  } else if (dataModuleCanBeRandomSize(style as DataModulesStyle)) {
+    return size
   }
   return 1
 }

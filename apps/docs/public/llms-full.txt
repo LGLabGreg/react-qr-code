@@ -37,6 +37,7 @@ The main component exported by the library.
 | `color` | `string` | - | Color of the data modules (overridden by `gradient`). |
 | `style` | `DataModulesStyle` | `'square'` | Shape of the data modules. |
 | `randomSize` | `boolean` | `false` | If true, modules will have slightly varied sizes. |
+| `size` | `number` | `1` | Fixed module size multiplier (1 = full size). Keep between 0.75 and 1 for best results — lower values may degrade scannability. Only applies to fillable styles (square, pinched-square, circle, diamond, heart, star, hashtag). Ignored when `randomSize` is true. |
 
 **Available Styles (`DataModulesStyle`):**
 `'square'`, `'square-sm'`, `'pinched-square'`, `'rounded'`, `'leaf'`, `'vertical-line'`, `'horizontal-line'`, `'circuit-board'`, `'circle'`, `'diamond'`, `'star'`, `'heart'`, `'hashtag'`
