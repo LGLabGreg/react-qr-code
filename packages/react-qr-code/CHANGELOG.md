@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.7.0
+
+### Minor Changes
+
+- [#536](https://github.com/LGLabGreg/react-qr-code/pull/536) [`4c0556d`](https://github.com/LGLabGreg/react-qr-code/commit/4c0556df4a680592391a2444bca2779b08adedc4) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Add `lineWidth` option to `dataModulesSettings`. Controls the stroke width (in module units) for connected-shape styles: `vertical-line`, `horizontal-line`, `rounded`, and `circuit-board`. Defaults preserve existing rendering (`1` for line/rounded, `0.5` for `circuit-board`). The `rounded` style fillets exposed outer hub corners so the rounded character is preserved at any `lineWidth`.
+
 ## 1.6.0
 
 ### Minor Changes
