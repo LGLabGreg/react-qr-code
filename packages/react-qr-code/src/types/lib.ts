@@ -55,6 +55,15 @@ export interface DataModulesSettings {
    * @defaultValue 1
    */
   size?: number
+  /**
+   * Width of the stroke for connected-shape styles, in module units. Only
+   * applies to `vertical-line`, `horizontal-line`, `rounded`, and
+   * `circuit-board`. Keep between 0.25 and 1 — lower values may degrade
+   * scannability, and values above 1 cause end caps to overflow neighbouring
+   * cells. Not clamped.
+   * @defaultValue 1 for `vertical-line` / `horizontal-line` / `rounded`, 0.5 for `circuit-board`
+   */
+  lineWidth?: number
 }
 
 export type FinderPatternOuterStyle =

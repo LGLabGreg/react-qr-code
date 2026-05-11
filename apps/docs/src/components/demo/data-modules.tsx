@@ -61,6 +61,16 @@ export const DataModules = ({ qrProps, setQrProps }: DataModulesProps) => {
   const size = qrProps.dataModulesSettings?.size ?? 1
   const randomSize = qrProps.dataModulesSettings?.randomSize ?? false
 
+  const currentStyle = qrProps.dataModulesSettings?.style
+  const isCircuitBoard = currentStyle === 'circuit-board'
+  const canSetLineWidth =
+    currentStyle === 'vertical-line' ||
+    currentStyle === 'horizontal-line' ||
+    currentStyle === 'rounded' ||
+    isCircuitBoard
+  const defaultLineWidth = isCircuitBoard ? 0.5 : 1
+  const lineWidth = qrProps.dataModulesSettings?.lineWidth ?? defaultLineWidth
+
   return (
     <>
       <FormField label='Style'>
@@ -79,6 +89,25 @@ export const DataModules = ({ qrProps, setQrProps }: DataModulesProps) => {
           ))}
         </div>
       </FormField>
+      {canSetLineWidth && (
+        <FormField label={`Line width (${lineWidth.toFixed(2)})`}>
+          <Slider
+            value={[lineWidth]}
+            onValueChange={([value]) =>
+              setQrProps((prevProps) => ({
+                ...prevProps,
+                dataModulesSettings: {
+                  ...prevProps.dataModulesSettings,
+                  lineWidth: value,
+                },
+              }))
+            }
+            min={0.25}
+            max={1}
+            step={0.01}
+          />
+        </FormField>
+      )}
       {canBeRandomSize && (
         <>
           <FormCheckbox
