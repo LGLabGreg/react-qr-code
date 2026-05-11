@@ -68,6 +68,19 @@ const props: Prop[] = [
     ),
     defaultValue: '1',
   },
+  {
+    name: 'lineWidth',
+    type: 'number',
+    description: (
+      <>
+        Width of the stroke for connected-shape styles, in module units. Only applies to{' '}
+        <Bold>vertical-line</Bold>, <Bold>horizontal-line</Bold>, <Bold>rounded</Bold>,
+        and <Bold>circuit-board</Bold>. Keep between <Bold>0.25</Bold> and <Bold>1</Bold>;
+        values outside this range may degrade scannability or overflow neighbouring cells.
+      </>
+    ),
+    defaultValue: '1 (0.5 for circuit-board)',
+  },
 ]
 
 export default function Page() {

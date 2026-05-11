@@ -1,10 +1,6 @@
 import { type ReactNode, useCallback, useMemo } from 'react'
 
-import {
-  CIRCUIT_BOARD_LINE_WIDTH,
-  CIRCUIT_BOARD_PAD_RADIUS,
-  DEFAULT_NUM_STAR_POINTS,
-} from '../constants'
+import { CIRCUIT_BOARD_PAD_RADIUS, DEFAULT_NUM_STAR_POINTS } from '../constants'
 import type { DataModulesProps } from '../types/utils'
 import {
   bottomRounded,
@@ -19,6 +15,7 @@ import {
   leftRounded,
   rect,
   rightRounded,
+  roundedDataModule,
   square,
   topRounded,
 } from '../utils/data-modules'
@@ -41,7 +38,7 @@ export const DataModules = ({
   gradient,
   gradientId,
 }: DataModulesProps): ReactNode => {
-  const { color, style, randomSize, size } = useMemo(
+  const { color, style, randomSize, size, lineWidth } = useMemo(
     () => sanitizeDataModulesSettings(settings),
     [settings],
   )
@@ -68,41 +65,34 @@ export const DataModules = ({
       const scale = scaleFactor()
       const size = 1 * scale
       const posOffset = (1 - 1 * scale) / 2
-      const xPos = x + margin + posOffset
-      const yPos = y + margin + posOffset
+      const baseX = x + margin
+      const baseY = y + margin
+      const xPos = baseX + posOffset
+      const yPos = baseY + posOffset
+      const lwOffset = (1 - lineWidth) / 2
 
       if (cell) {
         if (style === 'circuit-board') {
-          const cx = x + margin + 0.5
-          const cy = y + margin + 0.5
-          const traceHalf = CIRCUIT_BOARD_LINE_WIDTH / 2
+          const cx = baseX + 0.5
+          const cy = baseY + 0.5
+          const traceHalf = lineWidth / 2
           // Traces extend traceHalf past both endpoints so that adjacent
           // traces fully cover the cell-center square at every junction
           // (preventing white notches at L/T/+ bends under nonzero fill).
-          const traceLength = 1 + CIRCUIT_BOARD_LINE_WIDTH
+          const traceLength = 1 + lineWidth
           const neighbours = getRenderableDataModuleNeighbours(x, y, modules, numCells)
           const { right, bottom, count } = neighbours
 
           if (right) {
-            ops.push(
-              rect(cx - traceHalf, cy - traceHalf, traceLength, CIRCUIT_BOARD_LINE_WIDTH),
-            )
+            ops.push(rect(cx - traceHalf, cy - traceHalf, traceLength, lineWidth))
           }
           if (bottom) {
-            ops.push(
-              rect(cx - traceHalf, cy - traceHalf, CIRCUIT_BOARD_LINE_WIDTH, traceLength),
-            )
+            ops.push(rect(cx - traceHalf, cy - traceHalf, lineWidth, traceLength))
           }
           if (count === 0) {
             const isolatedSize = 0.75
             const isolatedOffset = (1 - isolatedSize) / 2
-            ops.push(
-              square(
-                x + margin + isolatedOffset,
-                y + margin + isolatedOffset,
-                isolatedSize,
-              ),
-            )
+            ops.push(square(baseX + isolatedOffset, baseY + isolatedOffset, isolatedSize))
           } else if (circuitBoardShouldDrawPad({ ...neighbours, count })) {
             ops.push(circuitBoardPad(cx, cy, CIRCUIT_BOARD_PAD_RADIUS))
           }
@@ -123,32 +113,37 @@ export const DataModules = ({
         } else if (style === 'hashtag') {
           ops.push(hashtag(xPos, yPos, size))
         } else if (style === 'rounded') {
-          const { left, right, top, bottom, count } = getModuleNeighbours(x, y, modules)
+          const neighbours = getModuleNeighbours(x, y, modules)
+          const { left, right, top, bottom, count } = neighbours
 
-          if (count === 0) {
-            ops.push(circle(xPos, yPos, 1))
-          } else if (count > 2 || (left && right) || (top && bottom)) {
-            ops.push(square(xPos, yPos, 1))
-          } else if (count === 2) {
-            if (left && top) {
-              ops.push(bottomRightRounded(xPos, yPos))
-            } else if (top && right) {
-              ops.push(bottomLeftRounded(xPos, yPos))
-            } else if (right && bottom) {
-              ops.push(topLeftRounded(xPos, yPos))
+          if (lineWidth === 1) {
+            if (count === 0) {
+              ops.push(circle(xPos, yPos, 1))
+            } else if (count > 2 || (left && right) || (top && bottom)) {
+              ops.push(square(xPos, yPos, 1))
+            } else if (count === 2) {
+              if (left && top) {
+                ops.push(bottomRightRounded(xPos, yPos))
+              } else if (top && right) {
+                ops.push(bottomLeftRounded(xPos, yPos))
+              } else if (right && bottom) {
+                ops.push(topLeftRounded(xPos, yPos))
+              } else {
+                ops.push(topRightRounded(xPos, yPos))
+              }
             } else {
-              ops.push(topRightRounded(xPos, yPos))
+              if (top) {
+                ops.push(bottomRounded(xPos, yPos))
+              } else if (right) {
+                ops.push(leftRounded(xPos, yPos))
+              } else if (bottom) {
+                ops.push(topRounded(xPos, yPos))
+              } else {
+                ops.push(rightRounded(xPos, yPos))
+              }
             }
           } else {
-            if (top) {
-              ops.push(bottomRounded(xPos, yPos))
-            } else if (right) {
-              ops.push(leftRounded(xPos, yPos))
-            } else if (bottom) {
-              ops.push(topRounded(xPos, yPos))
-            } else {
-              ops.push(rightRounded(xPos, yPos))
-            }
+            ops.push(roundedDataModule(baseX, baseY, lineWidth, neighbours))
           }
         } else if (style === 'leaf') {
           const { left, right, top, bottom, count } = getModuleNeighbours(x, y, modules)
@@ -167,25 +162,25 @@ export const DataModules = ({
           const { left, right, top, bottom, count } = getModuleNeighbours(x, y, modules)
 
           if (count === 0 || (left && !(top || bottom)) || (right && !(top || bottom))) {
-            ops.push(circle(xPos, yPos, 1))
+            ops.push(circle(baseX + lwOffset, baseY + lwOffset, lineWidth))
           } else if (top && bottom) {
-            ops.push(square(xPos, yPos, 1))
+            ops.push(rect(baseX + lwOffset, baseY, lineWidth, 1))
           } else if (top && !bottom) {
-            ops.push(bottomRounded(xPos, yPos))
+            ops.push(bottomRounded(baseX, baseY, lineWidth))
           } else if (bottom && !top) {
-            ops.push(topRounded(xPos, yPos))
+            ops.push(topRounded(baseX, baseY, lineWidth))
           }
         } else if (style === 'horizontal-line') {
           const { left, right, top, bottom, count } = getModuleNeighbours(x, y, modules)
 
           if (count === 0 || (top && !(left || right)) || (bottom && !(left || right))) {
-            ops.push(circle(xPos, yPos, 1))
+            ops.push(circle(baseX + lwOffset, baseY + lwOffset, lineWidth))
           } else if (left && right) {
-            ops.push(square(xPos, yPos, 1))
+            ops.push(rect(baseX, baseY + lwOffset, 1, lineWidth))
           } else if (left && !right) {
-            ops.push(rightRounded(xPos, yPos))
+            ops.push(rightRounded(baseX, baseY, lineWidth))
           } else if (right && !left) {
-            ops.push(leftRounded(xPos, yPos))
+            ops.push(leftRounded(baseX, baseY, lineWidth))
           }
         }
       }

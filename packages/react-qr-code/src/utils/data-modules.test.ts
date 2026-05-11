@@ -2,12 +2,17 @@ import { describe, expect, it, vi } from 'vitest'
 
 import type { Modules } from '../types/lib'
 import {
+  bottomRounded,
   circuitBoardShouldDrawPad,
   dataModuleCanBeRandomSize,
   getModuleNeighbours,
   getRenderableDataModuleNeighbours,
   getScaleFactor,
   isRenderableDataModule,
+  leftRounded,
+  rightRounded,
+  roundedDataModule,
+  topRounded,
 } from './data-modules'
 
 describe('getScaleFactor', () => {
@@ -253,6 +258,67 @@ describe('isRenderableDataModule', () => {
     modules[0][0] = true
 
     expect(isRenderableDataModule({ x: 0, y: 0, modules, numCells: 21 })).toBe(false)
+  })
+})
+
+describe('rounded line-cap helpers', () => {
+  const normalize = (s: string) => s.replace(/\s+/g, ' ').trim()
+
+  it('emit the legacy full-width path when width defaults to 1', () => {
+    expect(normalize(topRounded(0, 0))).toBe(
+      normalize(`M 0 1 h 1 v -0.5 a 0.5 0.5, 0, 0, 0, -1 0`),
+    )
+    expect(normalize(bottomRounded(0, 0))).toBe(
+      normalize(`M 0 0 h 1 v 0.5 a 0.5 0.5, 0, 0, 1, -1 0`),
+    )
+    expect(normalize(leftRounded(0, 0))).toBe(
+      normalize(`M 1 0 v 1 h -0.5 a 0.5 0.5, 0, 0, 1, 0 -1`),
+    )
+    expect(normalize(rightRounded(0, 0))).toBe(
+      normalize(`M 0 0 v 1 h 0.5 a 0.5 0.5, 0, 0, 0, 0 -1`),
+    )
+  })
+
+  it('centers the cap on the cell axis when width < 1', () => {
+    // width = 0.5, vertical-line top cap: cap is 0.5 wide, centered at x+0.5,
+    // straight body 0.75 tall, semicircle radius 0.25 on top.
+    expect(normalize(topRounded(0, 0, 0.5))).toBe(
+      normalize(`M 0.25 1 h 0.5 v -0.75 a 0.25 0.25, 0, 0, 0, -0.5 0`),
+    )
+    expect(normalize(leftRounded(0, 0, 0.5))).toBe(
+      normalize(`M 1 0.25 v 0.5 h -0.75 a 0.25 0.25, 0, 0, 1, 0 -0.5`),
+    )
+  })
+})
+
+describe('roundedDataModule', () => {
+  const n = { left: false, right: false, top: false, bottom: false }
+
+  it('fillets every hub corner when isolated (count=0)', () => {
+    const d = roundedDataModule(0, 0, 0.75, n)
+    // Four quarter-circle arcs of radius 0.375 → full circle
+    const arcs = d.match(/A 0.375 0.375 0 0 1/g) ?? []
+    expect(arcs.length).toBe(4)
+  })
+
+  it('fillets only the outer (bottom-right) corner for a left+top L-bend', () => {
+    const d = roundedDataModule(0, 0, 0.5, { ...n, left: true, top: true })
+    const arcs = d.match(/A 0.25 0.25 0 0 1/g) ?? []
+    expect(arcs.length).toBe(1)
+    // Outer fillet sits at the hub's BR corner (cx+r, cy+r) = (0.75, 0.75)
+    expect(d).toContain('A 0.25 0.25 0 0 1 0.5 0.75')
+  })
+
+  it('emits no fillets for a straight-through (left+right) cell', () => {
+    const d = roundedDataModule(0, 0, 0.5, { ...n, left: true, right: true })
+    expect(d.includes('A ')).toBe(false)
+  })
+
+  it('fillets the two corners on the open side for a 1-neighbour cell', () => {
+    // Only top neighbour → BR and BL exposed
+    const d = roundedDataModule(0, 0, 0.5, { ...n, top: true })
+    const arcs = d.match(/A 0.25 0.25 0 0 1/g) ?? []
+    expect(arcs.length).toBe(2)
   })
 })
 

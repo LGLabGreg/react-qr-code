@@ -1,7 +1,11 @@
 'use client'
 
-import { ReactQRCode, type ReactQRCodeProps } from '@lglab/react-qr-code'
-import { type PropsWithChildren, useState } from 'react'
+import {
+  ReactQRCode,
+  type ReactQRCodeProps,
+  type ReactQRCodeRef,
+} from '@lglab/react-qr-code'
+import { type PropsWithChildren, useRef, useState } from 'react'
 
 import {
   Accordion,
@@ -9,6 +13,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import { Button } from '@/components/ui/button'
 
 import { Colors } from './colors'
 import { DataModules } from './data-modules'
@@ -50,6 +55,7 @@ const AccContent = ({ children }: PropsWithChildren) => (
 )
 
 export const Demo = () => {
+  const qrRef = useRef<ReactQRCodeRef>(null)
   const [qrProps, setQrProps] = useState<ReactQRCodeProps>({
     value: 'https://reactqrcode.com',
     size: 400,
@@ -116,8 +122,15 @@ export const Demo = () => {
           </AccordionItem>
         </Accordion>
       </div>
-      <div className='flex justify-center [&>svg]:self-start [&>svg]:h-auto sm:col-span-2'>
-        <ReactQRCode {...qrProps} />
+      <div className='flex flex-col items-center gap-3 sm:col-span-2 [&>svg]:h-auto'>
+        <ReactQRCode {...qrProps} ref={qrRef} />
+        <Button
+          onClick={() =>
+            qrRef.current?.download({ name: 'qr-code', format: 'png', size: 1000 })
+          }
+        >
+          Download PNG
+        </Button>
       </div>
     </div>
   )

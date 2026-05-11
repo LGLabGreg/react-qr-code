@@ -243,7 +243,7 @@ export const dataModulesVerticalLineNeighbours = [
       bottom: true,
       count: 1,
     },
-    'square',
+    'rect',
   ],
   [
     {
@@ -253,7 +253,7 @@ export const dataModulesVerticalLineNeighbours = [
       bottom: true,
       count: 2,
     },
-    'square',
+    'rect',
   ],
   [
     {
@@ -263,7 +263,7 @@ export const dataModulesVerticalLineNeighbours = [
       bottom: true,
       count: 3,
     },
-    'square',
+    'rect',
   ],
   [
     {
@@ -273,7 +273,7 @@ export const dataModulesVerticalLineNeighbours = [
       bottom: true,
       count: 4,
     },
-    'square',
+    'rect',
   ],
   [
     {
@@ -396,7 +396,7 @@ export const dataModulesHorizontalLineNeighbours = [
       bottom: false,
       count: 1,
     },
-    'square',
+    'rect',
   ],
   [
     {
