@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.6.0
+
+### Minor Changes
+
+- [#533](https://github.com/LGLabGreg/react-qr-code/pull/533) [`e573a1e`](https://github.com/LGLabGreg/react-qr-code/commit/e573a1e001be89d211f06d05bd5ade9202714580) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Add `size` option to `dataModulesSettings`. Sets a fixed module size multiplier (1 = full size) for the fillable data module styles (square, pinched-square, circle, diamond, heart, star, hashtag). Ignored when `randomSize` is true.
+
 ## 1.5.0
 
 ### Minor Changes
