@@ -25,6 +25,24 @@ describe('getScaleFactor', () => {
     const scaleFactor = getScaleFactor('circle', true)
     expect(scaleFactor).toEqual(0.9 * (1 - 0.75) + 0.75)
   })
+
+  it('returns the provided size for fillable styles when randomSize is false', () => {
+    expect(getScaleFactor('circle', false, 0.8)).toBe(0.8)
+    expect(getScaleFactor('square', false, 0.9)).toBe(0.9)
+  })
+
+  it('ignores size for styles that cannot be scaled', () => {
+    expect(getScaleFactor('rounded', false, 0.8)).toBe(1)
+    expect(getScaleFactor('leaf', false, 0.8)).toBe(1)
+    expect(getScaleFactor('vertical-line', false, 0.8)).toBe(1)
+    expect(getScaleFactor('horizontal-line', false, 0.8)).toBe(1)
+    expect(getScaleFactor('circuit-board', false, 0.8)).toBe(1)
+  })
+
+  it('ignores size when randomSize is true', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.5)
+    expect(getScaleFactor('circle', true, 0.8)).toEqual(0.5 * (1 - 0.75) + 0.75)
+  })
 })
 
 describe('dataModuleCanBeRandomSize', () => {

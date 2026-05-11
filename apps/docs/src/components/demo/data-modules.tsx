@@ -2,6 +2,7 @@ import { type DataModulesStyle, type ReactQRCodeProps } from '@lglab/react-qr-co
 import { type Dispatch } from 'react'
 
 import { FormCheckbox, FormField } from '@/components/ui/form-fields'
+import { Slider } from '@/components/ui/slider'
 
 import { Button } from '../ui/button'
 
@@ -57,6 +58,9 @@ export const DataModules = ({ qrProps, setQrProps }: DataModulesProps) => {
     'hashtag',
   ].includes(qrProps.dataModulesSettings?.style ?? '')
 
+  const size = qrProps.dataModulesSettings?.size ?? 1
+  const randomSize = qrProps.dataModulesSettings?.randomSize ?? false
+
   return (
     <>
       <FormField label='Style'>
@@ -76,13 +80,34 @@ export const DataModules = ({ qrProps, setQrProps }: DataModulesProps) => {
         </div>
       </FormField>
       {canBeRandomSize && (
-        <FormCheckbox
-          label='Random size'
-          checked={qrProps.dataModulesSettings?.randomSize}
-          onCheckedChange={(checked) =>
-            onCheckboxChange(checked as boolean, 'randomSize')
-          }
-        />
+        <>
+          <FormCheckbox
+            label='Random size'
+            checked={randomSize}
+            onCheckedChange={(checked) =>
+              onCheckboxChange(checked as boolean, 'randomSize')
+            }
+          />
+          <FormField label={`Size (${size.toFixed(2)})`}>
+            <Slider
+              value={[size]}
+              onValueChange={([value]) =>
+                setQrProps((prevProps) => ({
+                  ...prevProps,
+                  dataModulesSettings: {
+                    ...prevProps.dataModulesSettings,
+                    size: value,
+                  },
+                }))
+              }
+              min={0.75}
+              max={1}
+              step={0.01}
+              disabled={randomSize}
+              className={randomSize ? 'opacity-50' : undefined}
+            />
+          </FormField>
+        </>
       )}
     </>
   )

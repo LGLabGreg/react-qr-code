@@ -15,6 +15,7 @@ export const sanitizeDataModulesSettings = (settings?: DataModulesSettings) => {
     color: settings?.color || DEFAULT_DATA_MODULES_COLOR,
     style: settings?.style || DEFAULT_DATA_MODULES_STYLE,
     randomSize: settings?.randomSize || false,
+    size: settings?.size ?? 1,
   }
 }
 

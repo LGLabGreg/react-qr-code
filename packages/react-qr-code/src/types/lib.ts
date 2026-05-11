@@ -47,6 +47,14 @@ export interface DataModulesSettings {
   color?: string
   style?: DataModulesStyle
   randomSize?: boolean
+  /**
+   * Fixed size multiplier applied to each data module (1 = full size). Keep
+   * between 0.75 and 1 for best results — lower values may degrade
+   * scannability. Only applies to fillable styles (square, pinched-square,
+   * circle, diamond, heart, star, hashtag). Ignored when `randomSize` is true.
+   * @defaultValue 1
+   */
+  size?: number
 }
 
 export type FinderPatternOuterStyle =
