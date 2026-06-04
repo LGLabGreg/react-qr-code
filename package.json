@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/LGLabGreg/react-qr-code.git"
   },
-  "packageManager": "pnpm@10.33.4",
+  "packageManager": "pnpm@11.5.1",
   "type": "module",
   "scripts": {
     "dev": "pnpm concurrently --names packages,apps \"pnpm watch:packages\" \"pnpm watch:docs\"",
@@ -40,17 +40,17 @@
     "@types/jsdom": "^28.0.3",
     "@types/node": "^25.9.1",
     "@vitejs/plugin-react": "^6.0.2",
-    "@vitest/coverage-v8": "4.1.7",
-    "concurrently": "^10.0.0",
+    "@vitest/coverage-v8": "4.1.8",
+    "concurrently": "^10.0.3",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
-    "lint-staged": "^17.0.5",
-    "oxfmt": "^0.52.0",
-    "oxlint": "^1.67.0",
-    "react": "^19.2.6",
-    "react-dom": "^19.2.6",
+    "lint-staged": "^17.0.7",
+    "oxfmt": "^0.53.0",
+    "oxlint": "^1.68.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
     "typescript": "~6.0.3",
-    "vite": "^8.0.14",
-    "vitest": "^4.1.7"
+    "vite": "^8.0.16",
+    "vitest": "^4.1.8"
   }
 }
