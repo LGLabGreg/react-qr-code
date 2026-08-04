@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.7.1
+
+### Patch Changes
+
+- [#601](https://github.com/LGLabGreg/react-qr-code/pull/601) [`a23a08f`](https://github.com/LGLabGreg/react-qr-code/commit/a23a08f942ef8875bfc160a4becf4e41d7e1df74) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Fix `randomSize` breaking server-side rendering. `getScaleFactor` called `Math.random()` during render, so the server and the client produced different module sizes, causing a hydration mismatch, and static prerenders froze one arbitrary result into the HTML. Scale factors are now derived deterministically from the module's position and a seed hashed from the code's pre-excavation module grid: the same `value` always renders the same layout, different values still get different layouts, resizing an excavating image no longer reshuffles the rest of the code, and SSR output matches hydration.
+
 ## 1.7.0
 
 ### Minor Changes
