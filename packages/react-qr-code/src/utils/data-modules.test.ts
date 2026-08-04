@@ -6,6 +6,7 @@ import {
   circuitBoardShouldDrawPad,
   dataModuleCanBeRandomSize,
   getModuleNeighbours,
+  getModulesSeed,
   getRenderableDataModuleNeighbours,
   getScaleFactor,
   isRenderableDataModule,
@@ -14,6 +15,7 @@ import {
   roundedDataModule,
   topRounded,
 } from './data-modules'
+import { excavateModules } from './qr-code'
 
 describe('getScaleFactor', () => {
   it('returns 0.75 for square-sm style', () => {
@@ -25,10 +27,39 @@ describe('getScaleFactor', () => {
     expect(getScaleFactor('circle', false)).toBe(1)
   })
 
-  it('returns a random value between 0.75 and 1 when randomSize is true', () => {
-    vi.spyOn(Math, 'random').mockReturnValue(0.9)
-    const scaleFactor = getScaleFactor('circle', true)
-    expect(scaleFactor).toEqual(0.9 * (1 - 0.75) + 0.75)
+  it('returns a value between 0.75 and 1 when randomSize is true', () => {
+    for (let y = 0; y < 8; y++) {
+      for (let x = 0; x < 8; x++) {
+        const scaleFactor = getScaleFactor('circle', true, 1, x, y, 12345)
+        expect(scaleFactor).toBeGreaterThanOrEqual(0.75)
+        expect(scaleFactor).toBeLessThan(1)
+      }
+    }
+  })
+
+  it('returns the same value for a given cell and seed', () => {
+    expect(getScaleFactor('circle', true, 1, 3, 4, 12345)).toBe(
+      getScaleFactor('circle', true, 1, 3, 4, 12345),
+    )
+  })
+
+  it('does not depend on Math.random', () => {
+    const random = vi.spyOn(Math, 'random')
+    getScaleFactor('circle', true, 1, 3, 4, 12345)
+    expect(random).not.toHaveBeenCalled()
+  })
+
+  it('varies across cells and across seeds', () => {
+    const sameSeed = new Set(
+      Array.from({ length: 32 }, (_, i) =>
+        getScaleFactor('circle', true, 1, i, 0, 12345),
+      ),
+    )
+    expect(sameSeed.size).toBeGreaterThan(1)
+
+    expect(getScaleFactor('circle', true, 1, 3, 4, 12345)).not.toBe(
+      getScaleFactor('circle', true, 1, 3, 4, 54321),
+    )
   })
 
   it('returns the provided size for fillable styles when randomSize is false', () => {
@@ -45,8 +76,56 @@ describe('getScaleFactor', () => {
   })
 
   it('ignores size when randomSize is true', () => {
-    vi.spyOn(Math, 'random').mockReturnValue(0.5)
-    expect(getScaleFactor('circle', true, 0.8)).toEqual(0.5 * (1 - 0.75) + 0.75)
+    expect(getScaleFactor('circle', true, 0.8, 3, 4, 12345)).toBe(
+      getScaleFactor('circle', true, 1, 3, 4, 12345),
+    )
+  })
+})
+
+describe('getModulesSeed', () => {
+  it('is stable for the same grid', () => {
+    const modules: Modules = [
+      [true, false],
+      [false, true],
+    ]
+    expect(getModulesSeed(modules)).toBe(getModulesSeed(modules))
+  })
+
+  it('differs for different grids', () => {
+    expect(
+      getModulesSeed([
+        [true, false],
+        [false, true],
+      ]),
+    ).not.toBe(
+      getModulesSeed([
+        [true, true],
+        [false, true],
+      ]),
+    )
+  })
+
+  it('returns an unsigned 32-bit integer', () => {
+    const seed = getModulesSeed([[true, false, true, true, false]])
+    expect(Number.isInteger(seed)).toBe(true)
+    expect(seed).toBeGreaterThanOrEqual(0)
+    expect(seed).toBeLessThanOrEqual(0xffffffff)
+  })
+
+  // The seed is taken from the pre-excavation grid, so resizing an excavating
+  // image must not reshuffle the random sizes of the whole code.
+  it('is unaffected by excavation', () => {
+    const cells: Modules = [
+      [true, true, true, true],
+      [true, true, true, true],
+      [true, true, true, true],
+      [true, true, true, true],
+    ]
+    const small = excavateModules(cells, { x: 1, y: 1, w: 1, h: 1 })
+    const large = excavateModules(cells, { x: 1, y: 1, w: 2, h: 2 })
+
+    expect(getModulesSeed(small)).not.toBe(getModulesSeed(large))
+    expect(getModulesSeed(cells)).toBe(getModulesSeed(cells))
   })
 })
 

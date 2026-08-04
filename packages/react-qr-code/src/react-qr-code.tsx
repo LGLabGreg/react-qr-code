@@ -120,7 +120,7 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
       />
       <FinderPatternsOuter settings={finderPatternOuterSettings} {...svgElementsProps} />
       <FinderPatternsInner settings={finderPatternInnerSettings} {...svgElementsProps} />
-      <DataModules settings={dataModulesSettings} {...svgElementsProps} />
+      <DataModules settings={dataModulesSettings} cells={cells} {...svgElementsProps} />
       {image}
     </svg>
   )

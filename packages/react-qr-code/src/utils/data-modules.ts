@@ -12,11 +12,40 @@ export const dataModuleCanBeRandomSize = (style: DataModulesStyle): boolean =>
   style === 'diamond' ||
   style === 'hashtag'
 
-export const getScaleFactor = (style: string, isRandom: boolean, size = 1) => {
+// FNV-1a over the module grid, so codes with different contents get different
+// random-size layouts while a given code always gets the same one.
+export const getModulesSeed = (modules: Modules): number => {
+  let hash = 0x811c9dc5
+  modules.forEach((row) => {
+    row.forEach((cell) => {
+      hash = Math.imul(hash ^ (cell ? 1 : 0), 0x01000193)
+    })
+  })
+  return hash >>> 0
+}
+
+// Deterministic stand-in for Math.random(), returning [0, 1) for a given cell.
+// Math.random() would produce different values on the server and on the client,
+// desyncing hydration and baking one arbitrary result into a prerender.
+const pseudoRandom = (x: number, y: number, seed: number): number => {
+  let hash = (seed ^ Math.imul(x, 0x27d4eb2d) ^ Math.imul(y, 0x165667b1)) >>> 0
+  hash = Math.imul(hash ^ (hash >>> 15), 0x2c1b3c6d) >>> 0
+  hash = Math.imul(hash ^ (hash >>> 13), 0x297a2d39) >>> 0
+  return ((hash ^ (hash >>> 16)) >>> 0) / 0x100000000
+}
+
+export const getScaleFactor = (
+  style: string,
+  isRandom: boolean,
+  size = 1,
+  x = 0,
+  y = 0,
+  seed = 0,
+) => {
   if (style === 'square-sm') {
     return 0.75
   } else if (isRandom) {
-    return Math.random() * (1 - 0.75) + 0.75
+    return pseudoRandom(x, y, seed) * (1 - 0.75) + 0.75
   } else if (dataModuleCanBeRandomSize(style as DataModulesStyle)) {
     return size
   }

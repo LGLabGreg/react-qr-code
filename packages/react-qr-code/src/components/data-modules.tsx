@@ -9,6 +9,7 @@ import {
   circuitBoardShouldDrawPad,
   dataModuleCanBeRandomSize,
   diamond,
+  getModulesSeed,
   getRenderableDataModuleNeighbours,
   getScaleFactor,
   leaf,
@@ -33,6 +34,7 @@ import { hashtag, heart, pinchedSquare, star } from '../utils/svg'
 
 export const DataModules = ({
   modules,
+  cells,
   margin,
   settings,
   gradient,
@@ -47,9 +49,11 @@ export const DataModules = ({
   const numCells = modules.length
   const isRandom = dataModuleCanBeRandomSize(style) && randomSize
 
+  const seed = useMemo(() => (isRandom ? getModulesSeed(cells) : 0), [isRandom, cells])
+
   const scaleFactor = useCallback(
-    () => getScaleFactor(style, isRandom, size),
-    [style, isRandom, size],
+    (x: number, y: number) => getScaleFactor(style, isRandom, size, x, y, seed),
+    [style, isRandom, size, seed],
   )
 
   modules.forEach((row, y) => {
@@ -62,7 +66,7 @@ export const DataModules = ({
         return
       }
 
-      const scale = scaleFactor()
+      const scale = scaleFactor(x, y)
       const size = 1 * scale
       const posOffset = (1 - 1 * scale) / 2
       const baseX = x + margin
