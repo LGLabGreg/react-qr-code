@@ -35,6 +35,9 @@ export interface FinderPatternsInnerProps extends GeneratePathFnProps {
 
 export interface DataModulesProps extends GeneratePathFnProps {
   settings?: DataModulesSettings
+  // Grid before excavation. `randomSize` seeds from this so that resizing an
+  // excavating image does not reshuffle every module in the code.
+  cells: Modules
 }
 
 export interface DataModulesNeighbours {

@@ -81,6 +81,70 @@ describe('ReactQRCode', () => {
       expect(path).toBeInTheDocument()
       expect(path).toHaveAttribute('fill', dataModulesSettings.color)
     })
+
+    describe('randomSize', () => {
+      const dataModulesSettings: DataModulesSettings = {
+        style: 'circle',
+        randomSize: true,
+      }
+
+      const renderPath = (props = {}) => {
+        const { unmount } = render(
+          <ReactQRCode
+            value='test'
+            dataModulesSettings={dataModulesSettings}
+            {...props}
+          />,
+        )
+        const d = screen.getByTestId('data-modules').getAttribute('d')
+        unmount()
+        return d
+      }
+
+      it('renders identically across renders of the same value', () => {
+        expect(renderPath()).toBe(renderPath())
+      })
+
+      it('renders differently for a different value', () => {
+        expect(renderPath()).not.toBe(renderPath({ value: 'other' }))
+      })
+
+      // Each circle is `M{x},{y}a{r},{r} ...`, where r is half the module's scale
+      // and the position is inset by half the scale, so the grid cell and its
+      // scale can both be recovered from the path.
+      const modulesByCell = (d: string | null) => {
+        const byCell = new Map<string, number>()
+        for (const [, x, y, r] of d!.matchAll(/M(-?[\d.]+),(-?[\d.]+)a(-?[\d.]+),/g)) {
+          const scale = Number(r) * 2
+          const inset = (1 - scale) / 2
+          const cell = `${Math.round(Number(x) - inset)},${Math.round(Number(y) - inset)}`
+          byCell.set(cell, scale)
+        }
+        return byCell
+      }
+
+      it('keeps module scales stable when an excavating image is resized', () => {
+        const imageSettings = {
+          src: 'https://example.com/logo.png',
+          height: 24,
+          width: 24,
+          excavate: true,
+        }
+
+        const small = modulesByCell(renderPath({ imageSettings }))
+        const large = modulesByCell(
+          renderPath({ imageSettings: { ...imageSettings, height: 40, width: 40 } }),
+        )
+
+        // The larger logo excavates more, so it renders strictly fewer modules.
+        expect(large.size).toBeLessThan(small.size)
+
+        // Every module that survives both excavations keeps the same scale.
+        large.forEach((scale, cell) => {
+          expect(small.get(cell)).toBe(scale)
+        })
+      })
+    })
   })
 
   describe('Finder patterns outer', () => {

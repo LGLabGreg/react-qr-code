@@ -25,6 +25,8 @@ describe('DataModules', () => {
 
   const defaultProps = {
     modules: mockModules,
+    // No excavation in these cases, so the pre-excavation grid is the same.
+    cells: mockModules,
     margin: 2,
     gradientId: 'mock-gradient-id',
   }
@@ -63,6 +65,7 @@ describe('DataModules', () => {
     render(
       <DataModules
         modules={modules}
+        cells={modules}
         margin={2}
         gradientId='mock-gradient-id'
         settings={{ style: 'circuit-board', color: '#ffdd99' }}
@@ -111,6 +114,7 @@ describe('DataModules', () => {
     render(
       <DataModules
         modules={modules}
+        cells={modules}
         margin={2}
         gradientId='mock-gradient-id'
         settings={{ style: 'circuit-board', color: '#ffdd99' }}
@@ -138,6 +142,7 @@ describe('DataModules', () => {
     render(
       <DataModules
         modules={modules}
+        cells={modules}
         margin={2}
         gradientId='mock-gradient-id'
         settings={{ style: 'circuit-board', color: '#000000' }}
