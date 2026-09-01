@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.7.2
+
+### Patch Changes
+
+- [#615](https://github.com/LGLabGreg/react-qr-code/pull/615) [`f13d9eb`](https://github.com/LGLabGreg/react-qr-code/commit/f13d9eb6cecadea7eb6a782d3ecffc80de72ae4d) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - chore: update dependencies and migrate to changesets v3 / changesets/action v2
+
 ## 1.7.1
 
 ### Patch Changes

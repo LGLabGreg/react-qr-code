@@ -1,5 +1,13 @@
 # reactqrcode.com
 
+## 1.4.15
+
+### Patch Changes
+
+- [#615](https://github.com/LGLabGreg/react-qr-code/pull/615) [`f13d9eb`](https://github.com/LGLabGreg/react-qr-code/commit/f13d9eb6cecadea7eb6a782d3ecffc80de72ae4d) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - chore: update dependencies and migrate to changesets v3 / changesets/action v2
+- Updated dependencies [[`f13d9eb`](https://github.com/LGLabGreg/react-qr-code/commit/f13d9eb6cecadea7eb6a782d3ecffc80de72ae4d)]:
+  - @lglab/react-qr-code@1.7.2
+
 ## 1.4.14
 
 ### Patch Changes
