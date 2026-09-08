@@ -1,15 +1,15 @@
-import type qrcodegen from '../lib/qrcodegen'
+import type { Ecc, QrCode } from '../lib/qrcodegen'
 
 /**
  * qrcodegen
  */
-export type Modules = ReturnType<qrcodegen.QrCode['getModules']>
+export type Modules = ReturnType<QrCode['getModules']>
 export type Excavation = { x: number; y: number; w: number; h: number }
 export type ErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H'
 export type CrossOrigin = 'anonymous' | 'use-credentials' | '' | undefined
 
 export type ERROR_LEVEL_MAPPED_TYPE = {
-  [index in ErrorCorrectionLevel]: qrcodegen.QrCode.Ecc
+  [index in ErrorCorrectionLevel]: Ecc
 }
 
 /**

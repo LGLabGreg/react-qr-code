@@ -1,4 +1,4 @@
-import qrcodegen from './lib/qrcodegen'
+import { Ecc } from './lib/qrcodegen'
 import type {
   DataModulesStyle,
   ERROR_LEVEL_MAPPED_TYPE,
@@ -11,10 +11,10 @@ import type {
  * Error correction level map.
  */
 export const ERROR_LEVEL_MAP: ERROR_LEVEL_MAPPED_TYPE = {
-  L: qrcodegen.QrCode.Ecc.LOW,
-  M: qrcodegen.QrCode.Ecc.MEDIUM,
-  Q: qrcodegen.QrCode.Ecc.QUARTILE,
-  H: qrcodegen.QrCode.Ecc.HIGH,
+  L: Ecc.LOW,
+  M: Ecc.MEDIUM,
+  Q: Ecc.QUARTILE,
+  H: Ecc.HIGH,
 } as const
 
 /**
