@@ -7,20 +7,24 @@
  * the library in the past (see #621: esbuild targeting ES2020 mis-compiled the
  * TypeScript namespace emit into `ReferenceError: l is not defined`).
  *
- * This script runs the built bundle through esbuild at several targets, then
- * actually executes each result by rendering a QR code with react-dom/server.
+ * Two checks:
  *
- * esbuild is deliberately pinned to 0.28.1 (exact, and ignored by Dependabot):
- * every release from 0.25.0 through 0.28.1 exhibits the #621 mis-compilation,
- * and Vite 5/6/7 pin into that range, so it is what consumers actually run.
- * 0.28.2 fixed it upstream, which would make this test blind to a regression.
+ * 1. The built bundle must parse as ES2020 (the tsconfig / vite `target`).
+ *    If it does, no consumer has to down-level anything, so the class of bug
+ *    behind #621 cannot occur regardless of which minifier version they run.
+ *    This is deterministic and independent of esbuild's own bug history
+ *    (esbuild fixed #621's mis-compilation in 0.28.2; we do not rely on that).
+ *
+ * 2. The bundle is run through esbuild at several targets, and each result is
+ *    actually executed by rendering a QR code with react-dom/server.
  *
  * Usage: node scripts/smoke-test.mjs [path/to/index.es.js]
  */
-import { mkdir, rm } from 'node:fs/promises'
+import { mkdir, readFile, rm } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 
+import { parse } from 'acorn'
 import { build } from 'esbuild'
 import { createElement } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
@@ -34,6 +38,16 @@ await rm(outDir, { recursive: true, force: true })
 await mkdir(outDir, { recursive: true })
 
 let failed = false
+
+try {
+  parse(await readFile(entry, 'utf8'), { ecmaVersion: 2020, sourceType: 'module' })
+  console.log('ok   bundle parses as ES2020')
+} catch (error) {
+  failed = true
+  console.error(
+    `FAIL bundle contains syntax newer than ES2020: ${error instanceof Error ? error.message : String(error)}`,
+  )
+}
 
 for (const target of targets) {
   const outfile = resolve(outDir, `${target}.js`)
