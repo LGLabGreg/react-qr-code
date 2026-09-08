@@ -43,3 +43,6 @@ jobs:
 
       - name: Run tests
         run: pnpm test
+
+      - name: Build library and smoke test the production bundle
+        run: pnpm test:smoke

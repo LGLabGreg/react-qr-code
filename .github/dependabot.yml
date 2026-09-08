@@ -5,6 +5,11 @@ updates:
     target-branch: 'main'
     schedule:
       interval: 'weekly'
+    ignore:
+      # Deliberately pinned: esbuild <= 0.28.1 reproduces the down-levelling bug
+      # behind #621, which the production-bundle smoke test guards against.
+      # See packages/react-qr-code/scripts/smoke-test.mjs.
+      - dependency-name: 'esbuild'
     groups:
       react:
         patterns:
