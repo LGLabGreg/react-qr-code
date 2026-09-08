@@ -1,5 +1,12 @@
 # reactqrcode.com
 
+## 1.4.16
+
+### Patch Changes
+
+- Updated dependencies [[`0fdbcd5`](https://github.com/LGLabGreg/react-qr-code/commit/0fdbcd5223c08c393cec3ac6a49c1df18438bb7b)]:
+  - @lglab/react-qr-code@1.7.3
+
 ## 1.4.15
 
 ### Patch Changes
