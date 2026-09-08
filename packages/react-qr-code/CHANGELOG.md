@@ -1,5 +1,13 @@
 # @lglab/react-qr-code
 
+## 1.7.3
+
+### Patch Changes
+
+- [#622](https://github.com/LGLabGreg/react-qr-code/pull/622) [`0fdbcd5`](https://github.com/LGLabGreg/react-qr-code/commit/0fdbcd5223c08c393cec3ac6a49c1df18438bb7b) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - fix: `ReferenceError: l is not defined` in production builds ([#621](https://github.com/LGLabGreg/react-qr-code/issues/621))
+
+  The vendored qrcodegen library used TypeScript `namespace`s. The bundled output for the namespace merge (`let t; … t ||= ns.QrCode ||= {}`) was mis-compiled by consumers' minifiers when down-levelling to ES2020 (e.g. Vite with esbuild), dropping the variable declaration and crashing at load time. The library now uses plain ES module exports and the published bundle targets ES2020, so nothing needs to be down-levelled.
+
 ## 1.7.2
 
 ### Patch Changes
