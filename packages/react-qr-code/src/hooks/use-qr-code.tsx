@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import { ERROR_LEVEL_MAP } from '../constants'
-import qrcodegen from '../lib/qrcodegen'
+import { QrCode, QrSegment } from '../lib/qrcodegen'
 import type { ErrorCorrectionLevel, ImageSettings } from '../types/lib'
 import { getImageSettings, getMarginSize } from '../utils/qr-code'
 
@@ -24,11 +24,11 @@ export const useQRCode = ({
 }) => {
   const qrcode = useMemo(() => {
     const values = Array.isArray(value) ? value : [value]
-    const segments = values.reduce<qrcodegen.QrSegment[]>((accum, v) => {
-      accum.push(...qrcodegen.QrSegment.makeSegments(v))
+    const segments = values.reduce<QrSegment[]>((accum, v) => {
+      accum.push(...QrSegment.makeSegments(v))
       return accum
     }, [])
-    return qrcodegen.QrCode.encodeSegments(
+    return QrCode.encodeSegments(
       segments,
       ERROR_LEVEL_MAP[level],
       minVersion,

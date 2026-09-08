@@ -16,6 +16,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:smoke": "pnpm build:lib && pnpm --filter \"./packages/**\" run test:smoke",
     "lint": "oxlint",
     "format": "oxfmt",
     "format:check": "oxfmt --check",

@@ -15,6 +15,9 @@ export default defineConfig({
     }),
   ],
   build: {
+    // Emit ES2020 (no `||=`, no `static {}` blocks) so consumers' bundlers never have to
+    // down-level the shipped code; that down-levelling is what broke #621.
+    target: 'es2020',
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'ReactQRCode',
