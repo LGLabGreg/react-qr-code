@@ -1,0 +1,1 @@
+React QR Code – customizable QR code generator for React, showing styled QR code examples with gradients and custom shapes

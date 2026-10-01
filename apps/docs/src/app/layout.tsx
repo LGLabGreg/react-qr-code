@@ -38,17 +38,12 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    url: 'https://reactqrcode.com',
-    title: 'React QR Code – Customizable QR Code Generator for React',
-    description:
-      'Generate highly customizable, high-performance QR codes in React using SVG, gradients, and finder pattern controls.',
+    url: './',
     siteName: 'React QR Code',
+    locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'React QR Code – Customizable QR Code Generator for React',
-    description:
-      'Lightweight, customizable QR code generator for React with SVG rendering and fine-grained styling.',
   },
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,

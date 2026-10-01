@@ -13,9 +13,11 @@ import {
 import { TypographyBold } from '@/components/ui/typography'
 
 export const metadata: Metadata = {
-  title: 'Overview',
+  title: {
+    absolute: 'React QR Code – Customizable QR Code Generator for React',
+  },
   description:
-    'Overview of the React QR Code library, including key features, performance characteristics, and links to installation, demo, and documentation.',
+    'React QR Code is a highly customizable and lightweight QR code generator for React applications. Easily style QR codes with unique finder patterns, rounded corners, and customizable colors.',
 }
 
 export default function Page() {
