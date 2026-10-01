@@ -1,46 +1,47 @@
 'use client'
 
-import { Check, Copy } from 'lucide-react'
 import { useState } from 'react'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
+
+import { CopyButton } from './copy-button'
 
 interface CodeBlockProps {
-  code: string
-  title?: string
+  commands: { title: string; code: string }[]
 }
 
-export const CodeBlock = ({ code, title = '' }: CodeBlockProps) => {
-  const [isCopied, setIsCopied] = useState(false)
-
-  const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(code)
-    setIsCopied(true)
-    setTimeout(() => setIsCopied(false), 2000)
-  }
+export const CodeBlock = ({ commands }: CodeBlockProps) => {
+  const [active, setActive] = useState(0)
+  const { code } = commands[active]
 
   return (
-    <Card className='mb-4'>
-      <CardContent className='p-0'>
-        <div className='flex items-center justify-between bg-muted px-4 py-2'>
-          <span className='text-sm font-medium text-muted-foreground'>{title}</span>
-          <Button
-            variant='ghost'
-            size='sm'
-            onClick={copyToClipboard}
-            className='h-8 w-8 p-0 cursor-pointer'
-          >
-            {isCopied ? <Check className='h-4 w-4' /> : <Copy className='h-4 w-4' />}
-            <span className='sr-only'>
-              {isCopied ? 'Copied' : 'Copy code to clipboard'}
-            </span>
-          </Button>
+    <div className='mb-4 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 shadow-sm'>
+      <div className='flex h-10 items-center justify-between border-b border-zinc-800 pl-2 pr-2'>
+        <div className='flex items-center gap-1' role='tablist'>
+          {commands.map(({ title }, i) => (
+            <button
+              key={title}
+              type='button'
+              role='tab'
+              aria-selected={i === active}
+              onClick={() => setActive(i)}
+              className={cn(
+                'h-7 cursor-pointer rounded-md px-2.5 font-mono text-xs text-zinc-400 transition-colors hover:text-zinc-100',
+                i === active && 'bg-white/10 text-zinc-50',
+              )}
+            >
+              {title}
+            </button>
+          ))}
         </div>
-        <pre className='overflow-x-auto p-4'>
-          <code className='text-sm'>{code}</code>
-        </pre>
-      </CardContent>
-    </Card>
+        <CopyButton value={code} />
+      </div>
+      <pre className='overflow-x-auto p-4'>
+        <code className='font-mono text-sm text-zinc-100'>
+          <span className='select-none text-zinc-500'>$ </span>
+          {code}
+        </code>
+      </pre>
+    </div>
   )
 }

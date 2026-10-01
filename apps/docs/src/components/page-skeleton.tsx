@@ -6,7 +6,11 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 
 export const PageSkeleton = async ({ children }: PropsWithChildren) => {
   const Content = () => {
-    return <div className='flex flex-1 flex-col pt-5 pb-8 px-8'>{children}</div>
+    return (
+      <main className='mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 pt-8 pb-16 md:px-8 md:pt-10'>
+        {children}
+      </main>
+    )
   }
 
   return (

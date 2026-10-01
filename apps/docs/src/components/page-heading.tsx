@@ -14,10 +14,10 @@ export const PageHeading = ({
   callToAction: CallToAction,
 }: PageHeaderProps) => {
   return (
-    <div className='flex items-center justify-between mb-6 border-b pb-3'>
-      <div className='space-y-1'>
+    <div className='flex flex-wrap items-end justify-between gap-4 mb-8 border-b pb-6'>
+      <div className='space-y-2'>
         <TypographyH1>{heading}</TypographyH1>
-        {subheading && <p className='text-muted-foreground'>{subheading}</p>}
+        {subheading && <p className='text-lg text-muted-foreground'>{subheading}</p>}
       </div>
       {CallToAction && CallToAction}
     </div>
