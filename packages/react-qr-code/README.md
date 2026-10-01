@@ -4,6 +4,8 @@
 
 A highly customizable and lightweight QR code generator for React applications.
 
+![React QR Code showcase](https://github.com/LGLabGreg/react-qr-code/raw/main/media/promo.webp)
+
 🚀 **Live Demo:** [reactqrcode.com/demo](https://reactqrcode.com/demo)  
 📖 **Documentation:** [reactqrcode.com](https://reactqrcode.com/)
 
