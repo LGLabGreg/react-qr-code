@@ -17,7 +17,12 @@ interface TypographyListProps extends TypographyProps {
 
 export function TypographyH1({ children, className }: TypographyProps) {
   return (
-    <h1 className={cn('scroll-m-20 text-3xl font-bold tracking-tight', className)}>
+    <h1
+      className={cn(
+        'scroll-m-20 text-3xl font-semibold tracking-tight md:text-4xl',
+        className,
+      )}
+    >
       {children}
     </h1>
   )
@@ -27,7 +32,7 @@ export function TypographyH2({ children, className }: TypographyProps) {
   return (
     <h2
       className={cn(
-        'scroll-m-20 text-xl font-semibold tracking-tight first:mt-0 mb-3',
+        'scroll-m-20 text-2xl font-semibold tracking-tight first:mt-0 mb-3',
         className,
       )}
     >
@@ -57,7 +62,7 @@ export function TypographyH4({ children, className }: TypographyProps) {
 }
 
 export function TypographyP({ children, className }: TypographyProps) {
-  return <p className={cn('leading-7 mb-4', className)}>{children}</p>
+  return <p className={cn('leading-7 mb-4 text-foreground/85', className)}>{children}</p>
 }
 
 export function TypographyBlockquote({ children, className }: TypographyProps) {
@@ -82,7 +87,7 @@ export function TypographyInlineCode({ children, className }: TypographyProps) {
   return (
     <code
       className={cn(
-        'relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold',
+        'relative rounded-md border bg-muted/60 px-[0.35rem] py-[0.15rem] font-mono text-[0.85em] font-medium',
         className,
       )}
     >
@@ -92,7 +97,11 @@ export function TypographyInlineCode({ children, className }: TypographyProps) {
 }
 
 export function TypographyLead({ children, className }: TypographyProps) {
-  return <p className={cn('text-xl text-muted-foreground', className)}>{children}</p>
+  return (
+    <p className={cn('text-lg text-muted-foreground md:text-xl', className)}>
+      {children}
+    </p>
+  )
 }
 
 export function TypographyLarge({ children, className }: TypographyProps) {

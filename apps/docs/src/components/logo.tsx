@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export const LogoSVG = () => (
   <svg
-    fill='#000000'
+    fill='currentColor'
     width='200px'
     height='200px'
     viewBox='0 0 24 24'
@@ -16,14 +16,14 @@ export const LogoSVG = () => (
     <path
       id='primary'
       d='M21,9a1,1,0,0,1-1-1V4H16a1,1,0,0,1,0-2h4a2,2,0,0,1,2,2V8A1,1,0,0,1,21,9Zm1,11V16a1,1,0,0,0-2,0v4H16a1,1,0,0,0,0,2h4A2,2,0,0,0,22,20ZM4,8V4H8A1,1,0,0,0,8,2H4A2,2,0,0,0,2,4V8A1,1,0,0,0,4,8ZM9,21a1,1,0,0,0-1-1H4V16a1,1,0,0,0-2,0v4a2,2,0,0,0,2,2H8A1,1,0,0,0,9,21Z'
-      fill='#000'
+      fill='currentColor'
     ></path>
   </svg>
 )
 
 export const Logo = () => (
-  <Link href='/' className='flex items-center gap-1 [&>svg]:w-[36px] [&>svg]:h-[36px]'>
+  <Link href='/' className='flex items-center gap-2 [&>svg]:size-7'>
     <LogoSVG />
-    <span className='text-xl font-semibold'>React QR Code</span>
+    <span className='text-base font-semibold tracking-tight'>React QR Code</span>
   </Link>
 )

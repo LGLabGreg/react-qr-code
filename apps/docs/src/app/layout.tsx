@@ -14,7 +14,7 @@ const inter = Inter({
 })
 
 const mono = Source_Code_Pro({
-  variable: '--font-mono',
+  variable: '--font-source-code',
   subsets: ['latin'],
 })
 

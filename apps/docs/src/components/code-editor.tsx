@@ -1,12 +1,8 @@
 'use client'
 
-import { Check, Copy } from 'lucide-react'
-import { Highlight, type Language } from 'prism-react-renderer'
-import { useState } from 'react'
+import { Highlight, type Language, themes } from 'prism-react-renderer'
 
-import { Card } from '@/components/ui/card'
-
-import { Button } from './ui/button'
+import { CopyButton } from './copy-button'
 
 interface CodeEditorProps {
   code: string
@@ -14,42 +10,29 @@ interface CodeEditorProps {
 }
 
 export const CodeEditor = ({ code, language = 'tsx' }: CodeEditorProps) => {
-  const [isCopied, setIsCopied] = useState(false)
-  const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(code)
-    setIsCopied(true)
-    setTimeout(() => setIsCopied(false), 2000)
-  }
+  const trimmed = code.trim()
 
   return (
-    <Card className='mb-4 max-w-full overflow-x-auto'>
-      <div className='flex items-center justify-between bg-muted px-4 py-2'>
-        <span className='text-sm font-medium text-muted-foreground'>{language}</span>
-        <Button
-          variant='ghost'
-          size='sm'
-          onClick={copyToClipboard}
-          className='h-8 w-8 p-0 cursor-pointer'
-          data-umami-event='copy-code'
-        >
-          {isCopied ? <Check className='h-4 w-4' /> : <Copy className='h-4 w-4' />}
-          <span className='sr-only'>
-            {isCopied ? 'Copied' : 'Copy code to clipboard'}
-          </span>
-        </Button>
+    <div className='mb-4 max-w-full overflow-hidden rounded-xl border border-zinc-800 bg-zinc-950 shadow-sm'>
+      <div className='flex h-10 items-center justify-between border-b border-zinc-800 pl-4 pr-2'>
+        <span className='font-mono text-xs text-zinc-400'>{language}</span>
+        <CopyButton value={trimmed} />
       </div>
 
-      <Highlight code={code} language={language}>
+      <Highlight code={trimmed} language={language} theme={themes.oneDark}>
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
-          <pre className={`${className} p-4 overflow-x-auto`} style={style}>
+          <pre
+            className={`${className} overflow-x-auto py-4 font-mono text-[13.5px] leading-6`}
+            style={{ ...style, background: 'transparent' }}
+          >
             {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({ line, key: i })} className='table-row'>
-                <span className='table-cell text-right pr-4 select-none opacity-50 text-sm'>
+              <div key={i} {...getLineProps({ line })} className='table-row'>
+                <span className='table-cell w-12 select-none pr-4 text-right text-zinc-600'>
                   {i + 1}
                 </span>
-                <span className='table-cell'>
+                <span className='table-cell pr-4'>
                   {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token, key })} />
+                    <span key={key} {...getTokenProps({ token })} />
                   ))}
                 </span>
               </div>
@@ -57,6 +40,6 @@ export const CodeEditor = ({ code, language = 'tsx' }: CodeEditorProps) => {
           </pre>
         )}
       </Highlight>
-    </Card>
+    </div>
   )
 }

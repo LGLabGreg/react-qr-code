@@ -25,7 +25,7 @@ export const PropsTable = ({ props }: { props: Prop[] }) => (
     <TableBody>
       {props.map((prop) => (
         <TableRow key={prop.name}>
-          <TableCell className='font-medium'>{prop.name}</TableCell>
+          <TableCell className='font-mono text-[13px] font-medium'>{prop.name}</TableCell>
           <TableCell>
             <PropTypeTag type={prop.type} />
           </TableCell>

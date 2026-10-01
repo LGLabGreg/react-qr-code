@@ -18,10 +18,14 @@ export default function Page() {
         Setting up <TypographyBold>@lglab/react-qr-code</TypographyBold> is quick and
         easy. Install it using your favourite package manager:
       </TypographyP>
-      <CodeBlock code='pnpm add @lglab/react-qr-code' title='pnpm' />
-      <CodeBlock code='npm i @lglab/react-qr-code' title='npm' />
-      <CodeBlock code='yarn add @lglab/react-qr-code' title='yarn' />
-      <CodeBlock code='bun add @lglab/react-qr-code' title='bun' />
+      <CodeBlock
+        commands={[
+          { title: 'pnpm', code: 'pnpm add @lglab/react-qr-code' },
+          { title: 'npm', code: 'npm i @lglab/react-qr-code' },
+          { title: 'yarn', code: 'yarn add @lglab/react-qr-code' },
+          { title: 'bun', code: 'bun add @lglab/react-qr-code' },
+        ]}
+      />
     </>
   )
 }
