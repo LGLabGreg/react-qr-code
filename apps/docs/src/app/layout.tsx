@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: '%s – React QR Code',
   },
   description:
-    'React QR Code is a highly customizable and lightweight QR code generator for React applications. Easily style QR codes with unique finder patterns, rounded corners, and customizable colors.',
+    'Customizable, lightweight SVG QR code generator for React — gradients, custom module and finder pattern shapes, and logos.',
   keywords: [
     'React QR Code',
     'QR code generator',
