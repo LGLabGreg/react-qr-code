@@ -1,4 +1,3 @@
-import { Analytics } from '@vercel/analytics/react'
 import type { Metadata } from 'next'
 import { Inter, Source_Code_Pro } from 'next/font/google'
 import Script from 'next/script'
@@ -59,7 +58,6 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${inter.variable} ${mono.variable} antialiased`}>
         <PageSkeleton>{children}</PageSkeleton>
-        <Analytics />
         {IS_PRODUCTION && (
           <Script
             src='https://cloud.umami.is/script.js'
