@@ -123,7 +123,8 @@ export interface FrameSettings {
    */
   style: FrameStyle
   /**
-   * The label rendered in the frame.
+   * The label rendered in the frame. Long labels are condensed to fit the frame
+   * width. An empty string hides the label and the frame wraps the code evenly.
    * @defaultValue 'Scan me!'
    */
   text?: string
@@ -223,7 +224,9 @@ export interface ReactQRCodeProps {
   imageSettings?: ImageSettings
   /**
    * Draws a decorative frame with a call-to-action label around the QR code.
-   * `size` applies to the frame width; the height grows to fit the label.
+   * `size` applies to the frame width; the height grows to fit the label. The
+   * code sits on a light panel (the `background` color, white by default) with
+   * a quiet zone of at least 2 modules so it stays scannable.
    */
   frameSettings?: FrameSettings
   /**

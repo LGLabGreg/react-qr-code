@@ -1,10 +1,16 @@
+import { FRAME_MIN_QUIET_ZONE } from '../constants'
 import type { FrameStyle } from '../types/lib'
 
 export interface FrameLayout {
   width: number
   height: number
+  // Position of the QR code, inside the panel.
   qrX: number
   qrY: number
+  // Light panel behind the QR code that guarantees a quiet zone against the frame.
+  panelX: number
+  panelY: number
+  panelSize: number
   padding: number
   radius: number
   labelY: number
@@ -19,20 +25,22 @@ const FILLED_STYLES: FrameStyle[] = ['banner-bottom', 'banner-top', 'ticket']
 
 export const isFilledFrame = (style: FrameStyle) => FILLED_STYLES.includes(style)
 
-/**
- * Computes the frame geometry, in module units, around a QR code of `numCells`.
- */
-export const getFrameLayout = (style: FrameStyle, numCells: number): FrameLayout => {
-  const padding = numCells * 0.07
-  const radius = numCells * 0.08
-  const labelHeight = numCells * 0.24
+const getPanelLayout = (
+  style: FrameStyle,
+  panelSize: number,
+  hasLabel: boolean,
+): Omit<FrameLayout, 'qrX' | 'qrY'> => {
+  const padding = panelSize * 0.07
+  const radius = panelSize * 0.08
+  const labelHeight = panelSize * 0.24
   const strokeWidth = padding * 0.45
-  const width = numCells + padding * 2
+  const width = panelSize + padding * 2
 
   const base = {
     width,
-    qrX: padding,
-    qrY: padding,
+    panelX: padding,
+    panelY: padding,
+    panelSize,
     padding,
     radius,
     labelHeight,
@@ -40,16 +48,21 @@ export const getFrameLayout = (style: FrameStyle, numCells: number): FrameLayout
     strokeWidth,
   }
 
+  // Without a label every style collapses to an even frame around the code.
+  if (!hasLabel) {
+    return { ...base, labelHeight: 0, height: width, labelY: width }
+  }
+
   switch (style) {
     case 'banner-top':
       return {
         ...base,
-        qrY: labelHeight,
-        height: labelHeight + numCells + padding,
+        panelY: labelHeight,
+        height: labelHeight + panelSize + padding,
         labelY: labelHeight / 2,
       }
     case 'ticket': {
-      const dividerY = numCells + padding * 1.6
+      const dividerY = panelSize + padding * 1.6
       return {
         ...base,
         height: dividerY + labelHeight,
@@ -76,8 +89,28 @@ export const getFrameLayout = (style: FrameStyle, numCells: number): FrameLayout
     default:
       return {
         ...base,
-        height: numCells + padding + labelHeight,
-        labelY: numCells + padding + labelHeight / 2,
+        height: panelSize + padding + labelHeight,
+        labelY: panelSize + padding + labelHeight / 2,
       }
   }
+}
+
+/**
+ * Computes the frame geometry, in module units, around a QR code of `numCells`
+ * (margin included).
+ */
+export const getFrameLayout = (
+  style: FrameStyle,
+  numCells: number,
+  margin: number,
+  hasLabel = true,
+): FrameLayout => {
+  const layout = getPanelLayout(
+    style,
+    numCells + Math.max(0, FRAME_MIN_QUIET_ZONE - margin) * 2,
+    hasLabel,
+  )
+  const quietZone = (layout.panelSize - numCells) / 2
+
+  return { ...layout, qrX: layout.panelX + quietZone, qrY: layout.panelY + quietZone }
 }

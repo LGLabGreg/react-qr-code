@@ -15,19 +15,30 @@ export const FrameBack = ({ settings, layout, maskId }: FrameProps) => {
   const color = settings.color ?? DEFAULT_FRAME_COLOR
   const { width, height, radius, padding, strokeWidth, labelHeight } = layout
 
+  const outline = (
+    <rect
+      x={strokeWidth / 2}
+      y={strokeWidth / 2}
+      width={width - strokeWidth}
+      height={width - strokeWidth}
+      rx={radius}
+      fill='none'
+      stroke={color}
+      strokeWidth={strokeWidth}
+      data-testid='frame'
+    />
+  )
+  const filled = (
+    <rect width={width} height={height} rx={radius} fill={color} data-testid='frame' />
+  )
+  const hasLabel = labelHeight > 0
+
   switch (settings.style) {
     case 'banner-bottom':
     case 'banner-top':
-      return (
-        <rect
-          width={width}
-          height={height}
-          rx={radius}
-          fill={color}
-          data-testid='frame'
-        />
-      )
+      return filled
     case 'ticket': {
+      if (!hasLabel) return filled
       const notchRadius = padding * 0.8
       return (
         <>
@@ -50,21 +61,13 @@ export const FrameBack = ({ settings, layout, maskId }: FrameProps) => {
       )
     }
     case 'bubble': {
+      if (!hasLabel) return outline
       const bubbleY = height - labelHeight
       const pointerSize = padding * 1.1
       const cx = width / 2
       return (
-        <g data-testid='frame'>
-          <rect
-            x={strokeWidth / 2}
-            y={strokeWidth / 2}
-            width={width - strokeWidth}
-            height={width - strokeWidth}
-            rx={radius}
-            fill='none'
-            stroke={color}
-            strokeWidth={strokeWidth}
-          />
+        <g>
+          {outline}
           <path
             d={`M${cx - pointerSize},${bubbleY + 0.01} L${cx},${bubbleY - pointerSize} L${cx + pointerSize},${bubbleY + 0.01}z`}
             fill={color}
@@ -80,19 +83,7 @@ export const FrameBack = ({ settings, layout, maskId }: FrameProps) => {
       )
     }
     case 'border':
-      return (
-        <rect
-          x={strokeWidth / 2}
-          y={strokeWidth / 2}
-          width={width - strokeWidth}
-          height={width - strokeWidth}
-          rx={radius}
-          fill='none'
-          stroke={color}
-          strokeWidth={strokeWidth}
-          data-testid='frame'
-        />
-      )
+      return outline
     default:
       return null
   }
@@ -112,7 +103,7 @@ export const FrameLabel = ({ settings, layout }: Omit<FrameProps, 'maskId'>) => 
 
   return (
     <>
-      {settings.style === 'ticket' && (
+      {settings.style === 'ticket' && text && (
         <line
           x1={padding * 1.4}
           x2={width - padding * 1.4}

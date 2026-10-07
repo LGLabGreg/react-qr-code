@@ -43,6 +43,8 @@ export const FRAME_MASK_ID = 'react-qr-code-frame-mask'
 
 export const DEFAULT_FRAME_TEXT = 'Scan me!'
 export const DEFAULT_FRAME_COLOR = '#000000'
+// Minimum light area, in modules, kept between the QR code and the frame.
+export const FRAME_MIN_QUIET_ZONE = 2
 
 // This is *very* rough estimate of max amount of QRCode allowed to be covered.
 // It is "wrong" in a lot of ways (area is a terrible way to estimate, it

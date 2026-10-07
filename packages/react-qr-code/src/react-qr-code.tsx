@@ -50,7 +50,9 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
     size,
   })
 
-  const frameLayout = frameSettings ? getFrameLayout(frameSettings.style, numCells) : null
+  const frameLayout = frameSettings
+    ? getFrameLayout(frameSettings.style, numCells, margin, frameSettings.text !== '')
+    : null
   const viewBoxWidth = frameLayout?.width ?? numCells
   const viewBoxHeight = frameLayout?.height ?? numCells
 
@@ -115,8 +117,7 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
     <>
       <Gradient gradient={gradient} gradientId={gradientId} />
       <Background
-        // A frame usually has a dark fill, so the code needs its own light background.
-        background={background ?? (frameSettings ? DEFAULT_BGCOLOR : undefined)}
+        background={background}
         bgGradientId={bgGradientId}
         numCells={numCells}
       />
@@ -140,6 +141,15 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
       {frameSettings && frameLayout ? (
         <>
           <FrameBack settings={frameSettings} layout={frameLayout} maskId={frameMaskId} />
+          <rect
+            x={frameLayout.panelX}
+            y={frameLayout.panelY}
+            width={frameLayout.panelSize}
+            height={frameLayout.panelSize}
+            // Frames usually have a dark fill, so the code keeps a light quiet zone.
+            fill={typeof background === 'string' ? background : DEFAULT_BGCOLOR}
+            data-testid='frame-panel'
+          />
           <g transform={`translate(${frameLayout.qrX} ${frameLayout.qrY})`}>{qrCode}</g>
           <FrameLabel settings={frameSettings} layout={frameLayout} />
         </>

@@ -1,7 +1,7 @@
 import type { DownloadRasterProps, DownloadSVGProps } from '../types/utils'
 
 // Frames make the SVG non-square, so scale the height by the viewBox aspect ratio.
-const getFileHeight = (svg: SVGSVGElement, fileSize: number) => {
+export const getFileHeight = (svg: SVGSVGElement, fileSize: number) => {
   const { width, height } = svg.viewBox.baseVal ?? {}
   return width && height ? Math.round((fileSize * height) / width) : fileSize
 }

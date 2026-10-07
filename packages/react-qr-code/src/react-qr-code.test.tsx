@@ -4,7 +4,10 @@ import { describe, expect, it, vi } from 'vitest'
 
 import {
   BG_GRADIENT_ID,
+  DEFAULT_BGCOLOR,
+  DEFAULT_FRAME_TEXT,
   DEFAULT_MARGIN_SIZE,
+  FRAME_MIN_QUIET_ZONE,
   DEFAULT_SIZE,
   GRADIENT_ID,
 } from './constants'
@@ -14,6 +17,7 @@ import type {
   DataModulesSettings,
   FinderPatternInnerSettings,
   FinderPatternOuterSettings,
+  FrameStyle,
   GradientSettings,
   GradientSettingsType,
   ReactQRCodeRef,
@@ -290,6 +294,177 @@ describe('ReactQRCode', () => {
       const image = container.querySelector('image')
       expect(image).toBeInTheDocument()
       expect(image).toHaveAttribute('href', imageSettings.src)
+    })
+  })
+
+  describe('Frame settings', () => {
+    const styles: FrameStyle[] = [
+      'banner-bottom',
+      'banner-top',
+      'ticket',
+      'bubble',
+      'border',
+    ]
+
+    it('renders no frame when not provided', () => {
+      render(<ReactQRCode value='test' />)
+
+      expect(screen.queryByTestId('frame')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('frame-label')).not.toBeInTheDocument()
+    })
+
+    it.each(styles)('renders the %s frame with the default label', (style) => {
+      render(<ReactQRCode value='test' frameSettings={{ style }} />)
+
+      expect(screen.getByTestId('frame')).toBeInTheDocument()
+      expect(screen.getByTestId('frame-label')).toHaveTextContent(DEFAULT_FRAME_TEXT)
+    })
+
+    it.each(styles)('keeps the width and grows the height for %s', (style) => {
+      render(<ReactQRCode value='test' size={200} frameSettings={{ style }} />)
+
+      const svg = screen.getByRole('img')
+      const [, , vbWidth, vbHeight] = svg.getAttribute('viewBox')!.split(' ').map(Number)
+      expect(svg).toHaveAttribute('width', '200')
+      expect(Number(svg.getAttribute('height'))).toBeCloseTo((200 * vbHeight) / vbWidth)
+      expect(vbHeight).toBeGreaterThan(vbWidth)
+    })
+
+    it('renders a custom label and colors', () => {
+      render(
+        <ReactQRCode
+          value='test'
+          frameSettings={{
+            style: 'banner-bottom',
+            text: 'Menu',
+            color: '#0b4d3c',
+            textColor: '#ffcc00',
+            fontFamily: 'serif',
+          }}
+        />,
+      )
+
+      expect(screen.getByTestId('frame')).toHaveAttribute('fill', '#0b4d3c')
+      const label = screen.getByTestId('frame-label')
+      expect(label).toHaveTextContent('Menu')
+      expect(label).toHaveAttribute('fill', '#ffcc00')
+      expect(label).toHaveAttribute('font-family', 'serif')
+    })
+
+    it('uses the frame color for the label of outlined frames', () => {
+      render(
+        <ReactQRCode
+          value='test'
+          frameSettings={{ style: 'border', color: '#c40000' }}
+        />,
+      )
+
+      expect(screen.getByTestId('frame')).toHaveAttribute('stroke', '#c40000')
+      expect(screen.getByTestId('frame-label')).toHaveAttribute('fill', '#c40000')
+    })
+
+    it.each(styles)(
+      'renders a square %s frame without a label when text is empty',
+      (style) => {
+        const { container } = render(
+          <ReactQRCode value='test' frameSettings={{ style, text: '' }} />,
+        )
+
+        const [, , vbWidth, vbHeight] = screen
+          .getByRole('img')
+          .getAttribute('viewBox')!
+          .split(' ')
+          .map(Number)
+        expect(vbHeight).toBeCloseTo(vbWidth)
+        expect(screen.getByTestId('frame')).toBeInTheDocument()
+        expect(screen.queryByTestId('frame-label')).not.toBeInTheDocument()
+        expect(container.querySelector('mask')).not.toBeInTheDocument()
+        expect(container.querySelector('line')).not.toBeInTheDocument()
+      },
+    )
+
+    it('fits long labels to the frame width', () => {
+      render(
+        <ReactQRCode
+          value='test'
+          frameSettings={{
+            style: 'banner-bottom',
+            text: 'A very long call to action label',
+          }}
+        />,
+      )
+
+      const label = screen.getByTestId('frame-label')
+      expect(label).toHaveAttribute('textLength')
+      expect(label).toHaveAttribute('lengthAdjust', 'spacingAndGlyphs')
+    })
+
+    it('renders a white panel behind the code by default', () => {
+      render(<ReactQRCode value='test' frameSettings={{ style: 'ticket' }} />)
+
+      expect(screen.getByTestId('frame-panel')).toHaveAttribute('fill', DEFAULT_BGCOLOR)
+      expect(screen.queryByTestId('background')).not.toBeInTheDocument()
+    })
+
+    it('uses a solid background for the panel', () => {
+      render(
+        <ReactQRCode
+          value='test'
+          background='#eeeeee'
+          frameSettings={{ style: 'ticket' }}
+        />,
+      )
+
+      expect(screen.getByTestId('frame-panel')).toHaveAttribute('fill', '#eeeeee')
+      expect(screen.getByTestId('background')).toHaveAttribute('fill', '#eeeeee')
+    })
+
+    it('keeps a quiet zone around codes without a margin', () => {
+      render(
+        <ReactQRCode value='test' marginSize={0} frameSettings={{ style: 'ticket' }} />,
+      )
+
+      const panel = screen.getByTestId('frame-panel')
+      const [, x, y] = screen
+        .getByTestId('data-modules')
+        .closest('g')!
+        .getAttribute('transform')!
+        .match(/translate\(([\d.]+) ([\d.]+)\)/)!
+        .map(Number)
+      expect(x - Number(panel.getAttribute('x'))).toBeCloseTo(FRAME_MIN_QUIET_ZONE)
+      expect(y - Number(panel.getAttribute('y'))).toBeCloseTo(FRAME_MIN_QUIET_ZONE)
+    })
+
+    it('offsets the code inside the frame', () => {
+      render(<ReactQRCode value='test' frameSettings={{ style: 'banner-top' }} />)
+
+      const group = screen.getByTestId('data-modules').closest('g')
+      expect(group?.getAttribute('transform')).toMatch(/^translate\(/)
+    })
+
+    it('uses unique mask ids for ticket frames', () => {
+      const { container } = render(
+        <>
+          <ReactQRCode value='a' frameSettings={{ style: 'ticket' }} />
+          <ReactQRCode value='b' frameSettings={{ style: 'ticket' }} />
+        </>,
+      )
+
+      const ids = [...container.querySelectorAll('mask')].map((mask) => mask.id)
+      expect(ids).toHaveLength(2)
+      expect(new Set(ids).size).toBe(2)
+    })
+
+    it('passes the frame layout to raster downloads', () => {
+      const ref = createRef<ReactQRCodeRef>()
+      render(<ReactQRCode value='test' ref={ref} frameSettings={{ style: 'ticket' }} />)
+
+      ref.current?.download({ format: 'png', size: 300 })
+      expect(vi.mocked(downloadRaster)).toHaveBeenLastCalledWith(
+        expect.objectContaining({
+          frameLayout: expect.objectContaining({ qrX: expect.any(Number) }),
+        }),
+      )
     })
   })
 

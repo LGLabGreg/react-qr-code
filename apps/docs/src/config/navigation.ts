@@ -56,6 +56,10 @@ export const mainNav: MenuItemProps[] = [
         url: '/image-settings',
       },
       {
+        title: 'FrameSettings',
+        url: '/frame-settings',
+      },
+      {
         title: 'ReactQRCodeRef',
         url: '/ref-api',
       },
@@ -84,6 +88,10 @@ export const mainNav: MenuItemProps[] = [
       {
         title: 'Image',
         url: '/examples/image',
+      },
+      {
+        title: 'Frame',
+        url: '/examples/frame',
       },
       {
         title: 'Download',

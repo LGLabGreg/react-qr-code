@@ -30,6 +30,8 @@ export const PropTypeTag = ({ type }: { type: PropType }) => {
     '(options: DownloadOptions) => void': 'bg-purple-100 text-purple-800',
     'React.RefObject<ReactQRCodeRef>': 'bg-purple-100 text-purple-800',
     ImageSettings: 'bg-purple-100 text-purple-800',
+    FrameSettings: 'bg-purple-100 text-purple-800',
+    FrameStyle: 'bg-purple-100 text-purple-800',
   }
 
   return (
