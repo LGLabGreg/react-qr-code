@@ -2,7 +2,11 @@ import type { Metadata } from 'next'
 
 import { PageHeading } from '@/components/page-heading'
 import { PropsTable } from '@/components/props-table'
-import { TypographyP } from '@/components/ui/typography'
+import {
+  TypographyH2,
+  TypographyInlineCode,
+  TypographyP,
+} from '@/components/ui/typography'
 import type { Prop } from '@/types/props'
 
 export const metadata: Metadata = {
@@ -41,7 +45,8 @@ const props: Prop[] = [
   {
     name: 'fontFamily',
     type: 'string',
-    description: 'The label font family.',
+    description:
+      'The label font family, as a CSS font-family value. See the font family section below for how it behaves in downloads.',
     defaultValue: 'sans-serif',
   },
 ]
@@ -58,6 +63,32 @@ export default function Page() {
         stays scannable on dark frames.
       </TypographyP>
       <PropsTable props={props} />
+
+      <TypographyH2>Font family</TypographyH2>
+      <TypographyP>
+        The fontFamily value is set as the font-family of the SVG label, so it accepts any
+        CSS font-family list such as{' '}
+        <TypographyInlineCode>&apos;Georgia, serif&apos;</TypographyInlineCode>. The label
+        is always bold. Which font is actually used depends on where the QR Code is
+        displayed:
+      </TypographyP>
+      <TypographyP>
+        On the page, the label can use system fonts and any web font your page has already
+        loaded, for example through Google Fonts, next/font or @font-face, as long as the
+        name matches.
+      </TypographyP>
+      <TypographyP>
+        Downloads only keep the font name, not the font file. An SVG download shows the
+        font if it is installed where the file is opened. PNG and JPEG downloads are
+        rendered as an isolated image that cannot see your page&apos;s web fonts, so they
+        use the font only if it is installed on the user&apos;s device.
+      </TypographyP>
+      <TypographyP>
+        In every case a missing font falls back to the next font in the list, so always
+        end it with a generic family such as sans-serif or serif. For labels that must
+        look the same everywhere, prefer widely installed fonts like Arial, Helvetica,
+        Georgia or Verdana.
+      </TypographyP>
     </>
   )
 }

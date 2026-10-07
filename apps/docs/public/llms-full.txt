@@ -84,7 +84,7 @@ Includes all `FinderPatternOuterStyle` plus: `'diamond'`, `'star'`, `'heart'`, `
 | `text` | `string` | `'Scan me!'` | Label rendered in the frame. Long labels are condensed to fit. An empty string hides it and the frame wraps the code evenly. |
 | `color` | `string` | `'#000000'` | Frame color. |
 | `textColor` | `string` | - | Label color. Defaults to white on filled frames and to `color` on `'border'`. |
-| `fontFamily` | `string` | `'sans-serif'` | Label font family. |
+| `fontFamily` | `string` | `'sans-serif'` | Label font family (CSS font-family list). Web fonts loaded by the page work on screen, but downloads only keep the name: SVG files need the font installed where they are opened, and PNG/JPEG exports cannot use page web fonts, only fonts installed on the device. End the list with a generic family. |
 
 **Available Styles (`FrameStyle`):**
 `'banner-bottom'`, `'banner-top'`, `'ticket'`, `'bubble'`, `'border'`

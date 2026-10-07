@@ -99,15 +99,6 @@ export const FrameSettingsDemo = ({ qrProps, setQrProps }: FrameSettingsDemoProp
           onChange={(value) => onValueChange('textColor', value)}
         />
       </FormField>
-      <FormField label='Font family'>
-        <Input
-          disabled={!includeFrame}
-          type='text'
-          placeholder='sans-serif'
-          value={qrProps.frameSettings?.fontFamily ?? ''}
-          onChange={(e) => onValueChange('fontFamily', e.target.value || undefined)}
-        />
-      </FormField>
     </>
   )
 }
