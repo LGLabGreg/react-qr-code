@@ -89,7 +89,7 @@ Includes all `FinderPatternOuterStyle` plus: `'diamond'`, `'star'`, `'heart'`, `
 **Available Styles (`FrameStyle`):**
 `'banner-bottom'`, `'banner-top'`, `'ticket'`, `'bubble'`, `'border'`
 
-When a frame is set and no `background` is passed, the QR code gets a white background so it stays scannable on dark frames.
+When a frame is set, the QR code sits on a light panel (the `background` color when it is a string, white otherwise) with a quiet zone of at least 2 modules, so it stays scannable on dark frames.
 
 ### GradientSettings
 

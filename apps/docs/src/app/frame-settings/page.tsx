@@ -53,8 +53,9 @@ export default function Page() {
       <TypographyP>
         These are the properties you can use to draw a frame with a call-to-action label
         around the QR Code. When a frame is set, the size prop applies to the frame width
-        and the height grows to fit the label. The QR Code gets a white background by
-        default so it stays scannable on dark frames; pass a background to override it.
+        and the height grows to fit the label. The QR Code sits on a light panel (the
+        background color, white by default) with a quiet zone of at least 2 modules, so it
+        stays scannable on dark frames.
       </TypographyP>
       <PropsTable props={props} />
     </>
