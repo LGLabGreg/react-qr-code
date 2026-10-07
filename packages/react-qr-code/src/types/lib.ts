@@ -134,7 +134,7 @@ export interface FrameSettings {
    */
   color?: string
   /**
-   * The label color. Defaults to white on filled frames and to `color` on outlined ones.
+   * The label color. Defaults to white, except for the `border` style, which uses `color`.
    */
   textColor?: string
   /**

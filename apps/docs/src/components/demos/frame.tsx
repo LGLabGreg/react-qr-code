@@ -1,6 +1,6 @@
 'use client'
 
-import { type FrameStyle, ReactQRCode } from '@lglab/react-qr-code'
+import { type FrameStyle, ReactQRCode, type ReactQRCodeProps } from '@lglab/react-qr-code'
 
 const styles: FrameStyle[] = ['banner-bottom', 'banner-top', 'ticket', 'bubble', 'border']
 
@@ -43,71 +43,95 @@ export const DemoStyles = () => {
 }
 
 export const customCodeBlock = `
-import { ReactQRCode } from '@lglab/react-qr-code'
+import { ReactQRCode, type ReactQRCodeProps } from '@lglab/react-qr-code'
+
+const examples: Omit<ReactQRCodeProps, 'value'>[] = [
+  {
+    frameSettings: { style: 'ticket', text: 'View menu', color: '#4f46e5' },
+    dataModulesSettings: { style: 'circle', color: '#4f46e5' },
+    finderPatternOuterSettings: { style: 'rounded-lg', color: '#4f46e5' },
+    finderPatternInnerSettings: { style: 'circle', color: '#4f46e5' },
+  },
+  {
+    frameSettings: { style: 'bubble', text: 'Follow us', color: '#18181b' },
+    dataModulesSettings: { style: 'rounded', color: '#18181b' },
+    finderPatternOuterSettings: { style: 'rounded-lg', color: '#18181b' },
+    finderPatternInnerSettings: { style: 'rounded', color: '#00a3ab' },
+  },
+  {
+    frameSettings: { style: 'banner-top', text: 'Free Wi-Fi', color: '#0e7490' },
+    gradient: {
+      type: 'linear',
+      rotation: 45,
+      stops: [
+        { offset: '0%', color: '#0e7490' },
+        { offset: '100%', color: '#2563eb' },
+      ],
+    },
+    dataModulesSettings: { style: 'leaf' },
+    finderPatternOuterSettings: { style: 'leaf-lg' },
+    finderPatternInnerSettings: { style: 'leaf' },
+  },
+]
 
 export const Demo = () => {
   return (
     <div className='flex flex-wrap gap-4'>
-      <ReactQRCode
-        frameSettings={{
-          style: 'ticket',
-          text: 'View menu',
-          color: '#0b4d3c',
-          textColor: '#f5e6b8',
-        }}
-        dataModulesSettings={{ style: 'rounded', color: '#0b4d3c' }}
-        finderPatternOuterSettings={{ style: 'rounded', color: '#0b4d3c' }}
-        finderPatternInnerSettings={{ style: 'rounded', color: '#0b4d3c' }}
-        marginSize={2}
-        size={200}
-        value='https://reactqrcode.com'
-      />
-      <ReactQRCode
-        frameSettings={{
-          style: 'bubble',
-          text: 'Follow us',
-          color: '#c40000',
-          fontFamily: 'Georgia, serif',
-        }}
-        dataModulesSettings={{ color: '#c40000' }}
-        marginSize={2}
-        size={200}
-        value='https://reactqrcode.com'
-      />
+      {examples.map((props, i) => (
+        <ReactQRCode
+          key={i}
+          {...props}
+          marginSize={2}
+          size={180}
+          value='https://reactqrcode.com'
+        />
+      ))}
     </div>
   )
 }
 `
 
+const examples: Omit<ReactQRCodeProps, 'value'>[] = [
+  {
+    frameSettings: { style: 'ticket', text: 'View menu', color: '#4f46e5' },
+    dataModulesSettings: { style: 'circle', color: '#4f46e5' },
+    finderPatternOuterSettings: { style: 'rounded-lg', color: '#4f46e5' },
+    finderPatternInnerSettings: { style: 'circle', color: '#4f46e5' },
+  },
+  {
+    frameSettings: { style: 'bubble', text: 'Follow us', color: '#18181b' },
+    dataModulesSettings: { style: 'rounded', color: '#18181b' },
+    finderPatternOuterSettings: { style: 'rounded-lg', color: '#18181b' },
+    finderPatternInnerSettings: { style: 'rounded', color: '#00a3ab' },
+  },
+  {
+    frameSettings: { style: 'banner-top', text: 'Free Wi-Fi', color: '#0e7490' },
+    gradient: {
+      type: 'linear',
+      rotation: 45,
+      stops: [
+        { offset: '0%', color: '#0e7490' },
+        { offset: '100%', color: '#2563eb' },
+      ],
+    },
+    dataModulesSettings: { style: 'leaf' },
+    finderPatternOuterSettings: { style: 'leaf-lg' },
+    finderPatternInnerSettings: { style: 'leaf' },
+  },
+]
+
 export const DemoCustom = () => {
   return (
     <div className='flex flex-wrap gap-4'>
-      <ReactQRCode
-        frameSettings={{
-          style: 'ticket',
-          text: 'View menu',
-          color: '#0b4d3c',
-          textColor: '#f5e6b8',
-        }}
-        dataModulesSettings={{ style: 'rounded', color: '#0b4d3c' }}
-        finderPatternOuterSettings={{ style: 'rounded', color: '#0b4d3c' }}
-        finderPatternInnerSettings={{ style: 'rounded', color: '#0b4d3c' }}
-        marginSize={2}
-        size={200}
-        value='https://reactqrcode.com'
-      />
-      <ReactQRCode
-        frameSettings={{
-          style: 'bubble',
-          text: 'Follow us',
-          color: '#c40000',
-          fontFamily: 'Georgia, serif',
-        }}
-        dataModulesSettings={{ color: '#c40000' }}
-        marginSize={2}
-        size={200}
-        value='https://reactqrcode.com'
-      />
+      {examples.map((props, i) => (
+        <ReactQRCode
+          key={i}
+          {...props}
+          marginSize={2}
+          size={180}
+          value='https://reactqrcode.com'
+        />
+      ))}
     </div>
   )
 }
