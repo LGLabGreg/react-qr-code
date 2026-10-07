@@ -1,3 +1,4 @@
+import { DEFAULT_BGCOLOR } from '../constants'
 import type { DownloadRasterProps, DownloadSVGProps } from '../types/utils'
 
 // Frames make the SVG non-square, so scale the height by the viewBox aspect ratio.
@@ -48,6 +49,12 @@ export const downloadRaster = ({
   canvas.width = fileSize
   const fileHeight = getFileHeight(svgRef.current, fileSize)
   canvas.height = fileHeight
+
+  // JPEG has no alpha channel, so transparent areas would come out black.
+  if (fileFormat === 'jpeg') {
+    ctx.fillStyle = DEFAULT_BGCOLOR
+    ctx.fillRect(0, 0, fileSize, fileHeight)
+  }
 
   const svgData = new XMLSerializer().serializeToString(svgRef.current)
   const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' })
