@@ -351,6 +351,20 @@ describe('ReactQRCode', () => {
       expect(label).toHaveAttribute('font-family', 'serif')
     })
 
+    it('draws the bubble and its pointer as a single path', () => {
+      const { container } = render(
+        <ReactQRCode
+          value='test'
+          frameSettings={{ style: 'bubble', color: '#c40000' }}
+        />,
+      )
+
+      const bubble = screen.getByTestId('frame-bubble')
+      expect(bubble).toHaveAttribute('fill', '#c40000')
+      expect(bubble.getAttribute('d')!.match(/M/g)).toHaveLength(1)
+      expect(container.querySelectorAll('path[fill="#c40000"]')).toHaveLength(1)
+    })
+
     it('uses the frame color for the label of outlined frames', () => {
       render(
         <ReactQRCode

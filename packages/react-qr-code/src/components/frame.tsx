@@ -62,23 +62,26 @@ export const FrameBack = ({ settings, layout, maskId }: FrameProps) => {
     }
     case 'bubble': {
       if (!hasLabel) return outline
-      const bubbleY = height - labelHeight
+      const top = height - labelHeight
+      const r = labelHeight / 2
       const pointerSize = padding * 1.1
       const cx = width / 2
+      // Pill and pointer as a single path, so no anti-aliasing seam shows between them.
+      const bubble = [
+        `M${r},${top}`,
+        `H${cx - pointerSize}`,
+        `L${cx},${top - pointerSize}`,
+        `L${cx + pointerSize},${top}`,
+        `H${width - r}`,
+        `A${r},${r} 0 0 1 ${width - r},${height}`,
+        `H${r}`,
+        `A${r},${r} 0 0 1 ${r},${top}`,
+        'Z',
+      ].join(' ')
       return (
         <g>
           {outline}
-          <path
-            d={`M${cx - pointerSize},${bubbleY + 0.01} L${cx},${bubbleY - pointerSize} L${cx + pointerSize},${bubbleY + 0.01}z`}
-            fill={color}
-          />
-          <rect
-            y={bubbleY}
-            width={width}
-            height={labelHeight}
-            rx={labelHeight / 2}
-            fill={color}
-          />
+          <path d={bubble} fill={color} data-testid='frame-bubble' />
         </g>
       )
     }
