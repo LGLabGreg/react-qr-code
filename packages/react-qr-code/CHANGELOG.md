@@ -1,5 +1,15 @@
 # @lglab/react-qr-code
 
+## 1.8.0
+
+### Minor Changes
+
+- [#644](https://github.com/LGLabGreg/react-qr-code/pull/644) [`f8cf5a6`](https://github.com/LGLabGreg/react-qr-code/commit/f8cf5a6abd5175cdba0f50699b3a94580330a8bd) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Add `frameSettings` to draw a frame with a call-to-action label around the QR code. Available styles: `banner-bottom`, `banner-top`, `ticket`, `bubble` and `border`.
+
+### Patch Changes
+
+- [#644](https://github.com/LGLabGreg/react-qr-code/pull/644) [`f8c39a1`](https://github.com/LGLabGreg/react-qr-code/commit/f8c39a1c7ac4ff89e127a61576fd1d84705a92d6) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Fix JPEG downloads of QR codes without a background: transparent areas were exported as black, making the code unscannable. JPEG downloads now use a white background; PNG downloads stay transparent.
+
 ## 1.7.3
 
 ### Patch Changes
