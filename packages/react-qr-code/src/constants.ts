@@ -39,6 +39,10 @@ export const DEFAULT_FILENAME = 'react-qr-code'
 
 export const GRADIENT_ID = 'react-qr-code-gradient'
 export const BG_GRADIENT_ID = 'react-qr-code-bg-gradient'
+export const FRAME_MASK_ID = 'react-qr-code-frame-mask'
+
+export const DEFAULT_FRAME_TEXT = 'Scan me!'
+export const DEFAULT_FRAME_COLOR = '#000000'
 
 // This is *very* rough estimate of max amount of QRCode allowed to be covered.
 // It is "wrong" in a lot of ways (area is a terrible way to estimate, it

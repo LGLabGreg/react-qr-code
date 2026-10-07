@@ -1,5 +1,6 @@
 import { type RefObject } from 'react'
 
+import type { FrameLayout } from '../utils/frame'
 import type {
   CrossOrigin,
   DataModulesSettings,
@@ -64,6 +65,7 @@ export interface DownloadRasterProps {
   size: number
   numCells: number
   margin: number
+  frameLayout: FrameLayout | null
 }
 
 export interface CalculatedImageSettings {

@@ -1,11 +1,17 @@
 import type { DownloadRasterProps, DownloadSVGProps } from '../types/utils'
 
+// Frames make the SVG non-square, so scale the height by the viewBox aspect ratio.
+const getFileHeight = (svg: SVGSVGElement, fileSize: number) => {
+  const { width, height } = svg.viewBox.baseVal ?? {}
+  return width && height ? Math.round((fileSize * height) / width) : fileSize
+}
+
 export const downloadSVG = ({ svgRef, fileSize, fileName }: DownloadSVGProps) => {
   if (!svgRef.current) return
 
   const clonedSvg = svgRef.current.cloneNode(true) as SVGSVGElement
   clonedSvg.setAttribute('width', fileSize.toString())
-  clonedSvg.setAttribute('height', fileSize.toString())
+  clonedSvg.setAttribute('height', getFileHeight(svgRef.current, fileSize).toString())
 
   const serializer = new XMLSerializer()
   const svgBlob = new Blob([serializer.serializeToString(clonedSvg)], {
@@ -31,6 +37,7 @@ export const downloadRaster = ({
   size,
   numCells,
   margin,
+  frameLayout,
 }: DownloadRasterProps) => {
   if (!svgRef.current) return
 
@@ -39,7 +46,8 @@ export const downloadRaster = ({
   if (!ctx) return
 
   canvas.width = fileSize
-  canvas.height = fileSize
+  const fileHeight = getFileHeight(svgRef.current, fileSize)
+  canvas.height = fileHeight
 
   const svgData = new XMLSerializer().serializeToString(svgRef.current)
   const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' })
@@ -50,7 +58,7 @@ export const downloadRaster = ({
   qrImg.src = svgUrl
 
   qrImg.onload = () => {
-    ctx.drawImage(qrImg, 0, 0, fileSize, fileSize)
+    ctx.drawImage(qrImg, 0, 0, fileSize, fileHeight)
     URL.revokeObjectURL(svgUrl)
 
     if (imageSettings?.src && calculatedImageSettings) {
@@ -59,16 +67,20 @@ export const downloadRaster = ({
       logoImg.src = imageSettings.src
 
       logoImg.onload = () => {
+        const viewBoxWidth = frameLayout?.width ?? numCells
+        const offsetX = frameLayout?.qrX ?? 0
+        const offsetY = frameLayout?.qrY ?? 0
         const ratio = fileSize / size
-        const scale = numCells / fileSize
+        const scale = viewBoxWidth / fileSize
+        const qrSize = numCells / scale
 
-        const logoSize = imageSettings.width * ratio
+        const logoSize = imageSettings.width * ratio * (numCells / viewBoxWidth)
         const logoX = imageSettings.x
-          ? (calculatedImageSettings.x + margin) / scale
-          : (fileSize - logoSize) / 2
+          ? (calculatedImageSettings.x + margin + offsetX) / scale
+          : offsetX / scale + (qrSize - logoSize) / 2
         const logoY = imageSettings.y
-          ? (calculatedImageSettings.y + margin) / scale
-          : (fileSize - logoSize) / 2
+          ? (calculatedImageSettings.y + margin + offsetY) / scale
+          : offsetY / scale + (qrSize - logoSize) / 2
         ctx.drawImage(logoImg, logoX, logoY, logoSize, logoSize)
 
         const imageType = fileFormat === 'png' ? 'image/png' : 'image/jpeg'
