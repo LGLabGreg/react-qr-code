@@ -4,8 +4,10 @@ import { Background } from './components/background'
 import { DataModules } from './components/data-modules'
 import { FinderPatternsInner } from './components/finder-patterns-inner'
 import { FinderPatternsOuter } from './components/finder-patterns-outer'
+import { FrameBack, FrameLabel } from './components/frame'
 import { Gradient } from './components/gradient'
 import {
+  DEFAULT_BGCOLOR,
   DEFAULT_FILENAME,
   DEFAULT_LEVEL,
   DEFAULT_MINVERSION,
@@ -15,6 +17,7 @@ import { useIds } from './hooks/use-ids'
 import { useQRCode } from './hooks/use-qr-code'
 import type { DownloadOptions, ReactQRCodeProps, ReactQRCodeRef } from './types/lib'
 import { downloadRaster, downloadSVG } from './utils/download'
+import { getFrameLayout } from './utils/frame'
 import { excavateModules } from './utils/qr-code'
 
 const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) => {
@@ -31,11 +34,12 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
     finderPatternInnerSettings,
     dataModulesSettings,
     imageSettings,
+    frameSettings,
     svgProps,
   } = props
 
   const svgRef = useRef<SVGSVGElement | null>(null)
-  const { gradientId, bgGradientId } = useIds()
+  const { gradientId, bgGradientId, frameMaskId } = useIds()
   const { margin, cells, numCells, calculatedImageSettings } = useQRCode({
     value,
     level,
@@ -45,6 +49,12 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
     imageSettings,
     size,
   })
+
+  const frameLayout = frameSettings
+    ? getFrameLayout(frameSettings.style, numCells, margin, frameSettings.text !== '')
+    : null
+  const viewBoxWidth = frameLayout?.width ?? numCells
+  const viewBoxHeight = frameLayout?.height ?? numCells
 
   useImperativeHandle(ref, () => ({
     svg: svgRef.current,
@@ -68,6 +78,7 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
           size,
           numCells,
           margin,
+          frameLayout,
         })
       }
     },
@@ -102,16 +113,8 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
     gradientId,
   }
 
-  return (
-    <svg
-      height={size}
-      width={size}
-      viewBox={`0 0 ${numCells} ${numCells}`}
-      ref={svgRef}
-      role='img'
-      aria-label={svgProps?.['aria-label'] || 'QR Code'}
-      {...svgProps}
-    >
+  const qrCode = (
+    <>
       <Gradient gradient={gradient} gradientId={gradientId} />
       <Background
         background={background}
@@ -122,6 +125,37 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
       <FinderPatternsInner settings={finderPatternInnerSettings} {...svgElementsProps} />
       <DataModules settings={dataModulesSettings} cells={cells} {...svgElementsProps} />
       {image}
+    </>
+  )
+
+  return (
+    <svg
+      height={(size * viewBoxHeight) / viewBoxWidth}
+      width={size}
+      viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`}
+      ref={svgRef}
+      role='img'
+      aria-label={svgProps?.['aria-label'] || 'QR Code'}
+      {...svgProps}
+    >
+      {frameSettings && frameLayout ? (
+        <>
+          <FrameBack settings={frameSettings} layout={frameLayout} maskId={frameMaskId} />
+          <rect
+            x={frameLayout.panelX}
+            y={frameLayout.panelY}
+            width={frameLayout.panelSize}
+            height={frameLayout.panelSize}
+            // Frames usually have a dark fill, so the code keeps a light quiet zone.
+            fill={typeof background === 'string' ? background : DEFAULT_BGCOLOR}
+            data-testid='frame-panel'
+          />
+          <g transform={`translate(${frameLayout.qrX} ${frameLayout.qrY})`}>{qrCode}</g>
+          <FrameLabel settings={frameSettings} layout={frameLayout} />
+        </>
+      ) : (
+        qrCode
+      )}
     </svg>
   )
 })

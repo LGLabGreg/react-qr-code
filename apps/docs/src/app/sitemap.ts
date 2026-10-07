@@ -17,12 +17,14 @@ const PAGES = [
   { path: '/finder-pattern-inner-settings', priority: 0.7 },
   { path: '/gradient-settings', priority: 0.7 },
   { path: '/image-settings', priority: 0.7 },
+  { path: '/frame-settings', priority: 0.7 },
   { path: '/ref-api', priority: 0.7 },
   { path: '/examples/basic', priority: 0.7 },
   { path: '/examples/data-modules', priority: 0.7 },
   { path: '/examples/finder-patterns', priority: 0.7 },
   { path: '/examples/background', priority: 0.7 },
   { path: '/examples/image', priority: 0.7 },
+  { path: '/examples/frame', priority: 0.7 },
   { path: '/examples/download', priority: 0.7 },
 ]
 

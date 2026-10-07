@@ -27,6 +27,8 @@ export type PropType =
   | 'React.RefObject<ReactQRCodeRef>'
   | 'SVGSVGElement'
   | 'ImageSettings'
+  | 'FrameSettings'
+  | 'FrameStyle'
 
 export interface Prop {
   name: string

@@ -115,6 +115,35 @@ export interface FinderPatternInnerSettings {
   style?: FinderPatternInnerStyle
 }
 
+export type FrameStyle = 'banner-bottom' | 'banner-top' | 'ticket' | 'bubble' | 'border'
+
+export interface FrameSettings {
+  /**
+   * The frame style.
+   */
+  style: FrameStyle
+  /**
+   * The label rendered in the frame. Long labels are condensed to fit the frame
+   * width. An empty string hides the label and the frame wraps the code evenly.
+   * @defaultValue 'Scan me!'
+   */
+  text?: string
+  /**
+   * The frame color.
+   * @defaultValue #000000
+   */
+  color?: string
+  /**
+   * The label color. Defaults to white, except for the `border` style, which uses `color`.
+   */
+  textColor?: string
+  /**
+   * The label font family.
+   * @defaultValue sans-serif
+   */
+  fontFamily?: string
+}
+
 export type DownloadFileFormat = 'svg' | 'png' | 'jpeg'
 export interface DownloadOptions {
   name?: string
@@ -193,6 +222,13 @@ export interface ReactQRCodeProps {
    * The settings for the embedded image.
    */
   imageSettings?: ImageSettings
+  /**
+   * Draws a decorative frame with a call-to-action label around the QR code.
+   * `size` applies to the frame width; the height grows to fit the label. The
+   * code sits on a light panel (the `background` color, white by default) with
+   * a quiet zone of at least 2 modules so it stays scannable.
+   */
+  frameSettings?: FrameSettings
   /**
    * Optional props to pass to the SVG element.
    */

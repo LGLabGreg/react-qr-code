@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  type FrameSettings,
   ReactQRCode,
   type ReactQRCodeProps,
   type ReactQRCodeRef,
@@ -19,6 +20,7 @@ import { Colors } from './colors'
 import { DataModules } from './data-modules'
 import { FinderPatternInner } from './finder-pattern-inner'
 import { FinderPatternOuter } from './finder-pattern-outer'
+import { FrameSettingsDemo } from './frame-settings'
 import { ImageSettingsDemo } from './image-settings'
 import { MainSettings } from './main-settings'
 
@@ -30,6 +32,12 @@ export const defaultImageSettings = {
   opacity: 1,
   x: undefined,
   y: undefined,
+}
+
+export const defaultFrameSettings: FrameSettings = {
+  style: 'ticket',
+  text: 'Scan me!',
+  color: '#000000',
 }
 
 export const defaultBgColor = '#FFFFFF'
@@ -118,6 +126,12 @@ export const Demo = () => {
             <AccordionTrigger>Image settings</AccordionTrigger>
             <AccContent>
               <ImageSettingsDemo qrProps={qrProps} setQrProps={setQrProps} />
+            </AccContent>
+          </AccordionItem>
+          <AccordionItem value='frame-settings'>
+            <AccordionTrigger>Frame</AccordionTrigger>
+            <AccContent>
+              <FrameSettingsDemo qrProps={qrProps} setQrProps={setQrProps} />
             </AccContent>
           </AccordionItem>
         </Accordion>

@@ -106,6 +106,19 @@ const props: Prop[] = [
     ),
   },
   {
+    name: 'frameSettings',
+    type: 'FrameSettings',
+    description: (
+      <>
+        Draws a frame with a call-to-action label around the QR code. When set, size
+        applies to the frame width and the height grows to fit the label. See{' '}
+        <Link className='underline' href='/frame-settings'>
+          FrameSettings
+        </Link>
+      </>
+    ),
+  },
+  {
     name: 'level',
     type: 'ErrorCorrectionLevel',
     description: 'The Error Correction Level to use.',

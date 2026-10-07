@@ -24,6 +24,7 @@ The main component exported by the library.
 | `finderPatternOuterSettings` | `FinderPatternOuterSettings` | - | Configuration for outer finder patterns. |
 | `finderPatternInnerSettings` | `FinderPatternInnerSettings` | - | Configuration for inner finder patterns. |
 | `imageSettings` | `ImageSettings` | - | Settings for an embedded logo or image. |
+| `frameSettings` | `FrameSettings` | - | Draws a frame with a call-to-action label around the QR code. `size` then applies to the frame width; the height grows to fit the label. |
 | `svgProps` | `React.SVGProps<SVGSVGElement>` | - | Additional props passed to the root SVG element. |
 
 ---
@@ -74,6 +75,21 @@ Includes all `FinderPatternOuterStyle` plus: `'diamond'`, `'star'`, `'heart'`, `
 | `y` | `number` | - | Vertical offset (centered by default). |
 | `opacity` | `number` | `1` | Image opacity (0-1). |
 | `crossOrigin` | `CrossOrigin` | - | CORS setting for the image. |
+
+### FrameSettings
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `style` | `FrameStyle` | - | **Required.** Style of the frame. |
+| `text` | `string` | `'Scan me!'` | Label rendered in the frame. Long labels are condensed to fit. An empty string hides it and the frame wraps the code evenly. |
+| `color` | `string` | `'#000000'` | Frame color. |
+| `textColor` | `string` | - | Label color. Defaults to white on filled frames and to `color` on `'border'`. |
+| `fontFamily` | `string` | `'sans-serif'` | Label font family (CSS font-family list). Web fonts loaded by the page work on screen, but downloads only keep the name: SVG files need the font installed where they are opened, and PNG/JPEG exports cannot use page web fonts, only fonts installed on the device. End the list with a generic family. |
+
+**Available Styles (`FrameStyle`):**
+`'banner-bottom'`, `'banner-top'`, `'ticket'`, `'bubble'`, `'border'`
+
+When a frame is set, the QR code sits on a light panel (the `background` color when it is a string, white otherwise) with a quiet zone of at least 2 modules, so it stays scannable on dark frames.
 
 ### GradientSettings
 
@@ -133,6 +149,20 @@ import { ReactQRCode } from '@lglab/react-qr-code';
     width: 40,
     height: 40,
     excavate: true
+  }}
+/>
+```
+
+### Frame
+```tsx
+<ReactQRCode
+  value="https://reactqrcode.com"
+  size={256}
+  marginSize={2}
+  frameSettings={{
+    style: 'ticket',
+    text: 'Scan me!',
+    color: '#000000'
   }}
 />
 ```

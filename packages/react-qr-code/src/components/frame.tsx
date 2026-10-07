@@ -1,0 +1,139 @@
+import { DEFAULT_FRAME_COLOR, DEFAULT_FRAME_TEXT } from '../constants'
+import type { FrameSettings } from '../types/lib'
+import { type FrameLayout, isFilledFrame } from '../utils/frame'
+
+interface FrameProps {
+  settings: FrameSettings
+  layout: FrameLayout
+  maskId: string
+}
+
+// Rough average glyph width relative to font size for bold sans-serif fonts.
+const GLYPH_WIDTH_RATIO = 0.6
+
+export const FrameBack = ({ settings, layout, maskId }: FrameProps) => {
+  const color = settings.color ?? DEFAULT_FRAME_COLOR
+  const { width, height, radius, padding, strokeWidth, labelHeight } = layout
+
+  const outline = (
+    <rect
+      x={strokeWidth / 2}
+      y={strokeWidth / 2}
+      width={width - strokeWidth}
+      height={width - strokeWidth}
+      rx={radius}
+      fill='none'
+      stroke={color}
+      strokeWidth={strokeWidth}
+      data-testid='frame'
+    />
+  )
+  const filled = (
+    <rect width={width} height={height} rx={radius} fill={color} data-testid='frame' />
+  )
+  const hasLabel = labelHeight > 0
+
+  switch (settings.style) {
+    case 'banner-bottom':
+    case 'banner-top':
+      return filled
+    case 'ticket': {
+      if (!hasLabel) return filled
+      const notchRadius = padding * 0.8
+      return (
+        <>
+          <defs>
+            <mask id={maskId}>
+              <rect width={width} height={height} fill='#fff' />
+              <circle cx={0} cy={layout.dividerY} r={notchRadius} fill='#000' />
+              <circle cx={width} cy={layout.dividerY} r={notchRadius} fill='#000' />
+            </mask>
+          </defs>
+          <rect
+            width={width}
+            height={height}
+            rx={radius}
+            fill={color}
+            mask={`url(#${maskId})`}
+            data-testid='frame'
+          />
+        </>
+      )
+    }
+    case 'bubble': {
+      if (!hasLabel) return outline
+      const top = height - labelHeight
+      const r = labelHeight / 2
+      const pointerSize = padding * 1.1
+      const cx = width / 2
+      // Pill and pointer as a single path, so no anti-aliasing seam shows between them.
+      const bubble = [
+        `M${r},${top}`,
+        `H${cx - pointerSize}`,
+        `L${cx},${top - pointerSize}`,
+        `L${cx + pointerSize},${top}`,
+        `H${width - r}`,
+        `A${r},${r} 0 0 1 ${width - r},${height}`,
+        `H${r}`,
+        `A${r},${r} 0 0 1 ${r},${top}`,
+        'Z',
+      ].join(' ')
+      return (
+        <g>
+          {outline}
+          <path d={bubble} fill={color} data-testid='frame-bubble' />
+        </g>
+      )
+    }
+    case 'border':
+      return outline
+    default:
+      return null
+  }
+}
+
+export const FrameLabel = ({ settings, layout }: Omit<FrameProps, 'maskId'>) => {
+  const color = settings.color ?? DEFAULT_FRAME_COLOR
+  const text = settings.text ?? DEFAULT_FRAME_TEXT
+  const textColor =
+    settings.textColor ??
+    (isFilledFrame(settings.style) || settings.style === 'bubble' ? '#FFFFFF' : color)
+  const { width, padding, labelHeight, labelY } = layout
+
+  const fontSize = labelHeight * 0.5
+  const maxTextWidth = width - padding * 3
+  const overflows = text.length * fontSize * GLYPH_WIDTH_RATIO > maxTextWidth
+
+  return (
+    <>
+      {settings.style === 'ticket' && text && (
+        <line
+          x1={padding * 1.4}
+          x2={width - padding * 1.4}
+          y1={layout.dividerY}
+          y2={layout.dividerY}
+          stroke={textColor}
+          strokeWidth={padding * 0.15}
+          strokeDasharray={`${padding * 0.5} ${padding * 0.35}`}
+        />
+      )}
+      {text && (
+        <text
+          x={width / 2}
+          y={labelY}
+          fill={textColor}
+          fontSize={fontSize}
+          fontFamily={settings.fontFamily ?? 'sans-serif'}
+          fontWeight='bold'
+          textAnchor='middle'
+          dominantBaseline='central'
+          textLength={overflows ? maxTextWidth : undefined}
+          lengthAdjust={overflows ? 'spacingAndGlyphs' : undefined}
+          data-testid='frame-label'
+        >
+          {text}
+        </text>
+      )}
+    </>
+  )
+}

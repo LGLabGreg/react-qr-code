@@ -17,6 +17,7 @@ This site serves as the central hub for the `@lglab/react-qr-code` library, prov
 - [Finder Pattern Outer Settings](https://reactqrcode.com/finder-pattern-outer-settings)
 - [Gradient Settings](https://reactqrcode.com/gradient-settings)
 - [Image Settings](https://reactqrcode.com/image-settings)
+- [Frame Settings](https://reactqrcode.com/frame-settings)
 - [Examples](https://reactqrcode.com/examples)
 
 ## External Links
