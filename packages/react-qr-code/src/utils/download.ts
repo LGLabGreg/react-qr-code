@@ -7,12 +7,45 @@ export const getFileHeight = (svg: SVGSVGElement, fileSize: number) => {
   return width && height ? Math.round((fileSize * height) / width) : fileSize
 }
 
-export const downloadSVG = ({ svgRef, fileSize, fileName }: DownloadSVGProps) => {
+const toDataURL = async (src: string, credentials: RequestCredentials) => {
+  const response = await fetch(src, { credentials })
+  if (!response.ok) throw new Error(`Failed to fetch ${src}: ${response.status}`)
+  const blob = await response.blob()
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = () => reject(reader.error)
+    reader.readAsDataURL(blob)
+  })
+}
+
+// Embed linked images so the downloaded file works offline; keep the link if the fetch fails (e.g. CORS).
+export const inlineImages = async (svg: SVGSVGElement) => {
+  const images = Array.from(svg.querySelectorAll('image'))
+  await Promise.all(
+    images.map(async (image) => {
+      const href = image.getAttribute('href')
+      if (!href || href.startsWith('data:')) return
+      try {
+        const credentials =
+          image.getAttribute('crossorigin') === 'use-credentials'
+            ? 'include'
+            : 'same-origin'
+        image.setAttribute('href', await toDataURL(href, credentials))
+      } catch {
+        // Keep the original href
+      }
+    }),
+  )
+}
+
+export const downloadSVG = async ({ svgRef, fileSize, fileName }: DownloadSVGProps) => {
   if (!svgRef.current) return
 
   const clonedSvg = svgRef.current.cloneNode(true) as SVGSVGElement
   clonedSvg.setAttribute('width', fileSize.toString())
   clonedSvg.setAttribute('height', getFileHeight(svgRef.current, fileSize).toString())
+  await inlineImages(clonedSvg)
 
   const serializer = new XMLSerializer()
   const svgBlob = new Blob([serializer.serializeToString(clonedSvg)], {

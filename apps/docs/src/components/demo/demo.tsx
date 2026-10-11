@@ -1,11 +1,13 @@
 'use client'
 
 import {
+  type DownloadFileFormat,
   type FrameSettings,
   ReactQRCode,
   type ReactQRCodeProps,
   type ReactQRCodeRef,
 } from '@lglab/react-qr-code'
+import { ChevronDown } from 'lucide-react'
 import { type PropsWithChildren, useRef, useState } from 'react'
 
 import {
@@ -15,6 +17,12 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 import { Colors } from './colors'
 import { DataModules } from './data-modules'
@@ -25,7 +33,7 @@ import { ImageSettingsDemo } from './image-settings'
 import { MainSettings } from './main-settings'
 
 export const defaultImageSettings = {
-  src: 'https://reactqrcode.com/images/logo-60.png',
+  src: 'https://reactqrcode.com/images/logo.svg',
   width: 60,
   height: 60,
   excavate: true,
@@ -88,6 +96,9 @@ export const Demo = () => {
     imageSettings: defaultImageSettings,
   })
 
+  const download = (format: DownloadFileFormat) =>
+    qrRef.current?.download({ name: 'qr-code', format, size: 1000 })
+
   return (
     <div className='grid grid-cols-1 gap-4 sm:grid-cols-5'>
       <div className='sm:col-span-3'>
@@ -138,13 +149,25 @@ export const Demo = () => {
       </div>
       <div className='flex flex-col items-center gap-3 sm:col-span-2 [&>svg]:h-auto'>
         <ReactQRCode {...qrProps} ref={qrRef} />
-        <Button
-          onClick={() =>
-            qrRef.current?.download({ name: 'qr-code', format: 'png', size: 1000 })
-          }
-        >
-          Download PNG
-        </Button>
+        <div className='flex'>
+          <Button className='rounded-r-none' onClick={() => download('png')}>
+            Download PNG
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                aria-label='More download formats'
+                className='rounded-l-none border-l border-primary-foreground/20 px-2'
+              >
+                <ChevronDown />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='end'>
+              <DropdownMenuItem onSelect={() => download('png')}>PNG</DropdownMenuItem>
+              <DropdownMenuItem onSelect={() => download('svg')}>SVG</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </div>
   )

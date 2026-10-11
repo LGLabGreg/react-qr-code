@@ -66,7 +66,7 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
       if (!svgRef.current) return
 
       if (fileFormat === 'svg') {
-        downloadSVG({ svgRef, fileSize, fileName })
+        void downloadSVG({ svgRef, fileSize, fileName })
       } else {
         downloadRaster({
           svgRef,
