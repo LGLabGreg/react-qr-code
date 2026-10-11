@@ -33,7 +33,7 @@ import { ImageSettingsDemo } from './image-settings'
 import { MainSettings } from './main-settings'
 
 export const defaultImageSettings = {
-  src: 'https://reactqrcode.com/images/logo-60.png',
+  src: 'https://reactqrcode.com/images/logo.svg',
   width: 60,
   height: 60,
   excavate: true,
