@@ -3,6 +3,7 @@ import { type ComponentProps } from 'react'
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -12,6 +13,7 @@ import {
 } from '@/components/ui/sidebar'
 import { mainNav } from '@/config/navigation'
 
+import { DashboardBlocksPromo } from './dashboardblocks-promo'
 import { PageSidebarButton } from './page-sidebar-button'
 
 export const AppSidebar = async ({ ...props }: ComponentProps<typeof Sidebar>) => {
@@ -35,6 +37,9 @@ export const AppSidebar = async ({ ...props }: ComponentProps<typeof Sidebar>) =
           </SidebarGroup>
         ))}
       </SidebarContent>
+      <SidebarFooter>
+        <DashboardBlocksPromo />
+      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )
