@@ -1,5 +1,11 @@
 # @lglab/react-qr-code
 
+## 1.8.1
+
+### Patch Changes
+
+- [#650](https://github.com/LGLabGreg/react-qr-code/pull/650) [`7500df5`](https://github.com/LGLabGreg/react-qr-code/commit/7500df5047fa93e0f8b3d9ffea0044c0587b6628) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Embed images in SVG downloads as data URLs, so a downloaded SVG with an image still shows it offline and when printed. If the image can't be fetched (for example because of CORS), the original URL is kept.
+
 ## 1.8.0
 
 ### Minor Changes
