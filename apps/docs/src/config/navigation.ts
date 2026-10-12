@@ -22,6 +22,10 @@ export const mainNav: MenuItemProps[] = [
         url: '/demo',
       },
       {
+        title: 'X QR Code',
+        url: '/x-qr-code',
+      },
+      {
         title: 'llms.txt',
         url: '/llms-txt',
       },

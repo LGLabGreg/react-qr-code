@@ -8,7 +8,14 @@ import {
   type ReactQRCodeRef,
 } from '@lglab/react-qr-code'
 import { ChevronDown } from 'lucide-react'
-import { type PropsWithChildren, useRef, useState } from 'react'
+import {
+  type Dispatch,
+  type PropsWithChildren,
+  type ReactNode,
+  type SetStateAction,
+  useRef,
+  useState,
+} from 'react'
 
 import {
   Accordion,
@@ -70,38 +77,51 @@ const AccContent = ({ children }: PropsWithChildren) => (
   <AccordionContent className='p-2 pb-5 space-y-5'>{children}</AccordionContent>
 )
 
-export const Demo = () => {
+export const defaultQrProps: ReactQRCodeProps = {
+  value: 'https://reactqrcode.com',
+  size: 400,
+  level: 'M',
+  marginSize: 3,
+  minVersion: 1,
+  boostLevel: true,
+  background: '#FFFFFF',
+  dataModulesSettings: {
+    style: 'square',
+    color: '#000000',
+    randomSize: false,
+  },
+  finderPatternOuterSettings: {
+    style: 'square',
+    color: '#000000',
+  },
+  finderPatternInnerSettings: {
+    style: 'square',
+    color: '#000000',
+  },
+  imageSettings: defaultImageSettings,
+}
+
+interface DemoProps {
+  initialProps?: ReactQRCodeProps
+  downloadName?: string
+  header?: (setQrProps: Dispatch<SetStateAction<ReactQRCodeProps>>) => ReactNode
+}
+
+export const Demo = ({
+  initialProps = defaultQrProps,
+  downloadName = 'qr-code',
+  header,
+}: DemoProps) => {
   const qrRef = useRef<ReactQRCodeRef>(null)
-  const [qrProps, setQrProps] = useState<ReactQRCodeProps>({
-    value: 'https://reactqrcode.com',
-    size: 400,
-    level: 'M',
-    marginSize: 3,
-    minVersion: 1,
-    boostLevel: true,
-    background: '#FFFFFF',
-    dataModulesSettings: {
-      style: 'square',
-      color: '#000000',
-      randomSize: false,
-    },
-    finderPatternOuterSettings: {
-      style: 'square',
-      color: '#000000',
-    },
-    finderPatternInnerSettings: {
-      style: 'square',
-      color: '#000000',
-    },
-    imageSettings: defaultImageSettings,
-  })
+  const [qrProps, setQrProps] = useState<ReactQRCodeProps>(initialProps)
 
   const download = (format: DownloadFileFormat) =>
-    qrRef.current?.download({ name: 'qr-code', format, size: 1000 })
+    qrRef.current?.download({ name: downloadName, format, size: 1000 })
 
   return (
     <div className='grid grid-cols-1 gap-4 sm:grid-cols-5'>
       <div className='sm:col-span-3'>
+        {header?.(setQrProps)}
         <Accordion type='single' collapsible className='w-full'>
           <AccordionItem value='main-props'>
             <AccordionTrigger>Main props</AccordionTrigger>
