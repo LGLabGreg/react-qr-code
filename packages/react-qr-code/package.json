@@ -57,7 +57,7 @@
     "@vitejs/plugin-react": "^6.1.2",
     "acorn": "^8.19.0",
     "esbuild": "^0.28.2",
-    "globals": "^17.13.0",
+    "globals": "^17.14.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "typescript": "~7.0.2",
