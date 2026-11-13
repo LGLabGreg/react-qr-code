@@ -1,6 +1,7 @@
 import { type ReactNode, useCallback, useMemo } from 'react'
 
 import { CIRCUIT_BOARD_PAD_RADIUS, DEFAULT_NUM_STAR_POINTS } from '../constants'
+import { Path, shapeRendering, testId } from '../platform/primitives'
 import type { DataModulesProps } from '../types/utils'
 import {
   bottomRounded,
@@ -194,11 +195,11 @@ export const DataModules = ({
   const paint = gradient ? `url(#${gradientId})` : color
 
   return (
-    <path
+    <Path
       fill={paint}
       d={ops.join('')}
-      shapeRendering={style === 'square' ? 'crispEdges' : 'geometricPrecision'}
-      data-testid='data-modules'
+      {...shapeRendering(style)}
+      {...testId('data-modules')}
     />
   )
 }

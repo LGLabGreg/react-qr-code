@@ -31,7 +31,7 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && tsc -p tsconfig.native.json --noEmit && vite build && vite build -c vite.native.config.ts && node scripts/build-native-types.mjs",
     "test:smoke": "node scripts/smoke-test.mjs"
   },
   "types": "./dist/index.d.ts",
@@ -39,15 +39,33 @@
   "module": "./dist/index.es.js",
   "exports": {
     ".": {
-      "import": "./dist/index.es.js",
-      "types": "./dist/index.d.ts"
+      "browser": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.es.js"
+      },
+      "react-native": {
+        "types": "./dist/native/index.d.ts",
+        "default": "./dist/index.native.js"
+      },
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js"
     }
   },
   "files": [
     "dist"
   ],
   "peerDependencies": {
-    "react": "^18 || ^19"
+    "react": "^18 || ^19",
+    "react-native": ">=0.82",
+    "react-native-svg": ">=15"
+  },
+  "peerDependenciesMeta": {
+    "react-native": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@types/node": "^26.6.6",
@@ -60,6 +78,8 @@
     "globals": "^17.14.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
+    "react-native": "^0.88.1",
+    "react-native-svg": "^15.16.1",
     "typescript": "~7.0.2",
     "vite": "^8.3.6",
     "vite-plugin-dts": "^5.1.2"

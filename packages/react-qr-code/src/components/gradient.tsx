@@ -1,3 +1,4 @@
+import { Defs, LinearGradient, RadialGradient, Stop } from '../platform/primitives'
 import type { GradientSettings } from '../types/lib'
 import { calculateGradientVectors } from '../utils/svg'
 
@@ -14,15 +15,15 @@ export const Gradient = ({ gradient, gradientId }: GradientProps) => {
   const vectors = calculateGradientVectors(gradient?.rotation || 0)
 
   return (
-    <defs>
+    <Defs>
       {gradient.type === 'linear' ? (
-        <linearGradient id={gradientId} gradientUnits='userSpaceOnUse' {...vectors}>
+        <LinearGradient id={gradientId} gradientUnits='userSpaceOnUse' {...vectors}>
           {gradient.stops?.map((stop, index) => (
-            <stop key={index} offset={stop.offset} stopColor={stop.color} />
+            <Stop key={index} offset={stop.offset} stopColor={stop.color} />
           ))}
-        </linearGradient>
+        </LinearGradient>
       ) : (
-        <radialGradient
+        <RadialGradient
           id={gradientId}
           gradientUnits='userSpaceOnUse'
           cx='50%'
@@ -30,10 +31,10 @@ export const Gradient = ({ gradient, gradientId }: GradientProps) => {
           r='50%'
         >
           {gradient.stops?.map((stop, index) => (
-            <stop key={index} offset={stop.offset} stopColor={stop.color} />
+            <Stop key={index} offset={stop.offset} stopColor={stop.color} />
           ))}
-        </radialGradient>
+        </RadialGradient>
       )}
-    </defs>
+    </Defs>
   )
 }

@@ -1,4 +1,7 @@
 import type { Ecc, QrCode } from '../lib/qrcodegen'
+import type { ImageSource, ReactQRCodeRef, SvgRootProps } from './platform'
+
+export type { ReactQRCodeRef }
 
 /**
  * qrcodegen
@@ -151,11 +154,6 @@ export interface DownloadOptions {
   size?: number
 }
 
-export interface ReactQRCodeRef {
-  svg: SVGSVGElement | null
-  download: (options: DownloadOptions) => void
-}
-
 export interface ReactQRCodeProps {
   ref?: React.Ref<ReactQRCodeRef>
   /**
@@ -232,7 +230,7 @@ export interface ReactQRCodeProps {
   /**
    * Optional props to pass to the SVG element.
    */
-  svgProps?: React.SVGProps<SVGSVGElement>
+  svgProps?: SvgRootProps
 }
 
 /**
@@ -242,7 +240,7 @@ export interface ImageSettings {
   /**
    * The URI of the embedded image.
    */
-  src: string
+  src: ImageSource
   /**
    * The height, in pixels, of the image.
    */

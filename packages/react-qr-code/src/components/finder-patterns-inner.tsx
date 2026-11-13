@@ -7,17 +7,23 @@ import {
   FINDER_PATTERN_OUTER_ROTATIONS,
   FINDER_PATTERN_SIZE,
 } from '../constants'
+import { Path, Rect, testId } from '../platform/primitives'
 import type { FinderPatternsInnerProps } from '../types/utils'
 import {
   finderPatternsInnerInOutPoint,
   finderPatternsInnerLeaf,
 } from '../utils/finder-patterns-inner'
 import { sanitizeFinderPatternInnerSettings } from '../utils/settings'
-import { hashtag, heart, microchip, pinchedSquare, star } from '../utils/svg'
+import {
+  hashtag,
+  heart,
+  microchip,
+  pinchedSquare,
+  rotateAround,
+  star,
+} from '../utils/svg'
 
-const testProps = {
-  'data-testid': 'finder-patterns-inner',
-}
+const testProps = testId('finder-patterns-inner')
 
 export const FinderPatternsInner = ({
   modules,
@@ -53,7 +59,7 @@ export const FinderPatternsInner = ({
     return coordinates.map((coordinate) => {
       const { x, y } = coordinate
       return (
-        <rect
+        <Rect
           key={key(x, y)}
           x={x}
           y={y}
@@ -71,7 +77,7 @@ export const FinderPatternsInner = ({
     return coordinates.map((coordinate) => {
       const { x, y } = coordinate
       const path = pinchedSquare(x, y, FINDER_PATTERN_INNER_SIZE, 0.25)
-      return <path key={key(x, y)} fill={fill} d={path} {...testProps} />
+      return <Path key={key(x, y)} fill={fill} d={path} {...testProps} />
     })
   }
 
@@ -82,18 +88,19 @@ export const FinderPatternsInner = ({
       const size = FINDER_PATTERN_INNER_SIZE / sizeDiff
       const posDiff = size - size / sizeDiff
       return (
-        <rect
+        <Rect
           key={key(x, y)}
           x={x + posDiff / 2}
           y={y + posDiff / 2}
           width={size}
           height={size}
           fill={fill}
-          style={{
-            transform: `rotate(${45}deg)`,
-            transformOrigin: 'center',
-            transformBox: 'fill-box',
-          }}
+          // Rotates about the centre of the rect itself.
+          transform={rotateAround(
+            45,
+            x + posDiff / 2 + size / 2,
+            y + posDiff / 2 + size / 2,
+          )}
           {...testProps}
         />
       )
@@ -127,15 +134,15 @@ export const FinderPatternsInner = ({
           radius: FINDER_PATTERN_INNER_RADIUSES[style],
         })
         return (
-          <path
+          <Path
             key={key(x, y)}
             fill={fill}
             d={path}
-            style={{
-              transform: `rotate(${rotation}deg)`,
-              transformOrigin: 'center',
-              transformBox: 'fill-box',
-            }}
+            transform={rotateAround(
+              rotation,
+              x + FINDER_PATTERN_INNER_SIZE / 2,
+              y + FINDER_PATTERN_INNER_SIZE / 2,
+            )}
             {...testProps}
           />
         )
@@ -145,7 +152,7 @@ export const FinderPatternsInner = ({
   if (style === 'heart') {
     return coordinates.map(({ x, y }) => {
       return (
-        <path
+        <Path
           key={key(x, y)}
           fill={fill}
           d={heart(x, y, FINDER_PATTERN_INNER_SIZE)}
@@ -160,21 +167,21 @@ export const FinderPatternsInner = ({
       const cx = x + FINDER_PATTERN_INNER_SIZE / 2
       const cy = y + FINDER_PATTERN_INNER_SIZE / 2
       const path = star(cx, cy, FINDER_PATTERN_INNER_SIZE * 1.2, DEFAULT_NUM_STAR_POINTS)
-      return <path key={key(x, y)} fill={fill} d={path} {...testProps} />
+      return <Path key={key(x, y)} fill={fill} d={path} {...testProps} />
     })
   }
 
   if (style === 'microchip') {
     return coordinates.map(({ x, y }) => {
       const path = microchip(x, y, FINDER_PATTERN_INNER_SIZE)
-      return <path key={key(x, y)} fill={fill} d={path} {...testProps} />
+      return <Path key={key(x, y)} fill={fill} d={path} {...testProps} />
     })
   }
 
   if (style === 'hashtag') {
     return coordinates.map(({ x, y }) => {
       const path = hashtag(x - 0.25, y - 0.25, 3.5)
-      return <path key={key(x, y)} fill={fill} d={path} {...testProps} />
+      return <Path key={key(x, y)} fill={fill} d={path} {...testProps} />
     })
   }
 }

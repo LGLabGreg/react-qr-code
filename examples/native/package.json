@@ -1,0 +1,25 @@
+{
+  "name": "react-qr-code-native-example",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "setup": "pnpm --dir ../.. build:lib && node scripts/pack-lib.mjs && npm install",
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "typecheck": "tsc --noEmit",
+    "bundle": "expo export --platform android --platform ios --output-dir dist"
+  },
+  "dependencies": {
+    "@lglab/react-qr-code": "file:./.lib/react-qr-code.tgz",
+    "expo": "~58.0.25",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-svg": "15.16.0"
+  },
+  "devDependencies": {
+    "@types/react": "~19.3.0",
+    "typescript": "~6.0.3"
+  }
+}
