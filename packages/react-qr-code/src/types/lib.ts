@@ -1,4 +1,7 @@
 import type { Ecc, QrCode } from '../lib/qrcodegen'
+import type { ImageSource, ReactQRCodeRef, SvgRootProps } from './platform'
+
+export type { ReactQRCodeRef }
 
 /**
  * qrcodegen
@@ -138,22 +141,27 @@ export interface FrameSettings {
    */
   textColor?: string
   /**
-   * The label font family.
-   * @defaultValue sans-serif
+   * The label font family. On React Native, the name of a font loaded in the
+   * app.
+   * @defaultValue `sans-serif` on the web, the system font on React Native
    */
   fontFamily?: string
 }
 
 export type DownloadFileFormat = 'svg' | 'png' | 'jpeg'
+export interface ToDataURLOptions {
+  /**
+   * The width of the image in pixels. The height follows the aspect ratio of
+   * the code, which differs from the width when a frame is set.
+   * @defaultValue the `size` prop
+   */
+  size?: number
+}
+
 export interface DownloadOptions {
   name?: string
   format?: DownloadFileFormat
   size?: number
-}
-
-export interface ReactQRCodeRef {
-  svg: SVGSVGElement | null
-  download: (options: DownloadOptions) => void
 }
 
 export interface ReactQRCodeProps {
@@ -232,7 +240,7 @@ export interface ReactQRCodeProps {
   /**
    * Optional props to pass to the SVG element.
    */
-  svgProps?: React.SVGProps<SVGSVGElement>
+  svgProps?: SvgRootProps
 }
 
 /**
@@ -242,7 +250,7 @@ export interface ImageSettings {
   /**
    * The URI of the embedded image.
    */
-  src: string
+  src: ImageSource
   /**
    * The height, in pixels, of the image.
    */

@@ -1,3 +1,11 @@
+import {
+  Defs,
+  LinearGradient,
+  Path,
+  RadialGradient,
+  Stop,
+  testId,
+} from '../platform/primitives'
 import type { BackgroundSettings } from '../types/lib'
 import { calculateGradientVectors } from '../utils/svg'
 
@@ -7,9 +15,7 @@ interface BackgroundProps {
   numCells: number
 }
 
-const testProps = {
-  'data-testid': 'background',
-}
+const testProps = testId('background')
 
 export const Background = ({ background, bgGradientId, numCells }: BackgroundProps) => {
   if (!background) {
@@ -18,7 +24,7 @@ export const Background = ({ background, bgGradientId, numCells }: BackgroundPro
 
   if (typeof background === 'string') {
     return (
-      <path fill={background} d={`M0,0 h${numCells}v${numCells}H0z`} {...testProps} />
+      <Path fill={background} d={`M0,0 h${numCells}v${numCells}H0z`} {...testProps} />
     )
   }
 
@@ -26,15 +32,15 @@ export const Background = ({ background, bgGradientId, numCells }: BackgroundPro
 
   return (
     <>
-      <defs>
+      <Defs>
         {background.type === 'linear' ? (
-          <linearGradient id={bgGradientId} gradientUnits='userSpaceOnUse' {...vectors}>
+          <LinearGradient id={bgGradientId} gradientUnits='userSpaceOnUse' {...vectors}>
             {background.stops?.map((stop, index) => (
-              <stop key={index} offset={stop.offset} stopColor={stop.color} />
+              <Stop key={index} offset={stop.offset} stopColor={stop.color} />
             ))}
-          </linearGradient>
+          </LinearGradient>
         ) : (
-          <radialGradient
+          <RadialGradient
             id={bgGradientId}
             gradientUnits='userSpaceOnUse'
             cx='50%'
@@ -42,12 +48,12 @@ export const Background = ({ background, bgGradientId, numCells }: BackgroundPro
             r='50%'
           >
             {background.stops?.map((stop, index) => (
-              <stop key={index} offset={stop.offset} stopColor={stop.color} />
+              <Stop key={index} offset={stop.offset} stopColor={stop.color} />
             ))}
-          </radialGradient>
+          </RadialGradient>
         )}
-      </defs>
-      <path
+      </Defs>
+      <Path
         fill={`url(#${bgGradientId})`}
         d={`M0,0 h${numCells}v${numCells}H0z`}
         {...testProps}

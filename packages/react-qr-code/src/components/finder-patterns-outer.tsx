@@ -5,6 +5,7 @@ import {
   FINDER_PATTERN_OUTER_ROTATIONS,
   FINDER_PATTERN_SIZE,
 } from '../constants'
+import { Path, rotateProps, testId } from '../platform/primitives'
 import type { FinderPatternsOuterProps } from '../types/utils'
 import {
   finderPatternsOuterInOutPoint,
@@ -13,9 +14,7 @@ import {
 } from '../utils/finder-patterns-outer'
 import { sanitizeFinderPatternOuterSettings } from '../utils/settings'
 
-const testProps = {
-  'data-testid': 'finder-patterns-outer',
-}
+const testProps = testId('finder-patterns-outer')
 
 export const FinderPatternsOuter = ({
   modules,
@@ -104,7 +103,7 @@ export const FinderPatternsOuter = ({
         )
       }
     }
-    return <path fill={fill} d={ops.join('')} {...testProps} />
+    return <Path fill={fill} d={ops.join('')} {...testProps} />
   }
 
   if (
@@ -134,15 +133,15 @@ export const FinderPatternsOuter = ({
           radius: FINDER_PATTERN_OUTER_RADIUSES[style],
         })
         return (
-          <path
+          <Path
             key={`finder-patterns-outer-${style}-${x}-${y}`}
             fill={fill}
             d={path}
-            style={{
-              transform: `rotate(${rotation}deg)`,
-              transformOrigin: 'center',
-              transformBox: 'fill-box',
-            }}
+            {...rotateProps(
+              rotation,
+              x + FINDER_PATTERN_SIZE / 2,
+              y + FINDER_PATTERN_SIZE / 2,
+            )}
             {...testProps}
           />
         )

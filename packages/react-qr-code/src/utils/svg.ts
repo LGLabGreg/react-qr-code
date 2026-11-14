@@ -4,6 +4,13 @@ export function numToAttr(value: number) {
   return value.toFixed(7).replace(rx, '')
 }
 
+/**
+ * A rotation about an explicit centre, as an SVG `transform` attribute, for
+ * renderers without CSS `transform-box: fill-box` (React Native).
+ */
+export const rotateAround = (degrees: number, cx: number, cy: number) =>
+  `rotate(${degrees} ${numToAttr(cx)} ${numToAttr(cy)})`
+
 export const calculateGradientVectors = (rotation: number) => {
   const angle = (rotation % 360) * (Math.PI / 180)
 

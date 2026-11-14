@@ -1,4 +1,19 @@
 import { DEFAULT_FRAME_COLOR, DEFAULT_FRAME_TEXT } from '../constants'
+import {
+  Circle,
+  DEFAULT_FRAME_FONT_FAMILY,
+  Defs,
+  G,
+  Line,
+  Mask,
+  Path,
+  Rect,
+  Text,
+  centralBaseline,
+  fitLabel,
+  labelLayoutScale,
+  testId,
+} from '../platform/primitives'
 import type { FrameSettings } from '../types/lib'
 import { type FrameLayout, isFilledFrame } from '../utils/frame'
 
@@ -16,7 +31,7 @@ export const FrameBack = ({ settings, layout, maskId }: FrameProps) => {
   const { width, height, radius, padding, strokeWidth, labelHeight } = layout
 
   const outline = (
-    <rect
+    <Rect
       x={strokeWidth / 2}
       y={strokeWidth / 2}
       width={width - strokeWidth}
@@ -25,11 +40,11 @@ export const FrameBack = ({ settings, layout, maskId }: FrameProps) => {
       fill='none'
       stroke={color}
       strokeWidth={strokeWidth}
-      data-testid='frame'
+      {...testId('frame')}
     />
   )
   const filled = (
-    <rect width={width} height={height} rx={radius} fill={color} data-testid='frame' />
+    <Rect width={width} height={height} rx={radius} fill={color} {...testId('frame')} />
   )
   const hasLabel = labelHeight > 0
 
@@ -42,20 +57,20 @@ export const FrameBack = ({ settings, layout, maskId }: FrameProps) => {
       const notchRadius = padding * 0.8
       return (
         <>
-          <defs>
-            <mask id={maskId}>
-              <rect width={width} height={height} fill='#fff' />
-              <circle cx={0} cy={layout.dividerY} r={notchRadius} fill='#000' />
-              <circle cx={width} cy={layout.dividerY} r={notchRadius} fill='#000' />
-            </mask>
-          </defs>
-          <rect
+          <Defs>
+            <Mask id={maskId}>
+              <Rect width={width} height={height} fill='#fff' />
+              <Circle cx={0} cy={layout.dividerY} r={notchRadius} fill='#000' />
+              <Circle cx={width} cy={layout.dividerY} r={notchRadius} fill='#000' />
+            </Mask>
+          </Defs>
+          <Rect
             width={width}
             height={height}
             rx={radius}
             fill={color}
             mask={`url(#${maskId})`}
-            data-testid='frame'
+            {...testId('frame')}
           />
         </>
       )
@@ -79,10 +94,10 @@ export const FrameBack = ({ settings, layout, maskId }: FrameProps) => {
         'Z',
       ].join(' ')
       return (
-        <g>
+        <G>
           {outline}
-          <path d={bubble} fill={color} data-testid='frame-bubble' />
-        </g>
+          <Path d={bubble} fill={color} {...testId('frame-bubble')} />
+        </G>
       )
     }
     case 'border':
@@ -92,7 +107,12 @@ export const FrameBack = ({ settings, layout, maskId }: FrameProps) => {
   }
 }
 
-export const FrameLabel = ({ settings, layout }: Omit<FrameProps, 'maskId'>) => {
+interface FrameLabelProps extends Omit<FrameProps, 'maskId'> {
+  /** Rendered pixels per viewBox unit. */
+  pixelsPerUnit: number
+}
+
+export const FrameLabel = ({ settings, layout, pixelsPerUnit }: FrameLabelProps) => {
   const color = settings.color ?? DEFAULT_FRAME_COLOR
   const text = settings.text ?? DEFAULT_FRAME_TEXT
   const textColor =
@@ -102,12 +122,33 @@ export const FrameLabel = ({ settings, layout }: Omit<FrameProps, 'maskId'>) => 
 
   const fontSize = labelHeight * 0.5
   const maxTextWidth = width - padding * 3
-  const overflows = text.length * fontSize * GLYPH_WIDTH_RATIO > maxTextWidth
+  const estimatedTextWidth = text.length * fontSize * GLYPH_WIDTH_RATIO
+  const overflows = estimatedTextWidth > maxTextWidth
+
+  // The label is laid out in a coordinate space `k` times finer than the
+  // viewBox, then scaled back down, wherever the platform needs it.
+  const k = labelLayoutScale(pixelsPerUnit)
+  const label = (
+    <Text
+      x={(width / 2) * k}
+      y={labelY * k}
+      fill={textColor}
+      fontSize={fontSize * k}
+      fontFamily={settings.fontFamily ?? DEFAULT_FRAME_FONT_FAMILY}
+      fontWeight='bold'
+      textAnchor='middle'
+      {...centralBaseline}
+      {...(overflows && fitLabel(maxTextWidth, estimatedTextWidth, (width / 2) * k))}
+      {...testId('frame-label')}
+    >
+      {text}
+    </Text>
+  )
 
   return (
     <>
       {settings.style === 'ticket' && text && (
-        <line
+        <Line
           x1={padding * 1.4}
           x2={width - padding * 1.4}
           y1={layout.dividerY}
@@ -117,23 +158,7 @@ export const FrameLabel = ({ settings, layout }: Omit<FrameProps, 'maskId'>) => 
           strokeDasharray={`${padding * 0.5} ${padding * 0.35}`}
         />
       )}
-      {text && (
-        <text
-          x={width / 2}
-          y={labelY}
-          fill={textColor}
-          fontSize={fontSize}
-          fontFamily={settings.fontFamily ?? 'sans-serif'}
-          fontWeight='bold'
-          textAnchor='middle'
-          dominantBaseline='central'
-          textLength={overflows ? maxTextWidth : undefined}
-          lengthAdjust={overflows ? 'spacingAndGlyphs' : undefined}
-          data-testid='frame-label'
-        >
-          {text}
-        </text>
-      )}
+      {text && (k === 1 ? label : <G transform={`scale(${1 / k})`}>{label}</G>)}
     </>
   )
 }

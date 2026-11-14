@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "react-qr-code native example",
+    "slug": "react-qr-code-native-example",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light"
+  }
+}

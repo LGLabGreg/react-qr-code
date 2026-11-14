@@ -2,7 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { DEFAULT_BGCOLOR } from '../constants'
 import type { DownloadFileFormat } from '../types/lib'
-import { downloadRaster, getFileHeight, inlineImages } from './download'
+import { downloadRaster, getFileHeight, inlineImages, renderRaster } from './download'
 
 const svgWithViewBox = (width: number, height: number) =>
   ({ viewBox: { baseVal: { width, height } } }) as unknown as SVGSVGElement
@@ -49,7 +49,6 @@ describe('downloadRaster', () => {
       fileFormat,
       imageSettings: undefined,
       calculatedImageSettings: null,
-      size: 128,
       numCells: 33,
       margin: 4,
       frameLayout: null,
@@ -68,6 +67,145 @@ describe('downloadRaster', () => {
     const ctx = run('png')
 
     expect(ctx.fillRect).not.toHaveBeenCalled()
+  })
+})
+
+describe('renderRaster', () => {
+  // jsdom never loads images, so fire onload (or onerror for failing sources) on assignment.
+  class FakeImage {
+    onload: (() => void) | null = null
+    onerror: (() => void) | null = null
+    crossOrigin = ''
+    set src(value: string) {
+      queueMicrotask(() =>
+        value.includes('broken') ? this.onerror?.() : this.onload?.(),
+      )
+    }
+  }
+
+  afterEach(() => {
+    vi.unstubAllGlobals()
+    vi.restoreAllMocks()
+  })
+
+  const setup = () => {
+    vi.stubGlobal('Image', FakeImage)
+    URL.createObjectURL = vi.fn(() => 'blob:qr')
+    URL.revokeObjectURL = vi.fn()
+    const ctx = { fillStyle: '', globalAlpha: 1, fillRect: vi.fn(), drawImage: vi.fn() }
+    const canvas = document.createElement('canvas')
+    vi.spyOn(canvas, 'getContext').mockReturnValue(
+      ctx as unknown as CanvasRenderingContext2D,
+    )
+    vi.spyOn(canvas, 'toDataURL').mockImplementation(
+      (type?: string) => `data:${type};base64,AAAA`,
+    )
+    const createElement = document.createElement.bind(document)
+    vi.spyOn(document, 'createElement').mockImplementation((tag: string) =>
+      tag === 'canvas' ? canvas : createElement(tag),
+    )
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+    svg.setAttribute('viewBox', '0 0 33 33')
+    return { ctx, svg }
+  }
+
+  const baseProps = (svg: SVGSVGElement) => ({
+    svgRef: { current: svg },
+    fileSize: 300,
+    fileFormat: 'png' as const,
+    imageSettings: undefined,
+    calculatedImageSettings: null,
+    numCells: 33,
+    margin: 4,
+    frameLayout: null,
+  })
+
+  it('resolves with a PNG data URL and frees the SVG blob', async () => {
+    const { ctx, svg } = setup()
+    await expect(renderRaster(baseProps(svg))).resolves.toBe('data:image/png;base64,AAAA')
+    expect(ctx.drawImage).toHaveBeenCalledTimes(1)
+    expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:qr')
+  })
+
+  it('draws the logo on top', async () => {
+    const { ctx, svg } = setup()
+    await renderRaster({
+      ...baseProps(svg),
+      imageSettings: { src: 'logo.png', width: 24, height: 24 },
+      calculatedImageSettings: {
+        x: 0,
+        y: 0,
+        w: 6,
+        h: 6,
+        excavation: null,
+        opacity: 1,
+        crossOrigin: undefined,
+      },
+    })
+    expect(ctx.drawImage).toHaveBeenCalledTimes(2)
+  })
+
+  it('places and sizes the logo as the SVG does', async () => {
+    const { ctx, svg } = setup()
+    const alphas: number[] = []
+    ctx.drawImage.mockImplementation(() => {
+      alphas.push((ctx as unknown as { globalAlpha: number }).globalAlpha)
+    })
+    await renderRaster({
+      ...baseProps(svg),
+      // A wide logo pinned to the top-left corner, half transparent.
+      imageSettings: { src: 'logo.png', width: 40, height: 10, x: 0, y: 0, opacity: 0.5 },
+      calculatedImageSettings: {
+        x: 0,
+        y: 0,
+        w: 10,
+        h: 2.5,
+        excavation: null,
+        opacity: 0.5,
+        crossOrigin: undefined,
+      },
+    })
+    // fileSize 300 over a viewBox of 33 units, so 1 unit = 300 / 33 pixels.
+    const unit = 300 / 33
+    expect(ctx.drawImage).toHaveBeenLastCalledWith(
+      expect.anything(),
+      4 * unit,
+      4 * unit,
+      10 * unit,
+      2.5 * unit,
+    )
+    expect(alphas).toEqual([1, 0.5])
+  })
+
+  it('rejects when the logo fails to load', async () => {
+    const { svg } = setup()
+    await expect(
+      renderRaster({
+        ...baseProps(svg),
+        imageSettings: { src: 'broken.png', width: 24, height: 24 },
+        calculatedImageSettings: {
+          x: 0,
+          y: 0,
+          w: 6,
+          h: 6,
+          excavation: null,
+          opacity: 1,
+          crossOrigin: undefined,
+        },
+      }),
+    ).rejects.toThrow('Failed to load the logo')
+    expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:qr')
+  })
+
+  it('rejects when the QR code is not mounted', async () => {
+    await expect(
+      renderRaster({
+        ...baseProps(
+          document.createElementNS('http://www.w3.org/2000/svg', 'svg') as SVGSVGElement,
+        ),
+        svgRef: { current: null },
+      }),
+    ).rejects.toThrow('not mounted')
   })
 })
 

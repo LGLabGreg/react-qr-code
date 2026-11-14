@@ -55,17 +55,19 @@ export interface DownloadSVGProps {
   fileName: string
 }
 
-export interface DownloadRasterProps {
+export interface RenderRasterProps {
   svgRef: RefObject<SVGSVGElement | null>
   fileSize: number
-  fileName: string
   imageSettings: ImageSettings | undefined
   calculatedImageSettings: CalculatedImageSettings | null
   fileFormat: DownloadFileFormat
-  size: number
   numCells: number
   margin: number
   frameLayout: FrameLayout | null
+}
+
+export interface DownloadRasterProps extends RenderRasterProps {
+  fileName: string
 }
 
 export interface CalculatedImageSettings {

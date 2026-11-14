@@ -110,7 +110,8 @@ The component exposes the following via `forwardRef`:
 | Method / Property | Type | Description |
 | --- | --- | --- |
 | `svg` | `SVGSVGElement \| null` | Reference to the underlying SVG element. |
-| `download` | `(options: DownloadOptions) => void` | Triggers a download of the QR code. |
+| `download` | `(options: DownloadOptions) => void` | Triggers a download of the QR code. Web only. |
+| `toDataURL` | `(options?: ToDataURLOptions) => Promise<string>` | Renders the QR code to a PNG and resolves with its data URL (`data:image/png;base64,...`). Web and React Native. |
 
 ### DownloadOptions
 
@@ -119,6 +120,39 @@ The component exposes the following via `forwardRef`:
 | `name` | `string` | `'qr-code'` | Filename without extension. |
 | `format` | `'svg' \| 'png' \| 'jpeg'` | `'svg'` | Target file format. |
 | `size` | `number` | `500` | Target size in pixels for the export. |
+
+### ToDataURLOptions
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `size` | `number` | the `size` prop | Width of the PNG in pixels. The height follows the aspect ratio of the code or frame. |
+
+---
+
+## React Native
+
+The same `ReactQRCode` component works in React Native (0.82+, New Architecture) and Expo (SDK 55+). It renders through `react-native-svg` (15+), which must be installed alongside it:
+
+```sh
+npx expo install @lglab/react-qr-code react-native-svg
+```
+
+Import it the same way as on the web. Metro resolves the native build through the package's `react-native` export condition; Expo web keeps the DOM build.
+
+Differences from the web:
+
+- The ref's `svg` is the react-native-svg `Svg` instance. There is no `download()`; use `toDataURL()`.
+- `svgProps` are react-native-svg `SvgProps`.
+- `imageSettings.src` also accepts a bundled image from `require('./logo.png')`. `imageSettings.crossOrigin` has no effect.
+- Frame labels use the system font unless `frameSettings.fontFamily` names a font loaded in the app (for example with expo-font).
+- Labels too long for the frame are squeezed horizontally, because react-native-svg does not support `textLength`.
+- On Expo web the DOM build loads, so pass `imageSettings.src` as a URL and keep `svgProps` to DOM props there.
+- The native build is an ES module: add `@lglab` to Jest's `transformIgnorePatterns` allow-list.
+
+```tsx
+const ref = useRef<ReactQRCodeRef>(null)
+const png = await ref.current?.toDataURL({ size: 1024 }) // "data:image/png;base64,..."
+```
 
 ---
 

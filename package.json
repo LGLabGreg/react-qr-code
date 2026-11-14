@@ -9,9 +9,10 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm concurrently --names packages,apps \"pnpm watch:packages\" \"pnpm watch:docs\"",
-    "watch:packages": "pnpm --filter \"./packages/**\" run build --watch",
+    "watch:packages": "pnpm --filter \"./packages/**\" run dev",
     "watch:docs": "pnpm --filter \"./apps/docs/**\" run dev",
     "build:lib": "pnpm --filter \"./packages/**\" run build",
+    "example:native": "pnpm build:lib && pnpm --filter react-qr-code-native-example start",
     "ci:publish": "pnpm build:lib && pnpm publish -r --no-git-checks && pnpm changeset git-tag",
     "test": "vitest run",
     "test:watch": "vitest",

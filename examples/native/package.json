@@ -1,0 +1,46 @@
+{
+  "name": "react-qr-code-native-example",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "typecheck": "tsc --noEmit",
+    "bundle": "expo export --platform android --platform ios --platform web --output-dir dist",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@lglab/react-qr-code": "workspace:*",
+    "expo": "~58.0.25",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-svg": "15.16.0",
+    "react-native-web": "~0.21.4"
+  },
+  "devDependencies": {
+    "@react-native/jest-preset": "0.88.1",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^26.6.6",
+    "@types/react": "~19.3.0",
+    "@types/react-test-renderer": "~19.3.0",
+    "jest": "^30.5.2",
+    "jest-expo": "~58.0.14",
+    "react-test-renderer": "19.3.0",
+    "typescript": "~6.0.3"
+  },
+  "dependenciesMeta": {
+    "@lglab/react-qr-code": {
+      "injected": true
+    }
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(\\.pnpm|react-native|@react-native|@react-native-community|expo|@expo|react-native-svg|@lglab))"
+    ]
+  }
+}

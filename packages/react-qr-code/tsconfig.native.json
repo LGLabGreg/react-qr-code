@@ -1,0 +1,19 @@
+{
+  // Type-checks and emits declarations for the React Native build. `moduleSuffixes`
+  // makes `./primitives` resolve to `./primitives.native`, as the native bundle does.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2020"],
+    "moduleSuffixes": [".native", ""],
+    "types": [],
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "declarationMap": false,
+    "sourceMap": false,
+    "rootDir": "./src",
+    "outDir": "./dist/native"
+  },
+  "include": [],
+  "exclude": ["dist", "node_modules"],
+  "files": ["src/index.ts"]
+}

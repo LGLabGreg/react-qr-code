@@ -1,8 +1,17 @@
 packages:
   - packages/**
   - apps/**
+  - examples/*
+
+# The native example installs the library as a copy (`injected`) so it resolves
+# React from the example, not from the library's dev dependencies. Rebuilding
+# the library refreshes that copy.
+syncInjectedDepsAfterScripts:
+  - build
 
 allowBuilds:
+  # Ships prebuilt binaries; its install script only builds from source as a fallback.
+  '@parcel/watcher': false
   esbuild: true
   sharp: true
 

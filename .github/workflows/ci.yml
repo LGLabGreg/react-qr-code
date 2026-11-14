@@ -46,3 +46,8 @@ jobs:
 
       - name: Build library and smoke test the production bundle
         run: pnpm test:smoke
+
+      - name: Test the React Native build in the example app
+        run: |
+          pnpm --filter react-qr-code-native-example typecheck
+          pnpm --filter react-qr-code-native-example test

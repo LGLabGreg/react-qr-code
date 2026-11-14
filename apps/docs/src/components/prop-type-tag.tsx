@@ -28,6 +28,7 @@ export const PropTypeTag = ({ type }: { type: PropType }) => {
     'GradientSettingsStop[]': 'bg-purple-100 text-purple-800',
     DownloadFileFormat: 'bg-purple-100 text-purple-800',
     '(options: DownloadOptions) => void': 'bg-purple-100 text-purple-800',
+    '(options?: ToDataURLOptions) => Promise<string>': 'bg-purple-100 text-purple-800',
     'React.RefObject<ReactQRCodeRef>': 'bg-purple-100 text-purple-800',
     ImageSettings: 'bg-purple-100 text-purple-800',
     FrameSettings: 'bg-purple-100 text-purple-800',

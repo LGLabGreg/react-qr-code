@@ -9,6 +9,7 @@ This site serves as the central hub for the `@lglab/react-qr-code` library, prov
 - [Introduction](https://reactqrcode.com/)
 - [Installation](https://reactqrcode.com/installation)
 - [Quick Start](https://reactqrcode.com/quick-start)
+- [React Native](https://reactqrcode.com/react-native)
 - [Interactive Demo](https://reactqrcode.com/demo)
 - [ReactQRCode Props](https://reactqrcode.com/react-qr-code-props)
 - [Ref API](https://reactqrcode.com/ref-api)

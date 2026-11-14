@@ -9,7 +9,7 @@ import type { Prop } from '@/types/props'
 export const metadata: Metadata = {
   title: 'ReactQRCodeRef API',
   description:
-    'API reference for ReactQRCodeRef, including access to the SVG element and download helper for exporting QR codes in different formats.',
+    'API reference for ReactQRCodeRef, including access to the SVG element, the download helper and toDataURL for exporting QR codes.',
 }
 
 const props: Prop[] = [
@@ -21,7 +21,23 @@ const props: Prop[] = [
   {
     name: 'download',
     type: '(options: DownloadOptions) => void',
-    description: 'Method to download the QR code in different formats.',
+    description: 'Method to download the QR code in different formats. Web only.',
+  },
+  {
+    name: 'toDataURL',
+    type: '(options?: ToDataURLOptions) => Promise<string>',
+    description:
+      'Renders the QR code to a PNG and resolves with its data URL (data:image/png;base64,...). Works on the web and in React Native.',
+  },
+]
+
+const toDataURLOptions: Prop[] = [
+  {
+    name: 'size',
+    type: 'number',
+    description:
+      'The width of the image in pixels. The height follows the aspect ratio of the QR code or frame.',
+    defaultValue: 'the size prop',
   },
 ]
 
@@ -64,6 +80,16 @@ export default function Page() {
 
       <TypographyH2>DownloadOptions</TypographyH2>
       <PropsTable props={downloadOptions} />
+
+      <hr />
+
+      <TypographyH2>ToDataURLOptions</TypographyH2>
+      <PropsTable props={toDataURLOptions} />
+
+      <TypographyP>
+        In React Native, svg is the react-native-svg Svg instance and the ref has no
+        download method. See the React Native page for an example.
+      </TypographyP>
     </>
   )
 }
