@@ -113,6 +113,7 @@ const cases: Array<[string, ReactQRCodeProps]> = [
     {
       value: 'a',
       level: 'H',
+      // oxlint-disable-next-line typescript/no-require-imports -- Metro bundles assets through require()
       imageSettings: { src: require('../assets/logo.png'), width: 30, height: 30 },
     },
   ],

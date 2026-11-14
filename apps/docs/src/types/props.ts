@@ -23,6 +23,7 @@ export type PropType =
   | 'GradientSettingsStop'
   | 'GradientSettingsStop[]'
   | '(options: DownloadOptions) => void'
+  | '(options?: ToDataURLOptions) => Promise<string>'
   | 'DownloadFileFormat'
   | 'React.RefObject<ReactQRCodeRef>'
   | 'SVGSVGElement'

@@ -9,6 +9,7 @@ const PAGES = [
   { path: '', priority: 1 },
   { path: '/installation', priority: 0.8 },
   { path: '/quick-start', priority: 0.8 },
+  { path: '/react-native', priority: 0.8 },
   { path: '/demo', priority: 0.9 },
   { path: '/llms-txt', priority: 0.5 },
   { path: '/react-qr-code-props', priority: 0.7 },

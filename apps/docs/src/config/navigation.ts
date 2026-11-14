@@ -18,6 +18,10 @@ export const mainNav: MenuItemProps[] = [
         url: '/quick-start',
       },
       {
+        title: 'React Native',
+        url: '/react-native',
+      },
+      {
         title: 'Demo',
         url: '/demo',
       },

@@ -15,6 +15,7 @@ A highly customizable and lightweight QR code generator for React applications.
 - **Frames** - Wrap the QR code in a frame with a call-to-action label like "Scan me!".
 - **Performance Optimized** - Generates QR codes efficiently without sacrificing quality.
 - **SVG-Based Rendering** - Crisp and scalable output for web and print
+- **React Native** - The same component renders in React Native and Expo through react-native-svg.
 - **Developer-Friendly** - Built with TypeScript, easy to use, and well-documented.
 
 ## Install
@@ -52,3 +53,13 @@ const Page = () => {
   );
 }
 ```
+
+## React Native
+
+The same component works in React Native 0.82+ and Expo SDK 55+. Install it with react-native-svg:
+
+```
+npx expo install @lglab/react-qr-code react-native-svg
+```
+
+Import it as above; Metro picks the native build automatically. The native ref has `toDataURL()` (a PNG data URL) instead of `download()`. See [reactqrcode.com/react-native](https://reactqrcode.com/react-native) for the details.
