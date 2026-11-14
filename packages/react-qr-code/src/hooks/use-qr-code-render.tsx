@@ -59,6 +59,7 @@ export const useQRCodeRender = (props: ReactQRCodeProps) => {
       numCells,
       calculatedImageSettings,
       frameLayout,
+      pixelsPerUnit: size / viewBoxWidth,
       ...ids,
     },
   }

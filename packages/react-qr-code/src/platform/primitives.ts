@@ -22,6 +22,12 @@ export const SvgImage = 'image'
 
 export const DEFAULT_FRAME_FONT_FAMILY: string | undefined = 'sans-serif'
 
+/**
+ * Browsers lay out SVG text at its rendered size whatever the viewBox scale,
+ * so the label can use viewBox units directly.
+ */
+export const labelLayoutScale = (_pixelsPerUnit: number) => 1
+
 export const testId = (id: string) => ({ 'data-testid': id })
 
 export const centralBaseline = { dominantBaseline: 'central' } as const

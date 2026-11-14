@@ -11,6 +11,7 @@ import {
   Text,
   centralBaseline,
   fitLabel,
+  labelLayoutScale,
   testId,
 } from '../platform/primitives'
 import type { FrameSettings } from '../types/lib'
@@ -106,7 +107,12 @@ export const FrameBack = ({ settings, layout, maskId }: FrameProps) => {
   }
 }
 
-export const FrameLabel = ({ settings, layout }: Omit<FrameProps, 'maskId'>) => {
+interface FrameLabelProps extends Omit<FrameProps, 'maskId'> {
+  /** Rendered pixels per viewBox unit. */
+  pixelsPerUnit: number
+}
+
+export const FrameLabel = ({ settings, layout, pixelsPerUnit }: FrameLabelProps) => {
   const color = settings.color ?? DEFAULT_FRAME_COLOR
   const text = settings.text ?? DEFAULT_FRAME_TEXT
   const textColor =
@@ -118,6 +124,26 @@ export const FrameLabel = ({ settings, layout }: Omit<FrameProps, 'maskId'>) => 
   const maxTextWidth = width - padding * 3
   const estimatedTextWidth = text.length * fontSize * GLYPH_WIDTH_RATIO
   const overflows = estimatedTextWidth > maxTextWidth
+
+  // The label is laid out in a coordinate space `k` times finer than the
+  // viewBox, then scaled back down, wherever the platform needs it.
+  const k = labelLayoutScale(pixelsPerUnit)
+  const label = (
+    <Text
+      x={(width / 2) * k}
+      y={labelY * k}
+      fill={textColor}
+      fontSize={fontSize * k}
+      fontFamily={settings.fontFamily ?? DEFAULT_FRAME_FONT_FAMILY}
+      fontWeight='bold'
+      textAnchor='middle'
+      {...centralBaseline}
+      {...(overflows && fitLabel(maxTextWidth, estimatedTextWidth, (width / 2) * k))}
+      {...testId('frame-label')}
+    >
+      {text}
+    </Text>
+  )
 
   return (
     <>
@@ -132,22 +158,7 @@ export const FrameLabel = ({ settings, layout }: Omit<FrameProps, 'maskId'>) => 
           strokeDasharray={`${padding * 0.5} ${padding * 0.35}`}
         />
       )}
-      {text && (
-        <Text
-          x={width / 2}
-          y={labelY}
-          fill={textColor}
-          fontSize={fontSize}
-          fontFamily={settings.fontFamily ?? DEFAULT_FRAME_FONT_FAMILY}
-          fontWeight='bold'
-          textAnchor='middle'
-          {...centralBaseline}
-          {...(overflows && fitLabel(maxTextWidth, estimatedTextWidth, width / 2))}
-          {...testId('frame-label')}
-        >
-          {text}
-        </Text>
-      )}
+      {text && (k === 1 ? label : <G transform={`scale(${1 / k})`}>{label}</G>)}
     </>
   )
 }

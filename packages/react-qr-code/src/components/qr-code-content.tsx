@@ -27,6 +27,8 @@ interface QRCodeContentProps extends Pick<
   numCells: number
   calculatedImageSettings: CalculatedImageSettings | null
   frameLayout: FrameLayout | null
+  /** Rendered pixels per viewBox unit. */
+  pixelsPerUnit: number
   gradientId: string
   bgGradientId: string
   frameMaskId: string
@@ -49,6 +51,7 @@ export const QRCodeContent = ({
   numCells,
   calculatedImageSettings,
   frameLayout,
+  pixelsPerUnit,
   gradientId,
   bgGradientId,
   frameMaskId,
@@ -113,7 +116,11 @@ export const QRCodeContent = ({
         {...testId('frame-panel')}
       />
       <G transform={`translate(${frameLayout.qrX} ${frameLayout.qrY})`}>{qrCode}</G>
-      <FrameLabel settings={frameSettings} layout={frameLayout} />
+      <FrameLabel
+        settings={frameSettings}
+        layout={frameLayout}
+        pixelsPerUnit={pixelsPerUnit}
+      />
     </>
   )
 }
