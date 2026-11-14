@@ -5,9 +5,8 @@ export function numToAttr(value: number) {
 }
 
 /**
- * A rotation about an explicit centre, as an SVG `transform` attribute. Every
- * SVG renderer understands this form, unlike CSS `transform-box: fill-box`,
- * which React Native and several SVG viewers do not support.
+ * A rotation about an explicit centre, as an SVG `transform` attribute, for
+ * renderers without CSS `transform-box: fill-box` (React Native).
  */
 export const rotateAround = (degrees: number, cx: number, cy: number) =>
   `rotate(${degrees} ${numToAttr(cx)} ${numToAttr(cy)})`

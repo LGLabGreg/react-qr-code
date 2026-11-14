@@ -49,7 +49,6 @@ describe('downloadRaster', () => {
       fileFormat,
       imageSettings: undefined,
       calculatedImageSettings: null,
-      size: 128,
       numCells: 33,
       margin: 4,
       frameLayout: null,
@@ -93,7 +92,7 @@ describe('renderRaster', () => {
     vi.stubGlobal('Image', FakeImage)
     URL.createObjectURL = vi.fn(() => 'blob:qr')
     URL.revokeObjectURL = vi.fn()
-    const ctx = { fillStyle: '', fillRect: vi.fn(), drawImage: vi.fn() }
+    const ctx = { fillStyle: '', globalAlpha: 1, fillRect: vi.fn(), drawImage: vi.fn() }
     const canvas = document.createElement('canvas')
     vi.spyOn(canvas, 'getContext').mockReturnValue(
       ctx as unknown as CanvasRenderingContext2D,
@@ -116,7 +115,6 @@ describe('renderRaster', () => {
     fileFormat: 'png' as const,
     imageSettings: undefined,
     calculatedImageSettings: null,
-    size: 128,
     numCells: 33,
     margin: 4,
     frameLayout: null,
@@ -145,6 +143,38 @@ describe('renderRaster', () => {
       },
     })
     expect(ctx.drawImage).toHaveBeenCalledTimes(2)
+  })
+
+  it('places and sizes the logo as the SVG does', async () => {
+    const { ctx, svg } = setup()
+    const alphas: number[] = []
+    ctx.drawImage.mockImplementation(() => {
+      alphas.push((ctx as unknown as { globalAlpha: number }).globalAlpha)
+    })
+    await renderRaster({
+      ...baseProps(svg),
+      // A wide logo pinned to the top-left corner, half transparent.
+      imageSettings: { src: 'logo.png', width: 40, height: 10, x: 0, y: 0, opacity: 0.5 },
+      calculatedImageSettings: {
+        x: 0,
+        y: 0,
+        w: 10,
+        h: 2.5,
+        excavation: null,
+        opacity: 0.5,
+        crossOrigin: undefined,
+      },
+    })
+    // fileSize 300 over a viewBox of 33 units, so 1 unit = 300 / 33 pixels.
+    const unit = 300 / 33
+    expect(ctx.drawImage).toHaveBeenLastCalledWith(
+      expect.anything(),
+      4 * unit,
+      4 * unit,
+      10 * unit,
+      2.5 * unit,
+    )
+    expect(alphas).toEqual([1, 0.5])
   })
 
   it('rejects when the logo fails to load', async () => {

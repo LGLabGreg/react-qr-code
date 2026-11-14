@@ -37,7 +37,7 @@ const toDataURLOptions: Prop[] = [
     type: 'number',
     description:
       'The width of the image in pixels. The height follows the aspect ratio of the QR code or frame.',
-    defaultValue: 'the rendered size',
+    defaultValue: 'the size prop',
   },
 ]
 

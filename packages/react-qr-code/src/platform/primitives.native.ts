@@ -1,4 +1,5 @@
 import type { CrossOrigin, DataModulesStyle } from '../types/lib'
+import { rotateAround } from '../utils/svg'
 
 export {
   Circle,
@@ -47,3 +48,8 @@ export const shapeRendering = (_style: DataModulesStyle) => ({})
 
 // Native image loading has no CORS mode.
 export const imageCrossOrigin = (_crossOrigin: CrossOrigin) => ({})
+
+// react-native-svg has no CSS `transform-box`, so rotate about an explicit centre.
+export const rotateProps = (degrees: number, cx: number, cy: number) => ({
+  transform: rotateAround(degrees, cx, cy),
+})

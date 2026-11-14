@@ -31,7 +31,6 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
     svgRef,
     imageSettings,
     calculatedImageSettings,
-    size,
     numCells,
     margin,
     frameLayout,

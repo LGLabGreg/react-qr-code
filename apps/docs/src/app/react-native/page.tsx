@@ -25,7 +25,7 @@ export const Ticket = () => {
       value='https://reactqrcode.com'
       size={240}
       dataModulesSettings={{ style: 'rounded' }}
-      frameSettings={{ style: 'badge', text: 'Scan me!' }}
+      frameSettings={{ style: 'banner-bottom', text: 'Scan me!' }}
     />
   )
 }
@@ -65,6 +65,17 @@ const logo = `
     excavate: true,
   }}
 />
+`
+
+const jestConfig = `
+{
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(\\\\.pnpm|react-native|@react-native|@react-native-community|expo|@expo|react-native-svg|@lglab))"
+    ]
+  }
+}
 `
 
 export default function Page() {
@@ -128,9 +139,9 @@ export default function Page() {
         There is no file download on a phone, so the native ref has no{' '}
         <TypographyInlineCode>download()</TypographyInlineCode>. Use{' '}
         <TypographyInlineCode>toDataURL()</TypographyInlineCode> instead. It resolves with
-        a PNG data URL, at the rendered size unless you pass{' '}
-        <TypographyInlineCode>size</TypographyInlineCode>. The web ref has the same
-        method.
+        a PNG data URL that is <TypographyInlineCode>size</TypographyInlineCode> pixels
+        wide, the same as the component&apos;s size unless you pass one. The web ref has
+        the same method.
       </TypographyP>
       <CodeEditor code={exportCode} />
 
@@ -170,6 +181,24 @@ export default function Page() {
           },
         ]}
       />
+
+      <TypographyH2>Expo web</TypographyH2>
+      <TypographyP>
+        On Expo web the package loads its DOM build, so web rules apply there: pass{' '}
+        <TypographyInlineCode>imageSettings.src</TypographyInlineCode> as a URL rather
+        than a <TypographyInlineCode>require()</TypographyInlineCode>, and keep{' '}
+        <TypographyInlineCode>svgProps</TypographyInlineCode> to props a DOM svg accepts.
+        TypeScript in an Expo project uses the React Native types, so it will not flag
+        these.
+      </TypographyP>
+
+      <TypographyH2>Testing with Jest</TypographyH2>
+      <TypographyP>
+        The React Native build is an ES module, so add{' '}
+        <TypographyInlineCode>@lglab</TypographyInlineCode> to the packages Jest
+        transforms. With the jest-expo preset:
+      </TypographyP>
+      <CodeEditor code={jestConfig} language='json' />
     </>
   )
 }

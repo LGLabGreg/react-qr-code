@@ -46,3 +46,16 @@ export const shapeRendering = (style: DataModulesStyle) =>
 
 // Note: specified always, but undefined will result in no attribute.
 export const imageCrossOrigin = (crossOrigin: CrossOrigin) => ({ crossOrigin })
+
+/**
+ * Rotates a finder pattern about its own centre. The web build keeps the CSS
+ * form it has always emitted, so rendered and downloaded SVGs are unchanged.
+ */
+export const rotateProps = (degrees: number, _cx: number, _cy: number) =>
+  ({
+    style: {
+      transform: `rotate(${degrees}deg)`,
+      transformOrigin: 'center',
+      transformBox: 'fill-box',
+    },
+  }) as const

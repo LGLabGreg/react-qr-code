@@ -7,21 +7,14 @@ import {
   FINDER_PATTERN_OUTER_ROTATIONS,
   FINDER_PATTERN_SIZE,
 } from '../constants'
-import { Path, Rect, testId } from '../platform/primitives'
+import { Path, Rect, rotateProps, testId } from '../platform/primitives'
 import type { FinderPatternsInnerProps } from '../types/utils'
 import {
   finderPatternsInnerInOutPoint,
   finderPatternsInnerLeaf,
 } from '../utils/finder-patterns-inner'
 import { sanitizeFinderPatternInnerSettings } from '../utils/settings'
-import {
-  hashtag,
-  heart,
-  microchip,
-  pinchedSquare,
-  rotateAround,
-  star,
-} from '../utils/svg'
+import { hashtag, heart, microchip, pinchedSquare, star } from '../utils/svg'
 
 const testProps = testId('finder-patterns-inner')
 
@@ -96,11 +89,7 @@ export const FinderPatternsInner = ({
           height={size}
           fill={fill}
           // Rotates about the centre of the rect itself.
-          transform={rotateAround(
-            45,
-            x + posDiff / 2 + size / 2,
-            y + posDiff / 2 + size / 2,
-          )}
+          {...rotateProps(45, x + posDiff / 2 + size / 2, y + posDiff / 2 + size / 2)}
           {...testProps}
         />
       )
@@ -138,7 +127,7 @@ export const FinderPatternsInner = ({
             key={key(x, y)}
             fill={fill}
             d={path}
-            transform={rotateAround(
+            {...rotateProps(
               rotation,
               x + FINDER_PATTERN_INNER_SIZE / 2,
               y + FINDER_PATTERN_INNER_SIZE / 2,

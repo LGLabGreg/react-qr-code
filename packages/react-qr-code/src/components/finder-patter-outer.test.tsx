@@ -114,9 +114,7 @@ describe('DataModules', () => {
         const rotation =
           FINDER_PATTERN_OUTER_ROTATIONS[style as keyof typeof stylesToMethods][index]
         expect(path.getAttribute('fill')).toBe('#00ff00')
-        expect(path.getAttribute('transform')).toMatch(
-          new RegExp(`^rotate\\(${rotation} `),
-        )
+        expect(path.style.transform).toBe(`rotate(${rotation}deg)`)
       })
 
       expect(spy).toHaveBeenCalled()

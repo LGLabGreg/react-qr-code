@@ -141,8 +141,9 @@ export interface FrameSettings {
    */
   textColor?: string
   /**
-   * The label font family.
-   * @defaultValue sans-serif
+   * The label font family. On React Native, the name of a font loaded in the
+   * app.
+   * @defaultValue `sans-serif` on the web, the system font on React Native
    */
   fontFamily?: string
 }
@@ -152,7 +153,7 @@ export interface ToDataURLOptions {
   /**
    * The width of the image in pixels. The height follows the aspect ratio of
    * the code, which differs from the width when a frame is set.
-   * @defaultValue the rendered `size`
+   * @defaultValue the `size` prop
    */
   size?: number
 }

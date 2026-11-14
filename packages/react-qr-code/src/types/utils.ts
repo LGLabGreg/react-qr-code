@@ -61,7 +61,6 @@ export interface RenderRasterProps {
   imageSettings: ImageSettings | undefined
   calculatedImageSettings: CalculatedImageSettings | null
   fileFormat: DownloadFileFormat
-  size: number
   numCells: number
   margin: number
   frameLayout: FrameLayout | null

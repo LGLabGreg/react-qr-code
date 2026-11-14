@@ -5,7 +5,7 @@ import {
   FINDER_PATTERN_OUTER_ROTATIONS,
   FINDER_PATTERN_SIZE,
 } from '../constants'
-import { Path, testId } from '../platform/primitives'
+import { Path, rotateProps, testId } from '../platform/primitives'
 import type { FinderPatternsOuterProps } from '../types/utils'
 import {
   finderPatternsOuterInOutPoint,
@@ -13,7 +13,6 @@ import {
   finderPatternsOuterRoundedSquare,
 } from '../utils/finder-patterns-outer'
 import { sanitizeFinderPatternOuterSettings } from '../utils/settings'
-import { rotateAround } from '../utils/svg'
 
 const testProps = testId('finder-patterns-outer')
 
@@ -138,7 +137,7 @@ export const FinderPatternsOuter = ({
             key={`finder-patterns-outer-${style}-${x}-${y}`}
             fill={fill}
             d={path}
-            transform={rotateAround(
+            {...rotateProps(
               rotation,
               x + FINDER_PATTERN_SIZE / 2,
               y + FINDER_PATTERN_SIZE / 2,

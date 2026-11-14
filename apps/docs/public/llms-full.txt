@@ -125,7 +125,7 @@ The component exposes the following via `forwardRef`:
 
 | Property | Type | Default | Description |
 | --- | --- | --- | --- |
-| `size` | `number` | rendered `size` | Width of the PNG in pixels. The height follows the aspect ratio of the code or frame. |
+| `size` | `number` | the `size` prop | Width of the PNG in pixels. The height follows the aspect ratio of the code or frame. |
 
 ---
 
@@ -146,6 +146,8 @@ Differences from the web:
 - `imageSettings.src` also accepts a bundled image from `require('./logo.png')`. `imageSettings.crossOrigin` has no effect.
 - Frame labels use the system font unless `frameSettings.fontFamily` names a font loaded in the app (for example with expo-font).
 - Labels too long for the frame are squeezed horizontally, because react-native-svg does not support `textLength`.
+- On Expo web the DOM build loads, so pass `imageSettings.src` as a URL and keep `svgProps` to DOM props there.
+- The native build is an ES module: add `@lglab` to Jest's `transformIgnorePatterns` allow-list.
 
 ```tsx
 const ref = useRef<ReactQRCodeRef>(null)

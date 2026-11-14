@@ -1,4 +1,5 @@
 import { DEFAULT_BGCOLOR } from '../constants'
+import type { CrossOrigin } from '../types/lib'
 import type {
   DownloadRasterProps,
   DownloadSVGProps,
@@ -65,10 +66,11 @@ export const downloadSVG = async ({ svgRef, fileSize, fileName }: DownloadSVGPro
   URL.revokeObjectURL(url)
 }
 
-const loadImage = (src: string, what: string) =>
+const loadImage = (src: string, what: string, crossOrigin?: CrossOrigin) =>
   new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image()
-    img.crossOrigin = 'anonymous'
+    // A CORS mode is needed, or the image taints the canvas and export fails.
+    img.crossOrigin = crossOrigin || 'anonymous'
     img.onload = () => resolve(img)
     img.onerror = () => reject(new Error(`Failed to load the ${what}`))
     img.src = src
@@ -83,7 +85,6 @@ export const renderRaster = ({
   fileFormat,
   imageSettings,
   calculatedImageSettings,
-  size,
   numCells,
   margin,
   frameLayout,
@@ -113,22 +114,20 @@ export const renderRaster = ({
     ctx.drawImage(qrImg, 0, 0, fileSize, fileHeight)
 
     if (imageSettings?.src && calculatedImageSettings) {
-      const logoImg = await loadImage(imageSettings.src, 'logo')
-      const viewBoxWidth = frameLayout?.width ?? numCells
-      const offsetX = frameLayout?.qrX ?? 0
-      const offsetY = frameLayout?.qrY ?? 0
-      const ratio = fileSize / size
-      const scale = viewBoxWidth / fileSize
-      const qrSize = numCells / scale
-
-      const logoSize = imageSettings.width * ratio * (numCells / viewBoxWidth)
-      const logoX = imageSettings.x
-        ? (calculatedImageSettings.x + margin + offsetX) / scale
-        : offsetX / scale + (qrSize - logoSize) / 2
-      const logoY = imageSettings.y
-        ? (calculatedImageSettings.y + margin + offsetY) / scale
-        : offsetY / scale + (qrSize - logoSize) / 2
-      ctx.drawImage(logoImg, logoX, logoY, logoSize, logoSize)
+      // Draw the logo where the SVG puts it: calculatedImageSettings is in
+      // viewBox units, relative to the QR code inside its margin and frame.
+      const { x, y, w, h, opacity, crossOrigin } = calculatedImageSettings
+      const logoImg = await loadImage(imageSettings.src, 'logo', crossOrigin)
+      const unit = fileSize / (frameLayout?.width ?? numCells)
+      ctx.globalAlpha = opacity
+      ctx.drawImage(
+        logoImg,
+        (x + margin + (frameLayout?.qrX ?? 0)) * unit,
+        (y + margin + (frameLayout?.qrY ?? 0)) * unit,
+        w * unit,
+        h * unit,
+      )
+      ctx.globalAlpha = 1
     }
 
     return canvas.toDataURL(fileFormat === 'jpeg' ? 'image/jpeg' : 'image/png')

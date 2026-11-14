@@ -36,7 +36,7 @@ describe('DataModules', () => {
         expect(rect.getAttribute('width')).toBe(FINDER_PATTERN_INNER_SIZE.toString())
         expect(rect.getAttribute('height')).toBe(FINDER_PATTERN_INNER_SIZE.toString())
         expect(rect.getAttribute('fill')).toBe('#ff0000')
-        expect(rect.getAttribute('transform')).toBeNull()
+        expect(rect.style.transform).toBeFalsy()
       })
     },
   )
@@ -57,7 +57,7 @@ describe('DataModules', () => {
       expect(rect.getAttribute('width')).toBe(size.toString())
       expect(rect.getAttribute('height')).toBe(size.toString())
       expect(rect.getAttribute('fill')).toBe('#ff0000')
-      expect(rect.getAttribute('transform')).toMatch(/^rotate\(45 /)
+      expect(rect.style.transform).toBe('rotate(45deg)')
     })
   })
 
@@ -92,9 +92,7 @@ describe('DataModules', () => {
         const rotation =
           FINDER_PATTERN_OUTER_ROTATIONS[style as keyof typeof stylesToMethods][index]
         expect(path.getAttribute('fill')).toBe('#00ff00')
-        expect(path.getAttribute('transform')).toMatch(
-          new RegExp(`^rotate\\(${rotation} `),
-        )
+        expect(path.style.transform).toBe(`rotate(${rotation}deg)`)
       })
 
       expect(spy).toHaveBeenCalled()

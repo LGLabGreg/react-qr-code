@@ -31,12 +31,14 @@
   ],
   "type": "module",
   "scripts": {
-    "build": "tsc -b && tsc -p tsconfig.native.json --noEmit && vite build && vite build -c vite.native.config.ts && node scripts/build-native-types.mjs",
+    "build": "tsc -b && vite build && vite build -c vite.native.config.ts && node scripts/build-native-types.mjs",
+    "dev": "vite build --watch",
     "test:smoke": "node scripts/smoke-test.mjs"
   },
   "types": "./dist/index.d.ts",
   "main": "./dist/index.es.js",
   "module": "./dist/index.es.js",
+  "react-native": "./dist/index.native.js",
   "exports": {
     ".": {
       "browser": {
