@@ -108,9 +108,11 @@ export default function Page() {
         ]}
       />
       <TypographyP>
-        In a bare React Native app, run{' '}
-        <TypographyInlineCode>npx pod-install</TypographyInlineCode> afterwards so iOS
-        links react-native-svg.
+        Expo Go already includes react-native-svg. In a bare React Native app or an Expo
+        development build, rebuild the app after installing, for example with{' '}
+        <TypographyInlineCode>npx react-native run-android</TypographyInlineCode>. On iOS,
+        run <TypographyInlineCode>npx pod-install</TypographyInlineCode> before the
+        rebuild.
       </TypographyP>
 
       <TypographyH2>Usage</TypographyH2>
