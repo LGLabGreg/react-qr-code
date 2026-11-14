@@ -1,8 +1,6 @@
 node_modules/
 .expo/
-.lib/
 dist/
-package-lock.json
 expo-env.d.ts
 /ios
 /android

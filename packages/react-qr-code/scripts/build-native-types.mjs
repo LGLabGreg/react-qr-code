@@ -9,6 +9,7 @@
  */
 import { execFileSync } from 'node:child_process'
 import { readdir, rename, rm } from 'node:fs/promises'
+import { createRequire } from 'node:module'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -16,7 +17,15 @@ const pkgDir = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const outDir = join(pkgDir, 'dist/native')
 
 await rm(outDir, { recursive: true, force: true })
-execFileSync('tsc', ['-p', 'tsconfig.native.json'], { cwd: pkgDir, stdio: 'inherit' })
+// Run the TypeScript CLI through node: a bare `tsc` is a `.cmd` shim on Windows,
+// which execFileSync cannot start without a shell.
+const require = createRequire(import.meta.url)
+const tsPkg = require.resolve('typescript/package.json')
+const tscBin = join(dirname(tsPkg), require(tsPkg).bin.tsc)
+execFileSync(process.execPath, [tscBin, '-p', 'tsconfig.native.json'], {
+  cwd: pkgDir,
+  stdio: 'inherit',
+})
 
 let renamed = 0
 for (const entry of await readdir(outDir, { recursive: true, withFileTypes: true })) {
