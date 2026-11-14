@@ -30,7 +30,7 @@
     "jest": "^30.5.2",
     "jest-expo": "~58.0.14",
     "react-test-renderer": "19.3.0",
-    "typescript": "~6.0.3"
+    "typescript": "~7.0.2"
   },
   "dependenciesMeta": {
     "@lglab/react-qr-code": {
