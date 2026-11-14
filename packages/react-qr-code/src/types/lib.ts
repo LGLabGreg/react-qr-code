@@ -148,6 +148,15 @@ export interface FrameSettings {
 }
 
 export type DownloadFileFormat = 'svg' | 'png' | 'jpeg'
+export interface ToDataURLOptions {
+  /**
+   * The width of the image in pixels. The height follows the aspect ratio of
+   * the code, which differs from the width when a frame is set.
+   * @defaultValue the rendered `size`
+   */
+  size?: number
+}
+
 export interface DownloadOptions {
   name?: string
   format?: DownloadFileFormat

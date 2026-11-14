@@ -10,6 +10,8 @@ syncInjectedDepsAfterScripts:
   - build
 
 allowBuilds:
+  # Ships prebuilt binaries; its install script only builds from source as a fallback.
+  '@parcel/watcher': false
   esbuild: true
   sharp: true
 

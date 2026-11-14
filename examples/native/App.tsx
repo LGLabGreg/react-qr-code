@@ -4,15 +4,7 @@ import {
   type ReactQRCodeRef,
 } from '@lglab/react-qr-code'
 import { useRef, useState } from 'react'
-import {
-  Image,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native'
+import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 const value = 'https://reactqrcode.com'
 // oxlint-disable-next-line typescript/no-require-imports -- Metro bundles assets through require()
@@ -110,17 +102,7 @@ export default function App() {
   const [png, setPng] = useState<string | null>(null)
 
   const exportPng = () => {
-    const qr = ref.current
-    if (!qr) return
-    if (Platform.OS === 'web') {
-      // Expo web loads the DOM build, whose ref downloads a file instead.
-      const web = qr as unknown as {
-        download: (options: { format: 'png'; size: number }) => void
-      }
-      web.download({ format: 'png', size: 512 })
-      return
-    }
-    void qr.toDataURL({ size: 512 }).then(setPng)
+    void ref.current?.toDataURL({ size: 512 }).then(setPng)
   }
 
   return (
@@ -129,17 +111,12 @@ export default function App() {
         <Text style={styles.title}>@lglab/react-qr-code on React Native</Text>
 
         <View style={styles.card}>
-          <Text style={styles.label}>Export (ref.toDataURL, download on web)</Text>
+          <Text style={styles.label}>ref.toDataURL()</Text>
           <ReactQRCode ref={ref} value={value} size={160} marginSize={2} />
           <Pressable style={styles.button} onPress={exportPng}>
             <Text style={styles.buttonText}>Export PNG</Text>
           </Pressable>
-          {png && (
-            <Image
-              style={styles.exported}
-              source={{ uri: `data:image/png;base64,${png}` }}
-            />
-          )}
+          {png && <Image style={styles.exported} source={{ uri: png }} />}
         </View>
 
         {examples.map(([label, props]) => (

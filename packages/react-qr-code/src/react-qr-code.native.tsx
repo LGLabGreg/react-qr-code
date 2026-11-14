@@ -21,7 +21,8 @@ const ReactQRCode = forwardRef<ReactQRCodeRef, ReactQRCodeProps>((props, ref) =>
           return
         }
         svg.toDataURL(
-          resolve,
+          // react-native-svg resolves with bare base64; match the web build.
+          (base64) => resolve(`data:image/png;base64,${base64}`),
           fileSize ? { width: fileSize, height: (fileSize * height) / width } : undefined,
         )
       }),

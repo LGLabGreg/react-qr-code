@@ -22,11 +22,12 @@ import type {
   GradientSettingsType,
   ReactQRCodeRef,
 } from './types/lib'
-import { downloadRaster, downloadSVG } from './utils/download'
+import { downloadRaster, downloadSVG, renderRaster } from './utils/download'
 
 vi.mock('./utils/download', () => ({
   downloadSVG: vi.fn(),
   downloadRaster: vi.fn(),
+  renderRaster: vi.fn(async () => 'data:image/png;base64,AAAA'),
 }))
 
 describe('ReactQRCode', () => {
@@ -511,6 +512,26 @@ describe('ReactQRCode', () => {
           fileName: 'test-name',
         })
       }
+    })
+
+    it('resolves toDataURL with a PNG at the rendered size by default', async () => {
+      const ref = createRef<ReactQRCodeRef>()
+      render(<ReactQRCode value='test' size={200} ref={ref} />)
+
+      await expect(ref.current?.toDataURL()).resolves.toBe('data:image/png;base64,AAAA')
+      expect(vi.mocked(renderRaster)).toHaveBeenLastCalledWith(
+        expect.objectContaining({ fileSize: 200, fileFormat: 'png' }),
+      )
+    })
+
+    it('passes the toDataURL size through', async () => {
+      const ref = createRef<ReactQRCodeRef>()
+      render(<ReactQRCode value='test' ref={ref} />)
+
+      await ref.current?.toDataURL({ size: 640 })
+      expect(vi.mocked(renderRaster)).toHaveBeenLastCalledWith(
+        expect.objectContaining({ fileSize: 640 }),
+      )
     })
 
     it('handles raster download method call when ref is available', () => {

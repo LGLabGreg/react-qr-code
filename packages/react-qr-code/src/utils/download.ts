@@ -1,5 +1,9 @@
 import { DEFAULT_BGCOLOR } from '../constants'
-import type { DownloadRasterProps, DownloadSVGProps } from '../types/utils'
+import type {
+  DownloadRasterProps,
+  DownloadSVGProps,
+  RenderRasterProps,
+} from '../types/utils'
 
 // Frames make the SVG non-square, so scale the height by the viewBox aspect ratio.
 export const getFileHeight = (svg: SVGSVGElement, fileSize: number) => {
@@ -61,10 +65,21 @@ export const downloadSVG = async ({ svgRef, fileSize, fileName }: DownloadSVGPro
   URL.revokeObjectURL(url)
 }
 
-export const downloadRaster = ({
+const loadImage = (src: string, what: string) =>
+  new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => resolve(img)
+    img.onerror = () => reject(new Error(`Failed to load the ${what}`))
+    img.src = src
+  })
+
+/**
+ * Draws the QR code (and its logo) on a canvas and resolves with a data URL.
+ */
+export const renderRaster = ({
   svgRef,
   fileSize,
-  fileName,
   fileFormat,
   imageSettings,
   calculatedImageSettings,
@@ -72,12 +87,12 @@ export const downloadRaster = ({
   numCells,
   margin,
   frameLayout,
-}: DownloadRasterProps) => {
-  if (!svgRef.current) return
+}: RenderRasterProps): Promise<string> => {
+  if (!svgRef.current) return Promise.reject(new Error('The QR code is not mounted'))
 
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
-  if (!ctx) return
+  if (!ctx) return Promise.reject(new Error('Canvas 2D is not available'))
 
   canvas.width = fileSize
   const fileHeight = getFileHeight(svgRef.current, fileSize)
@@ -93,56 +108,45 @@ export const downloadRaster = ({
   const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' })
   const svgUrl = URL.createObjectURL(svgBlob)
 
-  const qrImg = new Image()
-  qrImg.crossOrigin = 'anonymous'
-  qrImg.src = svgUrl
-
-  qrImg.onload = () => {
+  const draw = async () => {
+    const qrImg = await loadImage(svgUrl, 'QR code')
     ctx.drawImage(qrImg, 0, 0, fileSize, fileHeight)
-    URL.revokeObjectURL(svgUrl)
 
     if (imageSettings?.src && calculatedImageSettings) {
-      const logoImg = new Image()
-      logoImg.crossOrigin = 'anonymous'
-      logoImg.src = imageSettings.src
+      const logoImg = await loadImage(imageSettings.src, 'logo')
+      const viewBoxWidth = frameLayout?.width ?? numCells
+      const offsetX = frameLayout?.qrX ?? 0
+      const offsetY = frameLayout?.qrY ?? 0
+      const ratio = fileSize / size
+      const scale = viewBoxWidth / fileSize
+      const qrSize = numCells / scale
 
-      logoImg.onload = () => {
-        const viewBoxWidth = frameLayout?.width ?? numCells
-        const offsetX = frameLayout?.qrX ?? 0
-        const offsetY = frameLayout?.qrY ?? 0
-        const ratio = fileSize / size
-        const scale = viewBoxWidth / fileSize
-        const qrSize = numCells / scale
+      const logoSize = imageSettings.width * ratio * (numCells / viewBoxWidth)
+      const logoX = imageSettings.x
+        ? (calculatedImageSettings.x + margin + offsetX) / scale
+        : offsetX / scale + (qrSize - logoSize) / 2
+      const logoY = imageSettings.y
+        ? (calculatedImageSettings.y + margin + offsetY) / scale
+        : offsetY / scale + (qrSize - logoSize) / 2
+      ctx.drawImage(logoImg, logoX, logoY, logoSize, logoSize)
+    }
 
-        const logoSize = imageSettings.width * ratio * (numCells / viewBoxWidth)
-        const logoX = imageSettings.x
-          ? (calculatedImageSettings.x + margin + offsetX) / scale
-          : offsetX / scale + (qrSize - logoSize) / 2
-        const logoY = imageSettings.y
-          ? (calculatedImageSettings.y + margin + offsetY) / scale
-          : offsetY / scale + (qrSize - logoSize) / 2
-        ctx.drawImage(logoImg, logoX, logoY, logoSize, logoSize)
+    return canvas.toDataURL(fileFormat === 'jpeg' ? 'image/jpeg' : 'image/png')
+  }
 
-        const imageType = fileFormat === 'png' ? 'image/png' : 'image/jpeg'
-        const a = document.createElement('a')
-        a.href = canvas.toDataURL(imageType)
-        a.download = `${fileName}.${fileFormat}`
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-      }
-      // oxlint-disable-next-line no-console
-      logoImg.onerror = (err) => console.error('Error loading logo:', err)
-    } else {
-      const imageType = fileFormat === 'png' ? 'image/png' : 'image/jpeg'
+  return draw().finally(() => URL.revokeObjectURL(svgUrl))
+}
+
+export const downloadRaster = ({ fileName, ...props }: DownloadRasterProps) => {
+  renderRaster(props)
+    .then((dataUrl) => {
       const a = document.createElement('a')
-      a.href = canvas.toDataURL(imageType)
-      a.download = `${fileName}.${fileFormat}`
+      a.href = dataUrl
+      a.download = `${fileName}.${props.fileFormat}`
       document.body.appendChild(a)
       a.click()
       document.body.removeChild(a)
-    }
-  }
-  // oxlint-disable-next-line no-console
-  qrImg.onerror = (err) => console.error('Error loading QR code:', err)
+    })
+    // oxlint-disable-next-line no-console
+    .catch((err) => console.error('Error downloading QR code:', err))
 }
