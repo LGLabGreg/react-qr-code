@@ -1,4 +1,4 @@
-import { ArrowRight, Bot, Code, Layers, Sparkles, Zap } from 'lucide-react'
+import { ArrowRight, Bot, Code, Layers, Smartphone, Sparkles, Zap } from 'lucide-react'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     absolute: 'React QR Code – Customizable QR Code Generator for React',
   },
   description:
-    'Customizable, lightweight SVG QR code generator for React — gradients, custom module and finder pattern shapes, and logos.',
+    'Customizable, lightweight SVG QR code generator for React and React Native — gradients, custom module and finder pattern shapes, logos and frames.',
 }
 
 const features = [
@@ -63,6 +63,27 @@ export default function Page() {
             </div>
           ))}
         </div>
+
+        <Link
+          href='/react-native'
+          className='group mt-4 flex flex-col gap-4 rounded-xl border bg-muted/40 p-6 transition-colors hover:bg-muted/70 sm:flex-row sm:items-center'
+        >
+          <FeatureIcon icon={Smartphone} />
+          <div className='flex-1 space-y-1.5'>
+            <h3 className='font-semibold tracking-tight'>Works in React Native</h3>
+            <p className='text-sm leading-relaxed text-muted-foreground'>
+              The same component renders in React Native and Expo apps through{' '}
+              <TypographyBold className='text-foreground'>
+                react-native-svg
+              </TypographyBold>
+              , with every style, logo and frame option.
+            </p>
+          </div>
+          <span className='inline-flex items-center gap-1 text-sm font-medium whitespace-nowrap'>
+            Learn more
+            <ArrowRight className='size-4 transition-transform group-hover:translate-x-0.5' />
+          </span>
+        </Link>
 
         <Link
           href='/llms-txt'
