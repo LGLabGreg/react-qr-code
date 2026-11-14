@@ -1,5 +1,13 @@
 # @lglab/react-qr-code
 
+## 1.9.0
+
+### Minor Changes
+
+- [#671](https://github.com/LGLabGreg/react-qr-code/pull/671) [`ce06d35`](https://github.com/LGLabGreg/react-qr-code/commit/ce06d35fddc06cda0fd3edffc2d6741d97ea6cf3) Thanks [@LGLabGreg](https://github.com/LGLabGreg)! - Add React Native support. The same `ReactQRCode` component now renders in React Native 0.82+ and Expo through `react-native-svg` (an optional peer dependency), picked by Metro through a new `react-native` export condition. Both the web and native refs gain `toDataURL({ size })`, which resolves with a PNG data URL.
+
+  PNG and JPEG downloads now draw the logo exactly where the SVG shows it: `imageSettings.height`, `opacity`, `crossOrigin` and an `x` or `y` of `0` were ignored before.
+
 ## 1.8.1
 
 ### Patch Changes
